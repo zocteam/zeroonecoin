@@ -1,9 +1,9 @@
 ![ZeroOne](doc/splash.png)
 
-ZeroOne Core staging tree 0.12.1
-===============================
+ZeroOne Core staging tree 0.12.1.4
+==================================
 
-[BITCOINTALK TOPIC](https://bitcointalk.org/index.php?topic=2886553.0)
+[WARNING!!! BITCOINTALK 1st dev](https://bitcointalk.org/index.php?topic=2886553.0)
 
 [WARNING!!! INVALID TOPIC!!!!](https://bitcointalk.org/index.php?topic=2885642.0)
 
@@ -24,7 +24,7 @@ Development Process
 -------------------
 
 The `master` branch is meant to be stable. Development is normally done in separate branches.
-[Tags](https://github.com/zeroonecoin/zeroone/tags) are created to indicate new official,
+[Tags](https://github.com/zocteam/zeroonecoin/tags) are created to indicate new official,
 stable release versions of ZeroOne Core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
