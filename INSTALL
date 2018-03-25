@@ -7,10 +7,11 @@ Use the autogen script to prepare the build environment.
     make
 
 Precompiled binaries are available at github, see
-https://github.com/zeroonecoin/zeroone-binaries
+https://github.com/zocteam/zeroone-binaries
 
 Always verify the signatures and checksums.
 
 See doc/build-*.md for instructions on building zerooned,
 the intended-for-services, no-graphical-interface, reference
 implementation of ZeroOne.
+
