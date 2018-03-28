@@ -7,6 +7,6 @@ services:
     volumes:
       - .datadir:/root/.zeroonecore
       - .:/source
-    env:
+    environment:
       # will be passed to the deamon to filter log output
-      -DEBUG=
+      - DEBUG=
