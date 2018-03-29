@@ -1,7 +1,2 @@
-Dockerfile
-release
-zeroone-docs
-doc
-*.cache
-.dockerignore
-.gitignore
+*
+!dockerentry.sh

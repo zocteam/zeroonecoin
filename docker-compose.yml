@@ -3,7 +3,7 @@ services:
   zerooned:
     build: .
     ports:
-      - 1000:1000
+      - 10000:10000
     volumes:
       - .datadir:/root/.zeroonecore
       - .:/source
