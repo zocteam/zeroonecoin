@@ -1,0 +1,12 @@
+version: '2'
+services:
+  zerooned:
+    build: .
+    ports:
+      - 10000:10000
+    volumes:
+      - .datadir:/root/.zeroonecore
+      - .:/source
+    environment:
+      # will be passed to the deamon to filter log output
+      - DEBUG=
