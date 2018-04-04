@@ -212,9 +212,9 @@ public:
         nMaxTipAge = 0x7fffffff; // allow mining on top of old blocks for testnet
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1517407200, 324878, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1522852335, 1869206, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000c8e2be06ce7e6ea78cd9f6ea60e22821d70f8c8fbb714b6baa7b4f2150c"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000ebe61e5bc70bc968b9cf4e5ed85ec996a85a68853361557876ae37a1648"));
         assert(genesis.hashMerkleRoot == uint256S("0xac77519bea8d4afceb11cfafd74d19643f660d5f94fd89c84ca84f884fa20648"));
 
         vFixedSeeds.clear();
@@ -237,7 +237,7 @@ public:
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
-        fMiningRequiresPeers = true;
+        fMiningRequiresPeers = false;
         fDefaultConsistencyChecks = false;
         fRequireStandard = false;
         fMineBlocksOnDemand = false;
@@ -252,7 +252,7 @@ public:
             boost::assign::map_list_of
             ( 0, uint256S("0x00000c8e2be06ce7e6ea78cd9f6ea60e22821d70f8c8fbb714b6baa7b4f2150c")),
 
-            1517407200, // * UNIX timestamp of last checkpoint block
+            1522852335, // * UNIX timestamp of last checkpoint block
             0,     // * total number of transactions between genesis and last checkpoint
                         //   (the tx=... number in the SetBestChain debug.log lines)
             500         // * estimated number of transactions per day after checkpoint
