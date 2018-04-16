@@ -121,8 +121,12 @@ public:
         assert(consensus.hashGenesisBlock == uint256S("0x00000c8e2be06ce7e6ea78cd9f6ea60e22821d70f8c8fbb714b6baa7b4f2150c"));
         assert(genesis.hashMerkleRoot == uint256S("0xac77519bea8d4afceb11cfafd74d19643f660d5f94fd89c84ca84f884fa20648"));
 
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed1.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed2.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed3.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed4.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed5.01coin.io"));
 
-        vSeeds.clear();
         // ZeroOne addresses start with 'Z'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,80);
         // ZeroOne script addresses start with '5'
