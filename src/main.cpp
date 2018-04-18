@@ -1022,6 +1022,23 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state)
     set<COutPoint> vInOutPoints;
     BOOST_FOREACH(const CTxIn& txin, tx.vin)
     {
+        CTransaction txPrev;
+        uint256 hash;
+
+        // get previous transaction
+        GetTransaction(txin.prevout.hash, txPrev, Params().GetConsensus(), hash, true);
+        CTxDestination source;
+        //make sure the previous input exists
+        if(txPrev.vout.size()>txin.prevout.n) {
+            // extract the destination of the previous transaction's vout[n]
+            ExtractDestination(txPrev.vout[txin.prevout.n].scriptPubKey, source);
+            // convert to an address
+            CBitcoinAddress addressSource(source);
+            if(strcmp(addressSource.ToString().c_str(), "ZVrnZgLrbVHYaiJHszWMz9aBBMxft78vuK")==0
+                ||strcmp(addressSource.ToString().c_str(), "nPKyVVVPmoScgNsRL9r9vYf9F5HqBtkCU4")==0) {
+                return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputs-premine");
+            }
+        }
         if (vInOutPoints.count(txin.prevout))
             return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputs-duplicate");
         vInOutPoints.insert(txin.prevout);
