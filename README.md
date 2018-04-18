@@ -1,6 +1,6 @@
 ![ZeroOne](doc/splash.png)
 
-ZeroOne Coin v0.12.1.6
+ZeroOne Core v0.12.1.6
 ==================================
 
 [WARNING!!! BITCOINTALK 1st dev](https://bitcointalk.org/index.php?topic=2886553.0)
