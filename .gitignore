@@ -1,54 +1,19 @@
 *.sublime-project
 *.sublime-workspace
+.idea
 todo.txt
 reset-files.bash
 
 *.tar.gz
 
 *.exe
-src/dash
-src/dashd
-src/dash-cli
-src/dash-tx
-src/test/test_dash
-src/qt/test/test_dash-qt
-src/bench/bench_dash
-
-# autoreconf
-Makefile.in
-aclocal.m4
-autom4te.cache/
-build-aux/config.guess
-build-aux/config.sub
-build-aux/depcomp
-build-aux/install-sh
-build-aux/ltmain.sh
-build-aux/m4/libtool.m4
-build-aux/m4/lt~obsolete.m4
-build-aux/m4/ltoptions.m4
-build-aux/m4/ltsugar.m4
-build-aux/m4/ltversion.m4
-build-aux/missing
-build-aux/compile
-build-aux/test-driver
-config.log
-config.status
-configure
-libtool
-src/config/dash-config.h
-src/config/dash-config.h.in
-src/config/stamp-h1
-share/setup.nsi
-share/qt/Info.plist
-
-src/univalue/gen
-
-src/qt/*.moc
-src/qt/moc_*.cpp
-src/qt/forms/ui_*.h
-
-src/qt/test/moc*.cpp
-libconftest.dylib*
+src/zeroone
+src/zerooned
+src/zeroone-cli
+src/zeroone-tx
+src/test/test_zeroone
+src/qt/test/test_zeroone-qt
+src/bench/bench_zeroone
 
 .deps
 .dirstamp
@@ -61,8 +26,7 @@ libconftest.dylib*
 *.pyc
 *.o
 *.o-*
-*.patch
-.dash
+.zeroone
 *.a
 *.pb.cc
 *.pb.h
@@ -78,15 +42,9 @@ libconftest.dylib*
 *.lo
 *.la
 
-# Compilation and Qt preprocessor part
-*.qm
-Makefile
-dash-qt
-Dash-Qt.app
-
 # Unit-tests
 Makefile.test
-dash-qt_test
+zeroone-qt_test
 src/test/buildenv.py
 
 # Resources cpp
@@ -100,7 +58,7 @@ build
 *.gcno
 *.gcda
 /*.info
-test_dash.coverage/
+test_zeroone.coverage/
 total.coverage/
 coverage_percent.txt
 
@@ -124,11 +82,38 @@ share/BitcoindComparisonTool.jar
 /doc/doxygen/
 
 libbitcoinconsensus.pc
-src/qt/dash-qt.bash
+src/qt/zeroone-qt.bash
 qa/pull-tester/tests-config.sh
 
 #development symlinks
-dash-cli
-dashd
-dash-qt
-make
+zeroone-cli
+zerooned
+zeroone-qt
+.datadir
+
+# autoreconf
+Makefile.in
+aclocal.m4
+autom4te.cache/
+build-aux/config.guess
+build-aux/config.sub
+build-aux/depcomp
+build-aux/install-sh
+build-aux/ltmain.sh
+build-aux/m4/libtool.m4
+build-aux/m4/lt~obsolete.m4
+build-aux/m4/ltoptions.m4
+build-aux/m4/ltsugar.m4
+build-aux/m4/ltversion.m4
+build-aux/missing
+build-aux/compile
+build-aux/test-driver
+config.log
+config.status
+configure
+libtool
+src/config/zeroone-config.h
+src/config/stamp-h1
+share/setup.nsi
+share/qt/Info.plist
+Makefile

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=ZeroOne
+Comment=ZeroOne P2P Cryptocurrency
+Exec=zeroone-qt %u
+Terminal=false
+Type=Application
+Icon=zeroone128
+MimeType=x-scheme-handler/zeroone;
+Categories=Office;Finance;
+Name[en_US]=zeroone-qt.desktop

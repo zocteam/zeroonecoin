@@ -1,0 +1,22 @@
+[Unit]
+Description=ZeroOne's distributed currency daemon
+After=network.target
+
+[Service]
+User=zeroonecore
+Group=zeroonecore
+
+Type=forking
+PIDFile=/var/lib/zerooned/zerooned.pid
+ExecStart=/usr/bin/zerooned -daemon -pid=/var/lib/zerooned/zerooned.pid \
+-conf=/etc/zeroonecore/zeroone.conf -datadir=/var/lib/zerooned -disablewallet
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

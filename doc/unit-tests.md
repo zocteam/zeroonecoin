@@ -6,13 +6,13 @@ and tests weren't explicitly disabled.
 
 After configuring, they can be run with `make check`.
 
-To run the dashd tests manually, launch `src/test/test_dash`.
+To run the zerooned tests manually, launch `src/test/test_zeroone`.
 
-To add more dashd tests, add `BOOST_AUTO_TEST_CASE` functions to the existing
+To add more zerooned tests, add `BOOST_AUTO_TEST_CASE` functions to the existing
 .cpp files in the `test/` directory or add new .cpp files that
 implement new BOOST_AUTO_TEST_SUITE sections.
 
-To run the dash-qt tests manually, launch `src/qt/test/test_dash-qt`
+To run the zeroone-qt tests manually, launch `src/qt/test/test_zeroone-qt`
 
-To add more dash-qt tests, add them to the `src/qt/test/` directory and
+To add more zeroone-qt tests, add them to the `src/qt/test/` directory and
 the `src/qt/test/test_main.cpp` file.

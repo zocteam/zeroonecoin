@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="topLayout">
    <item>
     <widget class="QLabel" name="labelAlerts">
@@ -67,10 +70,10 @@
             <item>
              <widget class="QLabel" name="labelWalletStatus">
               <property name="toolTip">
-               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Dash network after a connection is established, but this process has not completed yet.</string>
+               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the ZeroOne network after a connection is established, but this process has not completed yet.</string>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel { color: red; }</string>
+               <string notr="true">QLabel { color: orange;}</string>
               </property>
               <property name="text">
                <string notr="true">(out of sync)</string>
@@ -315,6 +318,9 @@
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="labelBalanceText">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="text">
                <string>Available:</string>
               </property>
@@ -333,6 +339,9 @@
               </property>
               <property name="toolTip">
                <string>Your current spendable balance</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
               </property>
               <property name="text">
                <string notr="true">0.000 000 00 BTC</string>
@@ -358,6 +367,9 @@
               </property>
               <property name="toolTip">
                <string>Your current balance in watch-only addresses</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
               </property>
               <property name="text">
                <string notr="true">0.000 000 00 BTC</string>
@@ -414,6 +426,9 @@
                 <bold>true</bold>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="text">
                <string>PrivateSend</string>
               </property>
@@ -422,10 +437,10 @@
             <item>
              <widget class="QLabel" name="labelPrivateSendSyncStatus">
               <property name="toolTip">
-               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Dash network after a connection is established, but this process has not completed yet.</string>
+               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the ZeroOne network after a connection is established, but this process has not completed yet.</string>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel { color: red; }</string>
+               <string notr="true">QLabel { color: orange; }</string>
               </property>
               <property name="text">
                <string notr="true">(out of sync)</string>
@@ -511,7 +526,7 @@
                </font>
               </property>
               <property name="text">
-               <string notr="true">0 DASH</string>
+               <string notr="true">0 ZOC</string>
               </property>
              </widget>
             </item>
@@ -525,7 +540,7 @@
             <item row="3" column="1">
              <widget class="QLabel" name="labelAmountRounds">
               <property name="text">
-               <string>0 DASH / 0 Rounds</string>
+               <string>0 ZOC / 0 Rounds</string>
               </property>
              </widget>
             </item>
@@ -550,6 +565,9 @@
           </item>
           <item>
            <layout class="QVBoxLayout" name="VerticalLayout_PS">
+            <property name="spacing">
+             <number>-1</number>
+            </property>
             <item>
              <widget class="QLabel" name="labelPrivateSendLastMessage">
               <property name="text">
@@ -680,10 +698,10 @@
             <item>
              <widget class="QLabel" name="labelTransactionsStatus">
               <property name="toolTip">
-               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Dash network after a connection is established, but this process has not completed yet.</string>
+               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the ZeroOne network after a connection is established, but this process has not completed yet.</string>
               </property>
               <property name="styleSheet">
-               <string notr="true">QLabel { color: red; }</string>
+               <string notr="true">QLabel { color: orange; }</string>
               </property>
               <property name="text">
                <string notr="true">(out of sync)</string>

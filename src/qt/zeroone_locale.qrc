@@ -1,0 +1,20 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="bg">locale/zeroone_bg.qm</file>
+        <file alias="de">locale/zeroone_de.qm</file>
+        <file alias="en">locale/zeroone_en.qm</file>
+        <file alias="es">locale/zeroone_es.qm</file>
+        <file alias="fi">locale/zeroone_fi.qm</file>
+        <file alias="fr">locale/zeroone_fr.qm</file>
+        <file alias="it">locale/zeroone_it.qm</file>
+        <file alias="ja">locale/zeroone_ja.qm</file>
+        <file alias="pl">locale/zeroone_pl.qm</file>
+        <file alias="pt">locale/zeroone_pt.qm</file>
+        <file alias="ru">locale/zeroone_ru.qm</file>
+        <file alias="sk">locale/zeroone_sk.qm</file>
+        <file alias="sv">locale/zeroone_sv.qm</file>
+        <file alias="vi">locale/zeroone_vi.qm</file>
+        <file alias="zh_CN">locale/zeroone_zh_CN.qm</file>
+        <file alias="zh_TW">locale/zeroone_zh_TW.qm</file>
+    </qresource>
+</RCC>

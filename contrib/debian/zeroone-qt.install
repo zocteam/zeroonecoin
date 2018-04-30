@@ -1,0 +1,6 @@
+usr/local/bin/zeroone-qt usr/bin
+share/pixmaps/zeroone32.xpm usr/share/pixmaps
+share/pixmaps/zeroone16.xpm usr/share/pixmaps
+share/pixmaps/zeroone128.png usr/share/pixmaps
+debian/zeroone-qt.desktop usr/share/applications
+debian/zeroone-qt.protocol usr/share/kde4/services/
