@@ -1,23 +1,23 @@
 ![ZeroOne](doc/splash.png)
 
-ZeroOne Core v0.12.1.6
+01coin Community v0.12.1.6
 ==================================
 
-[WARNING!!! BITCOINTALK 1st dev](https://bitcointalk.org/index.php?topic=2886553.0)
+[Bitcointalk ANN thread](https://bitcointalk.org/index.php?topic=3457534.0)
 
-[WARNING!!! INVALID TOPIC!!!!](https://bitcointalk.org/index.php?topic=2885642.0)
+[Discord Community](https://discord.gg/ad6MFkU)
 
-What is ZeroOne?
+What is the 01coin Community?
 ----------------
 
-ZeroOne (ZOC) is an innovative cryptocurrency. A form of digital currency secured by cryptography and issued through a decentralized and advanced mining market. Based on Dash, it's an enhanced and further developed version, featuring the masternode technology with 50% Reward, near-instant and secure payments as well as anonymous transactions. ZeroOne has great potential for rapid growth and expansion. Based on a total Proof of Work and Masternode system, it is accesible to everyone, it ensures a fair and stable return of investment for the Graphics Processing Units (GPUs) miners and the Masternode holders.
+01coin is an innovative, cryptographically-secured digital asset ledger based on blockchain technology. Developed in part from the core code behind Dash, 01coin includes many innovative enhancements. 01coin aims to become the most community-centric project in all of crypto. Born out of its own ashes when the original development team mysteriously disappeared one month after the coin launched, it is now completely managed and operated by the community. This includes a large and dedicated team of community moderators always ready and willing to help new users. It also includes a strong principle of community governance: no decision will be made unilaterally by a single individual or by an oligarchy of the few. Every step forward for 01coin will be determined by community votes and masternode governance. As such, we don’t know yet exactly what 01coin will look like a year from now, but we do know it will look exactly like the coin you want it to be.
 
 
 
 License
 -------
 
-ZeroOne Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+The 01coin core is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see https://opensource.org/licenses/MIT.
 
 Development Process
@@ -25,7 +25,7 @@ Development Process
 
 The `master` branch is meant to be stable. Development is normally done in separate branches.
 [Tags](https://github.com/zocteam/zeroonecoin/tags) are created to indicate new official,
-stable release versions of ZeroOne Core.
+stable release versions of the 01coin core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 
