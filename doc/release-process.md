@@ -1,7 +1,7 @@
 Release Process
 ====================
 
-* Update translations, see [translation_process.md](https://github.com/zeroonecoin/zeroone/blob/master/doc/translation_process.md#syncing-with-transifex)
+* Update translations, see [translation_process.md](https://github.com/zocteam/zeroonecoin/blob/master/doc/translation_process.md#syncing-with-transifex)
 * Update hardcoded [seeds](/contrib/seeds)
 
 * * *
@@ -10,10 +10,10 @@ Release Process
 Check out the source code in the following directory hierarchy.
 
 	cd /path/to/your/toplevel/build
-	git clone https://github.com/zeroonecoin/gitian.sigs.git
-	git clone https://github.com/zeroonecoin/zeroone-detached-sigs.git
+	git clone https://github.com/zocteam/gitian.sigs.git
+	git clone https://github.com/zocteam/zeroone-detached-sigs.git
 	git clone https://github.com/devrandom/gitian-builder.git
-	git clone https://github.com/zeroonecoin/zeroone.git
+	git clone https://github.com/zocteam/zeroonecoin
 
 ###ZeroOne Core maintainers/release engineers, update (commit) version in sources
 
@@ -139,7 +139,7 @@ Commit your signature to gitian.sigs:
 
   Wait for Windows/OS X detached signatures:
 	Once the Windows/OS X builds each have 3 matching signatures, they will be signed with their respective release keys.
-	Detached signatures will then be committed to the [zeroone-detached-sigs](https://github.com/zeroonecoin/zeroone-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
+	Detached signatures will then be committed to the [zeroone-detached-sigs](https://github.com/zocteam/zeroone-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
 
   Create (and optionally verify) the signed OS X binary:
 
@@ -182,19 +182,19 @@ rm SHA256SUMS
 (the digest algorithm is forced to sha256 to avoid confusion of the `Hash:` header that GPG adds with the SHA256 used for the files)
 Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spurious/nonsensical entry.
 
-- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the zeroone.org server
+- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the 01coin.io server
 
 - Update zeroone.org
 
 - Announce the release:
 
-  - Release on ZeroOne forum: https://www.zeroone.org/forum/topic/official-announcements.54/
+  - Release on ZeroOne forum: https://01coin.io/forum/topic/official-announcements.54/
 
   - ZeroOne-development mailing list
 
   - Update title of #zeroonecoin on Freenode IRC
 
-  - Optionally reddit /r/ZeroOnepay, ... but this will usually sort out itself
+  - Optionally reddit /r/ZeroOne, ... but this will usually sort out itself
 
 - Notify flare so that he can start building [the PPAs](https://launchpad.net/~zeroone.org/+archive/ubuntu/zeroone)
 

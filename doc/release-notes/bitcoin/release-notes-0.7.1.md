@@ -97,7 +97,7 @@ Thanks to everybody who contributed to this release:
 
 Gavin Andresen
 Jeff Garzik
-Luke ZeroOnejr
+Luke Dashjr
 Mark Friedenbach
 Matt Corallo
 Philip Kaufmann

@@ -85,7 +85,7 @@
         <bool>false</bool>
        </property>
        <property name="pixmap">
-        <pixmap>:/images/drkblue/about</pixmap>
+        <pixmap resource="../zeroone.qrc">:/images/drkblue/about</pixmap>
        </property>
        <property name="scaledContents">
         <bool>false</bool>
@@ -99,6 +99,13 @@
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QTextEdit" name="helpMessage">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QScrollArea" name="scrollArea">
        <property name="frameShape">

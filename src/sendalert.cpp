@@ -57,10 +57,10 @@ void ThreadSendAlert()
     //  Higher numbers mean higher priority
     alert.nPriority     = 5000;
     alert.strComment    = "";
-    alert.strStatusBar  = "URGENT: Upgrade required: see https://www.zeroone.org";
+    alert.strStatusBar  = "URGENT: Upgrade required: see https://01coin.io";
 
     // Set specific client version/versions here. If setSubVer is empty, no filtering on subver is done:
-    // alert.setSubVer.insert(std::string("/ZeroOne Core:0.12.0.58/"));
+    // alert.setSubVer.insert(std::string("/ZeroOne Core:0.12.1.3/"));
 
     // Sign
     if(!alert.Sign())

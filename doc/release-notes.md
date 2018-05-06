@@ -1,6 +1,6 @@
 ZeroOne Core version 0.12.1 is now available from:
 
-  <https://www.zeroone.org/downloads/>
+  <https://01coin.io/downloads/>
 
 
 
@@ -8,7 +8,8 @@ ZeroOne Core version 0.12.1 is now available from:
 Older releases
 --------------
 
-ZeroOne was previously known as Darkcoin.
+ZeroOne is sw fork of Dash 0.12.1
+Dash was previously known as Darkcoin.
 
 Darkcoin tree 0.8.x was a fork of Litecoin tree 0.8, original name was XCoin
 which was first released on Jan/18/2014.
@@ -99,10 +100,10 @@ the 0.8.x tree and was first released on Mar/13/2014.
 Darkcoin tree 0.10.x used to be the closed source implementation of Darksend
 which was released open source on Sep/25/2014.
 
-ZeroOne Core tree 0.11.x was a fork of Bitcoin Core tree 0.9, Darkcoin was rebranded
-to ZeroOne.
+Dash Core tree 0.11.x was a fork of Bitcoin Core tree 0.9, Darkcoin was rebranded
+to Dash.
 
-ZeroOne Core tree 0.12.0.x was a fork of Bitcoin Core tree 0.10.
+Dash Core tree 0.12.0.x was a fork of Bitcoin Core tree 0.10.
 
 These release are considered obsolete. Old changelogs can be found here:
 

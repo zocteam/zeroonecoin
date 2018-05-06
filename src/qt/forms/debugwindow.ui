@@ -490,7 +490,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../zeroone.qrc">
              <normaloff>:/icons/drkblue/remove</normaloff>:/icons/drkblue/remove</iconset>
            </property>
            <property name="shortcut">

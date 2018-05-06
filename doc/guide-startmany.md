@@ -95,7 +95,7 @@ Issue the following:
 Make note of the hash (which is your collateral_output) and index.
 
 ### Enter your Masternode details into your masternode.conf file
-[From the zeroone github repo](https://github.com/zeroonecoin/zeroone/blob/master/doc/masternode_conf.md)
+[From the zeroone github repo](https://github.com/zocteam/zeroonecoin/blob/master/doc/masternode_conf.md)
 
 `masternode.conf` format is a space seperated text file. Each line consisting of an alias, IP address followed by port, masternode private key, collateral output transaction id and collateral output index.
 
@@ -135,7 +135,7 @@ You can confirm that remote server is on the correct block by issuing
 
 ```zeroone-cli getinfo```
 
-and comparing with the official explorer at https://explorer.zeroone.org/chain/ZeroOne
+and comparing with the official explorer at https://explorer.01coin.io/
 
 ### Local
 
@@ -174,6 +174,6 @@ Command output should have "_Masternode successfully started_" in its `status` f
 
 ### Local
 
-Search your Masternodes on https://zerooneninja.pl/masternodes.html
+Search your Masternodes on https://masternodes.online/monitoring/
 
 _Hint: Bookmark it, you definitely will be using this site a lot._
