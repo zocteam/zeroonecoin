@@ -14,7 +14,7 @@ while :
 do
   make
   echo "build complete, will start now"
-  src/zerooned -regtest -printtoconsole &
+  src/zerooned -printtoconsole &
   echo "starting to watch for changes"
   inotifywait -e modify -e move -e create -e delete src -r > /dev/null 2>&1
   kill $(pidof zerooned) > /dev/null 2>&1

@@ -61,6 +61,9 @@
 /* Define this symbol if the consensus lib has been built */
 #undef HAVE_CONSENSUS_LIB
 
+/* define if the compiler supports basic C++11 syntax */
+#undef HAVE_CXX11
+
 /* Define to 1 if you have the declaration of `be16toh', and to 0 if you
    don't. */
 #undef HAVE_DECL_BE16TOH
@@ -297,8 +300,7 @@
 /* Define this symbol if boost sleep_for works */
 #undef HAVE_WORKING_BOOST_SLEEP_FOR
 
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
 
 /* Define to the address where bug reports for this package should be sent. */

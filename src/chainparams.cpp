@@ -137,8 +137,9 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
         // ZeroOne BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
-        // ZeroOne BIP44 coin type is '5'
-        base58Prefixes[EXT_COIN_TYPE]  = boost::assign::list_of(0x80)(0x00)(0x00)(0x05).convert_to_container<std::vector<unsigned char> >();
+
+        // ZeroOne BIP44 coin type is '1'
+        nExtCoinType = 1;
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
 
@@ -154,12 +155,12 @@ public:
         strMasternodePaymentsPubKey = "04934bc3bd96dd28aa8b7d95d8023d10d1e039e6660a9cd091539d42f492ec22e399d3454e6b5c19e310a070e3b93f1fcef4f3161e97ffd7a996d77ddfccf88f9d";
 
         checkpointData = (CCheckpointData) {
-            boost::assign::map_list_of
-            (   0, uint256S("0x00000c8e2be06ce7e6ea78cd9f6ea60e22821d70f8c8fbb714b6baa7b4f2150c")),
-            1517407200, // * UNIX timestamp of last checkpoint block
-            0,   // * total number of transactions between genesis and last checkpoint
-                        //   (the tx=... number in the SetBestChain debug.log lines)
-            2800        // * estimated number of transactions per day after checkpoint
+                boost::assign::map_list_of
+                        (   0, uint256S("0x00000c8e2be06ce7e6ea78cd9f6ea60e22821d70f8c8fbb714b6baa7b4f2150c")),
+                1517407200, // * UNIX timestamp of last checkpoint block
+                0,   // * total number of transactions between genesis and last checkpoint
+                //   (the tx=... number in the SetBestChain debug.log lines)
+                2800        // * estimated number of transactions per day after checkpoint
         };
     }
 };
@@ -236,8 +237,9 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
         // Testnet ZeroOne BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
-        // Testnet ZeroOne BIP44 coin type is '1' (All coin's testnet default)
-        base58Prefixes[EXT_COIN_TYPE]  = boost::assign::list_of(0x80)(0x00)(0x00)(0x01).convert_to_container<std::vector<unsigned char> >();
+
+        // ZeroOne BIP44 coin type is '1'
+        nExtCoinType = 1;
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
@@ -253,13 +255,13 @@ public:
         strMasternodePaymentsPubKey = "04934bc3bd96dd28aa8b7d95d8023d10d1e039e6660a9cd091539d42f492ec22e399d3454e6b5c19e310a070e3b93f1fcef4f3161e97ffd7a996d77ddfccf88f9d";
 
         checkpointData = (CCheckpointData) {
-            boost::assign::map_list_of
-            ( 0, uint256S("0x00000c8e2be06ce7e6ea78cd9f6ea60e22821d70f8c8fbb714b6baa7b4f2150c")),
+                boost::assign::map_list_of
+                        ( 0, uint256S("0x00000c8e2be06ce7e6ea78cd9f6ea60e22821d70f8c8fbb714b6baa7b4f2150c")),
 
-            1522852335, // * UNIX timestamp of last checkpoint block
-            0,     // * total number of transactions between genesis and last checkpoint
-                        //   (the tx=... number in the SetBestChain debug.log lines)
-            500         // * estimated number of transactions per day after checkpoint
+                1522852335, // * UNIX timestamp of last checkpoint block
+                0,     // * total number of transactions between genesis and last checkpoint
+                //   (the tx=... number in the SetBestChain debug.log lines)
+                500         // * estimated number of transactions per day after checkpoint
         };
 
     }
@@ -331,11 +333,11 @@ public:
         nFulfilledRequestExpireTime = 5*60*100; // fulfilled requests expire in 5 minutes
 
         checkpointData = (CCheckpointData){
-            boost::assign::map_list_of
-            ( 0, uint256S("0x1914dc2be327e62ffa37b9fb4b8fd9507fec61448bae9a82ea5e33b3e7cba128")),
-            0,
-            0,
-            0
+                boost::assign::map_list_of
+                        ( 0, uint256S("0x1914dc2be327e62ffa37b9fb4b8fd9507fec61448bae9a82ea5e33b3e7cba128")),
+                0,
+                0,
+                0
         };
         // Regtest ZeroOne addresses start with 'n'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,112);
@@ -347,8 +349,9 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
         // Regtest ZeroOne BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
-        // Regtest ZeroOne BIP44 coin type is '1' (All coin's testnet default)
-        base58Prefixes[EXT_COIN_TYPE]  = boost::assign::list_of(0x80)(0x00)(0x00)(0x01).convert_to_container<std::vector<unsigned char> >();
+
+        // ZeroOne BIP44 coin type is '1'
+        nExtCoinType = 1;
    }
 };
 static CRegTestParams regTestParams;
@@ -363,11 +366,11 @@ const CChainParams &Params() {
 CChainParams& Params(const std::string& chain)
 {
     if (chain == CBaseChainParams::MAIN)
-            return mainParams;
+        return mainParams;
     else if (chain == CBaseChainParams::TESTNET)
-            return testNetParams;
+        return testNetParams;
     else if (chain == CBaseChainParams::REGTEST)
-            return regTestParams;
+        return regTestParams;
     else
         throw std::runtime_error(strprintf("%s: Unknown chain %s.", __func__, chain));
 }
