@@ -75,7 +75,6 @@ BITCOIN_CORE_H = \
   addressindex.h \
   spentindex.h \
   addrman.h \
-  alert.h \
   amount.h \
   arith_uint256.h \
   base58.h \
@@ -214,7 +213,6 @@ libbitcoin_server_a_SOURCES = \
   activemasternode.cpp \
   addrman.cpp \
   addrdb.cpp \
-  alert.cpp \
   bloom.cpp \
   chain.cpp \
   checkpoints.cpp \
@@ -257,7 +255,6 @@ libbitcoin_server_a_SOURCES = \
   rpc/rawtransaction.cpp \
   rpc/server.cpp \
   script/sigcache.cpp \
-  sendalert.cpp \
   spork.cpp \
   timedata.cpp \
   torcontrol.cpp \

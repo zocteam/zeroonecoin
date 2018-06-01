@@ -112,7 +112,6 @@ public:
         pchMessageStart[2] = 0xc3;
         pchMessageStart[3] = 0xd4;
 
-        vAlertPubKey = ParseHex("0475624f124f593d29cae981d175f5c8cc6f7194cf764e3f8d3afa7e4bde49f24e49a315b972ab471898106fe925a323833e06f69d689d4e654dc87096f0b25556");
         nDefaultPort = 10000;
         nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
         nPruneAfterHeight = 100000;
@@ -216,7 +215,6 @@ public:
         pchMessageStart[1] = 0x2b;
         pchMessageStart[2] = 0xb3;
         pchMessageStart[3] = 0x7a;
-        vAlertPubKey = ParseHex("0475624f124f593d29cae981d175f5c8cc6f7194cf764e3f8d3afa7e4bde49f24e49a315b972ab471898106fe925a323833e06f69d689d4e654dc87096f0b25556");
         nDefaultPort = 10001;
         nMaxTipAge = 0x7fffffff; // allow mining on top of old blocks for testnet
         nPruneAfterHeight = 1000;
@@ -358,7 +356,7 @@ public:
 
         // ZeroOne BIP44 coin type is '1'
         nExtCoinType = 1;
-   }
+    }
 };
 static CRegTestParams regTestParams;
 
