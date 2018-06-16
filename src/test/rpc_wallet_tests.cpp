@@ -92,11 +92,11 @@ BOOST_AUTO_TEST_CASE(rpc_wallet)
      * 			setaccount
      *********************************/
     BOOST_CHECK_NO_THROW(CallRPC("setaccount " + setaccountDemoAddress.ToString() + " nullaccount"));
-    /* XnhQgp2Y11hPGWaCB7rdGF5xLxjf2kBZCb is not owned by the test wallet. */
-    BOOST_CHECK_THROW(CallRPC("setaccount XnhQgp2Y11hPGWaCB7rdGF5xLxjf2kBZCb nullaccount"), runtime_error);
+    /* ZVhDJjDXf7TTpbotLxzDQUBYpREPq5WotH is not owned by the test wallet. */
+    BOOST_CHECK_THROW(CallRPC("setaccount ZVhDJjDXf7TTpbotLxzDQUBYpREPq5WotH nullaccount"), runtime_error);
     BOOST_CHECK_THROW(CallRPC("setaccount"), runtime_error);
-    /* XnhQgp2Y11hPGWaCB7rdGF5xLxjf2kBZC (33 chars) is an illegal address (should be 34 chars) */
-    BOOST_CHECK_THROW(CallRPC("setaccount XnhQgp2Y11hPGWaCB7rdGF5xLxjf2kBZC nullaccount"), runtime_error);
+    /* ZVhDJjDXf7TTpbotLxzDQUBYpREPq5Wot (33 chars) is an illegal address (should be 34 chars) */
+    BOOST_CHECK_THROW(CallRPC("setaccount ZVhDJjDXf7TTpbotLxzDQUBYpREPq5Wot nullaccount"), runtime_error);
 
 
     /*********************************
@@ -196,15 +196,15 @@ BOOST_AUTO_TEST_CASE(rpc_wallet)
     BOOST_CHECK_NO_THROW(retValue = CallRPC("signmessage " + demoAddress.ToString() + " mymessage"));
     BOOST_CHECK_THROW(CallRPC("signmessage"), runtime_error);
     /* Should throw error because this address is not loaded in the wallet */
-    BOOST_CHECK_THROW(CallRPC("signmessage Xywgfc872nn5CKtpATCoAjZCc4v96pJczy mymessage"), runtime_error);
+    BOOST_CHECK_THROW(CallRPC("signmessage ZL2yjiq2EPzLZCWq3etXqQ5xepeDEpWxGe mymessage"), runtime_error);
 
     /* missing arguments */
     BOOST_CHECK_THROW(CallRPC("verifymessage " + demoAddress.ToString()), runtime_error);
     BOOST_CHECK_THROW(CallRPC("verifymessage " + demoAddress.ToString() + " " + retValue.get_str()), runtime_error);
     /* Illegal address */
-    BOOST_CHECK_THROW(CallRPC("verifymessage XnhQgp2Y11hPGWaCB7rdGF5xLxjf2kBZC " + retValue.get_str() + " mymessage"), runtime_error);
+    BOOST_CHECK_THROW(CallRPC("verifymessage ZVhDJjDXf7TTpbotLxzDQUBYpREPq5Wot " + retValue.get_str() + " mymessage"), runtime_error);
     /* wrong address */
-    BOOST_CHECK(CallRPC("verifymessage XnhQgp2Y11hPGWaCB7rdGF5xLxjf2kBZCb " + retValue.get_str() + " mymessage").get_bool() == false);
+    BOOST_CHECK(CallRPC("verifymessage ZVhDJjDXf7TTpbotLxzDQUBYpREPq5WotH " + retValue.get_str() + " mymessage").get_bool() == false);
     /* Correct address and signature but wrong message */
     BOOST_CHECK(CallRPC("verifymessage " + demoAddress.ToString() + " " + retValue.get_str() + " wrongmessage").get_bool() == false);
     /* Correct address, message and signature*/

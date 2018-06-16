@@ -3,6 +3,7 @@
 .idea
 todo.txt
 reset-files.bash
+*.dSYM
 
 *.tar.gz
 

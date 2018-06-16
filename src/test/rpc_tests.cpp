@@ -118,14 +118,14 @@ BOOST_AUTO_TEST_CASE(rpc_rawsign)
     UniValue r;
     // input is a 1-of-2 multisig (so is output):
     string prevout =
-      "[{\"txid\":\"b4cc287e58f87cdae59417329f710f3ecd75a4ee1d2872b7248f50977c8493f3\","
-      "\"vout\":1,\"scriptPubKey\":\"a914b10c9df5f7edf436c697f02f1efdba4cf399615187\","
-      "\"redeemScript\":\"512103debedc17b3df2badbcdd86d5feb4562b86fe182e5998abd8bcd4f122c6155b1b21027e940bb73ab8732bfdf7f9216ecefca5b94d6df834e77e108f68e66f126044c052ae\"}]";
+      "[{\"txid\":\"4366b4959e4710a3ec5f0c2c58dad622fbb1816d2b603c19cc7929cee700d177\","
+      "\"vout\":1,\"scriptPubKey\":\"a9146d78182056ee4e139600d36b029d127bab7aae5787\","
+      "\"redeemScript\":\"522102593ceda36314da267157c17d1c6569841afbc043990a3c6496815bda58f0158621037217cf21bdae261d910933ba2056985af3a404db67ae0862805d153bafafd24452ae\"}]";
     r = CallRPC(string("createrawtransaction ")+prevout+" "+
-      "{\"7iYoULd4BAqRsRt1UbD5qqna88JvKRU3SL\":11}");
+      "{\"5CMrNHob7ZCrwGBv8MpaSjPZ5K9C5rc6Y9\":11}");
     string notsigned = r.get_str();
-    string privkey1 = "\"XEwTRsCX3CiWSQf8YmKMTeb84KyTbibkUv9mDTZHQ5MwuKG2ZzES\"";
-    string privkey2 = "\"XDmZ7LjGd94Q81eUBjb2h6uV5Y14s7fmeXWEGYabfBJP8RVpprBu\"";
+    string privkey1 = "\"WJfw7fGZxeAYgSXh8pjF3J6xTXPP58nxqB5YEhjXGjvTkd6z3vxZ\"";
+    string privkey2 = "\"WSGhfdnnvDfQR9VYzb3cSK6BvJ8UFr6JMfVn3ET4nEtsRkoTwrPs\"";
     r = CallRPC(string("signrawtransaction ")+notsigned+" "+prevout+" "+"[]");
     BOOST_CHECK(find_value(r.get_obj(), "complete").get_bool() == false);
     r = CallRPC(string("signrawtransaction ")+notsigned+" "+prevout+" "+"["+privkey1+","+privkey2+"]");

@@ -1,7 +1,7 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
+#define ENABLE_ZOC_DEBUG
 #include "chainparams.h"
 #include "coins.h"
 #include "consensus/consensus.h"
@@ -18,6 +18,7 @@
 #include "utilstrencodings.h"
 
 #include "test/test_zeroone.h"
+#include <stdio.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -28,34 +29,33 @@ struct {
     unsigned char extranonce;
     unsigned int nonce;
 } blockinfo[] = {
-    {0, 0x009c5477}, {0, 0x00a94582}, {0, 0x00af3d7f}, {0, 0x00d0b721},
-    {0, 0x00d53e10}, {0, 0x00f52f0f}, {0, 0x00fb5876}, {0, 0x0117fb12},
-    {0, 0x011f930b}, {0, 0x013365d2}, {0, 0x0151737e}, {0, 0x0152cdd0},
-    {0, 0x01758d20}, {0, 0x0178d509}, {0, 0x0192103c}, {0, 0x01a3f1b8},
-    {0, 0x01abc9c7}, {0, 0x01d2f50c}, {0, 0x01eebad1}, {0, 0x01ef3419},
-    {0, 0x01f3f154}, {0, 0x01fa6245}, {0, 0x0224e780}, {0, 0x02281625},
-    {0, 0x023a4d10}, {0, 0x0251d3cf}, {0, 0x02555277}, {0, 0x02648a41},
-    {0, 0x0280795e}, {0, 0x02a3a585}, {0, 0x02ade34a}, {0, 0x02b02b02},
-    {0, 0x02c9dc32}, {0, 0x02da9867}, {0, 0x02e4126e}, {0, 0x02e738c7},
-    {0, 0x02f5c6a9}, {0, 0x0307bb0f}, {0, 0x0328ea58}, {0, 0x034fe819},
-    {0, 0x036c6fcb}, {0, 0x039b8e11}, {0, 0x039fec90}, {0, 0x03a268ff},
-    {0, 0x03d37583}, {0, 0x03d6a9a7}, {0, 0x03e7a013}, {0, 0x03f01ebe},
-    {0, 0x0437104d}, {0, 0x043d0af7}, {0, 0x043d824d}, {0, 0x043f50fc},
-    {0, 0x044def8c}, {0, 0x0452309a}, {0, 0x04538bd3}, {0, 0x0459286b},
-    {0, 0x045bc734}, {0, 0x045c878a}, {0, 0x0485d3ba}, {0, 0x048a64e5},
-    {0, 0x048d6ae1}, {0, 0x048dcfec}, {0, 0x049d2c79}, {0, 0x04ade791},
-    {0, 0x04b75856}, {0, 0x04c1f89e}, {0, 0x04c2f731}, {0, 0x04ca0376},
-    {0, 0x04ca102a}, {0, 0x04cbdfe5}, {0, 0x04cbe35a}, {0, 0x04ccfa95},
-    {0, 0x04dcd6e4}, {0, 0x05066d8b}, {0, 0x05150274}, {0, 0x051dcfa0},
-    {0, 0x052a4c40}, {0, 0x05310c4e}, {0, 0x05452f69}, {0, 0x05517592},
-    {0, 0x05543eb8}, {0, 0x05549dc7}, {0, 0x05732695}, {0, 0x057b00d3},
-    {0, 0x0584760d}, {0, 0x059ca419}, {0, 0x05b23b58}, {0, 0x05c69745},
-    {0, 0x05e31a12}, {0, 0x05e932d5}, {0, 0x05ef8400}, {0, 0x05f0bdf6},
-    {0, 0x05f93997}, {0, 0x05ff2978}, {0, 0x06030233}, {0, 0x0627d615},
-    {0, 0x0644a441}, {0, 0x06518661}, {0, 0x06805ef2}, {0, 0x068c43dd},
-    {0, 0x069cca16}, {0, 0x06acbf10}, {0, 0x06c2d607}, {0, 0x06d9ea08},
-    {0, 0x0700d639}, {0, 0x07083d86}, {0, 0x071cc39d}, {0, 0x072c3cb8},
-    {0, 0x07665a0f}, {0, 0x07741214},
+    {0, 0x00025455}, {0, 0x00082C18}, {0, 0x000B1E1A}, {0, 0x000BC730},
+    {0, 0x000FA9CF}, {0, 0x0013201D}, {0, 0x0013F6F3}, {0, 0x0026C844},
+    {0, 0x00573FD0}, {0, 0x0068D19A}, {0, 0x006AE3F0}, {0, 0x00748ADB},
+    {0, 0x008F124E}, {0, 0x00A10E9C}, {0, 0x00A13F59}, {0, 0x00AB1131},
+    {0, 0x00B96DDB}, {0, 0x00BD5A46}, {0, 0x00CB8B25}, {0, 0x011E1864},
+    {0, 0x011F8EE8}, {0, 0x012A678A}, {0, 0x012CA097}, {0, 0x014FA157},
+    {0, 0x0164D823}, {0, 0x0168D347}, {0, 0x01CA7574}, {0, 0x01CE8886},
+    {0, 0x01D7AE02}, {0, 0x0204F5DE}, {0, 0x020B8209}, {0, 0x02248A39},
+    {0, 0x0246F712}, {0, 0x0284BA08}, {0, 0x028A9831}, {0, 0x02B9D656},
+    {0, 0x02BA7E42}, {0, 0x02BACFDD}, {0, 0x030ED944}, {0, 0x03814A30},
+    {0, 0x03820571}, {0, 0x038A609E}, {0, 0x03909D52}, {0, 0x039A4DE1},
+    {0, 0x04097F0A}, {0, 0x0414BEF8}, {0, 0x0437EF7C}, {0, 0x0452BC00},
+    {0, 0x048367A6}, {0, 0x0485E539}, {0, 0x04B4C1DA}, {0, 0x04DB618E},
+    {0, 0x05DCC82A}, {0, 0x064DB5E9}, {0, 0x06620C6A}, {0, 0x06B9EA6A},
+    {0, 0x072063F5}, {0, 0x072ACE7F}, {0, 0x075D2D30}, {0, 0x07880F58},
+    {0, 0x08A95CE0}, {0, 0x0AA74A72}, {0, 0x0AE6B055}, {0, 0x0AEE21AB},
+    {0, 0x0BA0642D}, {0, 0x0BBF1A9B}, {0, 0x0C23D3FD}, {0, 0x0C25DB2A},
+    {0, 0x0C65E0EF}, {0, 0x0CAD8DEC}, {0, 0x0CFC46C6}, {0, 0x0DA148DA},
+    {0, 0x0DCB2BD0}, {0, 0x0E970751}, {0, 0x1238DF2F}, {0, 0x14764C0B},
+    {0, 0x149FC716}, {0, 0x16131B67}, {0, 0x16FCD852}, {0, 0x17320341},
+    {0, 0x1846860D}, {0, 0x18C648CC}, {0, 0x193618AE}, {0, 0x19B10232},
+    {0, 0x19FD6B46}, {0, 0x1AA40F2B}, {0, 0x1BC1F90E}, {0, 0x200D57D0},
+    {0, 0x20814CBD}, {0, 0x20B1C95C}, {0, 0x20CAA0BA}, {0, 0x21085352},
+    {0, 0x218BE0EA}, {0, 0x22C12856}, {0, 0x231A2C19}, {0, 0x2330CFEA},
+    {0, 0x2545777D}, {0, 0x31DE8837}, {0, 0x3267E789}, {0, 0x3344C8D0},
+    {0, 0x34AF59CE}, {0, 0x352D29E1}, {0, 0x35B1E342}, {0, 0x3631B35A},
+    {0, 0x3AEAA8A1}, {0, 0x3D63FE2F}
 };
 
 CBlockIndex CreateBlockIndex(int nHeight)
@@ -76,6 +76,7 @@ bool TestSequenceLocks(const CTransaction &tx, int flags)
 BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
 {
     const CChainParams& chainparams = Params(CBaseChainParams::MAIN);
+
     CScript scriptPubKey = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
     CBlockTemplate *pblocktemplate;
     CMutableTransaction tx,tx2;
@@ -99,11 +100,18 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
     // Therefore, load 100 blocks :)
     int baseheight = 0;
     std::vector<CTransaction*>txFirst;
+    auto prevNonce = blockinfo[0].nonce;
+    CBlock *prevBlock = NULL;
     for (unsigned int i = 0; i < sizeof(blockinfo)/sizeof(*blockinfo); ++i)
     {
+        pblocktemplate = CreateNewBlock(chainparams, scriptPubKey);
         CBlock *pblock = &pblocktemplate->block; // pointer for convenience
+        if(prevBlock) {
+            pblock->hashPrevBlock = prevBlock->GetHash();
+            pblock->nNonce = prevBlock->nNonce;
+        }
         pblock->nVersion = 1;
-        pblock->nTime = chainActive.Tip()->GetMedianTimePast()+1;
+        pblock->nTime = chainActive.Tip()->GetMedianTimePast() + 300;
         CMutableTransaction txCoinbase(pblock->vtx[0]);
         txCoinbase.nVersion = 1;
         txCoinbase.vin[0].scriptSig = CScript();
@@ -115,10 +123,13 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
             baseheight = chainActive.Height();
         if (txFirst.size() < 4)
             txFirst.push_back(new CTransaction(pblock->vtx[0]));
+
         pblock->hashMerkleRoot = BlockMerkleRoot(*pblock);
         pblock->nNonce = blockinfo[i].nonce;
+
         BOOST_CHECK(ProcessNewBlock(chainparams, pblock, true, NULL, NULL));
-        pblock->hashPrevBlock = pblock->GetHash();
+        prevBlock = pblock;
+        prevNonce = blockinfo[i].nonce;
     }
     delete pblocktemplate;
 
@@ -191,7 +202,7 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
     // child with higher priority than parent
     tx.vin[0].scriptSig = CScript() << OP_1;
     tx.vin[0].prevout.hash = txFirst[1]->GetHash();
-    tx.vout[0].nValue = 49000000000LL;
+    tx.vout[0].nValue = 2500000000LL;
     hash = tx.GetHash();
     mempool.addUnchecked(hash, entry.Fee(1000000000LL).Time(GetTime()).SpendsCoinbase(true).FromTx(tx));
     tx.vin[0].prevout.hash = hash;
@@ -216,6 +227,7 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
     mempool.addUnchecked(hash, entry.Fee(100000).Time(GetTime()).SpendsCoinbase(false).FromTx(tx));
     BOOST_CHECK_THROW(CreateNewBlock(chainparams, scriptPubKey), std::runtime_error);
     mempool.clear();
+    printf("??");
 
     // invalid (pre-p2sh) txn in mempool, template creation fails
     tx.vin[0].prevout.hash = txFirst[0]->GetHash();
@@ -300,7 +312,7 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
     tx.vin[0].nSequence = chainActive.Tip()->nHeight + 1; // txFirst[0] is the 2nd block
     prevheights[0] = baseheight + 1;
     tx.vout.resize(1);
-    tx.vout[0].nValue = 49000000000LL;
+    tx.vout[0].nValue = 2500000000LL;
     tx.vout[0].scriptPubKey = CScript() << OP_1;
     tx.nLockTime = 0;
     hash = tx.GetHash();

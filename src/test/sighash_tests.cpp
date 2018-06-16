@@ -15,6 +15,7 @@
 #include "util.h"
 #include "utilstrencodings.h"
 #include "version.h"
+#include "../validation.h"
 
 #include <iostream>
 
@@ -169,6 +170,7 @@ BOOST_AUTO_TEST_CASE(sighash_test)
 // Goal: check that SignatureHash generates correct hash
 BOOST_AUTO_TEST_CASE(sighash_from_data)
 {
+    pblocktree = NULL;//reset blocktree (it may have been set in previous tests)
     UniValue tests = read_json(std::string(json_tests::sighash, json_tests::sighash + sizeof(json_tests::sighash)));
 
     for (unsigned int idx = 0; idx < tests.size(); idx++) {
