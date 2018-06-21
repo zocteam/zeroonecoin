@@ -112,7 +112,7 @@ public:
         pchMessageStart[2] = 0xc3;
         pchMessageStart[3] = 0xd4;
 
-        nDefaultPort = 10000;
+        nDefaultPort = 10001;
         nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
         nPruneAfterHeight = 100000;
 
@@ -215,7 +215,7 @@ public:
         pchMessageStart[1] = 0x2b;
         pchMessageStart[2] = 0xb3;
         pchMessageStart[3] = 0x7a;
-        nDefaultPort = 10001;
+        nDefaultPort = 10002;
         nMaxTipAge = 0x7fffffff; // allow mining on top of old blocks for testnet
         nPruneAfterHeight = 1000;
 
