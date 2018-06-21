@@ -127,6 +127,11 @@ public:
         vSeeds.push_back(CDNSSeedData("01coin.io", "seed3.01coin.io"));
         vSeeds.push_back(CDNSSeedData("01coin.io", "seed4.01coin.io"));
         vSeeds.push_back(CDNSSeedData("01coin.io", "seed5.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed6.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed7.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed8.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed9.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "seed10.01coin.io"));
 
         // ZeroOne addresses start with 'Z'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,80);
