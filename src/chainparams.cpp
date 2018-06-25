@@ -96,6 +96,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
         consensus.nPowDGWHeight = 300;
         consensus.nPowKGWHeight = 300;
+        consensus.nStartenforcingVersionFrom = 84472;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
@@ -157,8 +158,8 @@ public:
 
         nPoolMaxTransactions = 3;
         nFulfilledRequestExpireTime = 60*60; // fulfilled requests expire in 1 hour
-        strSporkPubKey = "04934bc3bd96dd28aa8b7d95d8023d10d1e039e6660a9cd091539d42f492ec22e399d3454e6b5c19e310a070e3b93f1fcef4f3161e97ffd7a996d77ddfccf88f9d";
-        strMasternodePaymentsPubKey = "04934bc3bd96dd28aa8b7d95d8023d10d1e039e6660a9cd091539d42f492ec22e399d3454e6b5c19e310a070e3b93f1fcef4f3161e97ffd7a996d77ddfccf88f9d";
+        strSporkPubKey = "04db059fd92eed731828622874e1ab09757532c8bf18272959ff77e11f8bc516dd4968ac8718763e230befeabdca93f4c085e4aa2f87cf599440097d9899c36155";
+        strMasternodePaymentsPubKey = "04db059fd92eed731828622874e1ab09757532c8bf18272959ff77e11f8bc516dd4968ac8718763e230befeabdca93f4c085e4aa2f87cf599440097d9899c36155";
 
         checkpointData = (CCheckpointData) {
                 boost::assign::map_list_of
@@ -210,6 +211,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
         consensus.nPowDGWHeight = 350;
         consensus.nPowKGWHeight = 350;
+        consensus.nStartenforcingVersionFrom = 22400;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
@@ -258,8 +260,9 @@ public:
 
         nPoolMaxTransactions = 3;
         nFulfilledRequestExpireTime = 5*60*100; // fulfilled requests expire in 5 minutes
-        strSporkPubKey = "04934bc3bd96dd28aa8b7d95d8023d10d1e039e6660a9cd091539d42f492ec22e399d3454e6b5c19e310a070e3b93f1fcef4f3161e97ffd7a996d77ddfccf88f9d";
-        strMasternodePaymentsPubKey = "04934bc3bd96dd28aa8b7d95d8023d10d1e039e6660a9cd091539d42f492ec22e399d3454e6b5c19e310a070e3b93f1fcef4f3161e97ffd7a996d77ddfccf88f9d";
+
+        strSporkPubKey = "04fd137935c396034ce7384a68374035ae685d127fe2fd76c59108af95a2d393d8a842f8858f7ccf18539a277cd2377924f77121f31cdece23e98d24eb05835892";
+        strMasternodePaymentsPubKey = "04fd137935c396034ce7384a68374035ae685d127fe2fd76c59108af95a2d393d8a842f8858f7ccf18539a277cd2377924f77121f31cdece23e98d24eb05835892";
 
         checkpointData = (CCheckpointData) {
                 boost::assign::map_list_of
