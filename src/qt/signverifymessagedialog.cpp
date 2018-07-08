@@ -65,6 +65,12 @@ SignVerifyMessageDialog::SignVerifyMessageDialog(const PlatformStyle *platformSt
     ui->messageIn_VM->installEventFilter(this);
     ui->signatureIn_VM->installEventFilter(this);
 
+    ui->addressIn_SM->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->signatureOut_SM->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->addressIn_VM->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->messageIn_VM->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->signatureIn_VM->setAttribute(Qt::WA_MacShowFocusRect,0);
+
     ui->signatureOut_SM->setFont(GUIUtil::fixedPitchFont());
     ui->signatureIn_VM->setFont(GUIUtil::fixedPitchFont());
 }

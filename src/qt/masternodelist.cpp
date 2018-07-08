@@ -58,6 +58,8 @@ MasternodeList::MasternodeList(const PlatformStyle *platformStyle, QWidget *pare
 
     ui->tableWidgetMyMasternodes->setContextMenuPolicy(Qt::CustomContextMenu);
 
+    ui->filterLineEdit->setAttribute(Qt::WA_MacShowFocusRect,0);
+
     QAction *startAliasAction = new QAction(tr("Start alias"), this);
     contextMenu = new QMenu();
     contextMenu->addAction(startAliasAction);

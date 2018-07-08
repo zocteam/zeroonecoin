@@ -198,6 +198,7 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *platformStyle, const NetworkStyle *n
 
     // Status bar notification icons
     QFrame *frameBlocks = new QFrame();
+    frameBlocks->setObjectName("barNotificationsFrame");
     frameBlocks->setContentsMargins(0,0,0,0);
     frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
     QHBoxLayout *frameBlocksLayout = new QHBoxLayout(frameBlocks);
@@ -227,6 +228,11 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *platformStyle, const NetworkStyle *n
     progressBarLabel = new QLabel();
     progressBarLabel->setVisible(true);
     progressBar = new GUIUtil::ProgressBar();
+    progressBar->setMaximumSize(9999,8);
+    QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    sizePolicy.setHorizontalStretch(1);
+    sizePolicy.setVerticalStretch(0);
+    progressBar->setSizePolicy(sizePolicy);
     progressBar->setAlignment(Qt::AlignCenter);
     progressBar->setVisible(true);
 
@@ -1477,7 +1483,7 @@ UnitDisplayStatusBarControl::UnitDisplayStatusBarControl(const PlatformStyle *pl
     }
     setMinimumSize(max_width, 0);
     setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    setStyleSheet(QString("QLabel { color : %1 }").arg(platformStyle->SingleColor().name()));
+    //setStyleSheet(QString("QLabel { color : %1 }").arg(platformStyle->SingleColor().name()));
 }
 
 /** So that it responds to button clicks */

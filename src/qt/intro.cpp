@@ -125,6 +125,7 @@ Intro::Intro(QWidget *parent) :
     if (pruneTarget)
         requiredSpace = CHAIN_STATE_SIZE + std::ceil(pruneTarget * 1024 * 1024.0 / GB_BYTES);
     ui->sizeWarningLabel->setText(ui->sizeWarningLabel->text().arg(requiredSpace));
+    ui->dataDirectory->setAttribute(Qt::WA_MacShowFocusRect,0);
     startThread();
 }
 

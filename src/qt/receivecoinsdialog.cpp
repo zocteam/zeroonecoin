@@ -44,6 +44,10 @@ ReceiveCoinsDialog::ReceiveCoinsDialog(const PlatformStyle *platformStyle, QWidg
         ui->removeRequestButton->setIcon(QIcon(":/icons/" + theme + "/remove"));
     }
 
+    ui->reqLabel->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->reqAmount->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->reqMessage->setAttribute(Qt::WA_MacShowFocusRect,0);
+
     // context menu actions
     QAction *copyURIAction = new QAction(tr("Copy URI"), this);
     QAction *copyLabelAction = new QAction(tr("Copy label"), this);

@@ -42,6 +42,9 @@ EditAddressDialog::EditAddressDialog(Mode mode, QWidget *parent) :
         break;
     }
 
+    ui->addressEdit->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->labelEdit->setAttribute(Qt::WA_MacShowFocusRect,0);
+
     mapper = new QDataWidgetMapper(this);
     mapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
 }

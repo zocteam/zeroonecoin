@@ -28,6 +28,7 @@ public:
         singleStep(100000) // satoshis
     {
         setAlignment(Qt::AlignRight);
+        setAttribute(Qt::WA_MacShowFocusRect,0);
 
         connect(lineEdit(), SIGNAL(textEdited(QString)), this, SIGNAL(valueChanged()));
     }

@@ -110,6 +110,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     addressWidget->setPlaceholderText(tr("Enter address or label to search"));
 #endif
     addressWidget->setObjectName("addressWidget");
+    addressWidget->setAttribute(Qt::WA_MacShowFocusRect, false);
     hlayout->addWidget(addressWidget);
 
     amountWidget = new QLineEdit(this);

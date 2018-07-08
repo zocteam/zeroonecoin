@@ -49,6 +49,7 @@ private:
     QPixmap pixmap;
     QString curMessage;
     QColor curColor;
+    QString font;
     int curAlignment;
 
     std::function<void(void)> breakAction;

@@ -36,7 +36,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
 
     // set reference point, paddings
     int paddingLeft             = 14;
-    int paddingTop              = 460;
+    int paddingTop              = 235;
     int titleVersionVSpace      = 17;
     int titleCopyrightVSpace    = 32;
 
@@ -56,13 +56,13 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     if(GetBoolArg("-testnet", false))
         splashScreenPath = ":/images/" + GUIUtil::getThemeName() + "/splash_testnet";
 
-    QString font = QApplication::font().toString();
-
+    font = QApplication::font().toString();
     // load the bitmap for writing some text over it
     pixmap = QPixmap(splashScreenPath);
+    pixmap.setDevicePixelRatio(2);
 
     QPainter pixPaint(&pixmap);
-    pixPaint.setPen(QColor(100,100,100));
+    pixPaint.setPen(QColor(255,255,255));
 
     // check font size and drawing with
     pixPaint.setFont(QFont(font, 28*fontFactor));
@@ -86,21 +86,21 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace,copyrightTextBtc);
     pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace+12,copyrightTextDash);
     pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace+24,copyrightTextZeroOne);
+    pixPaint.setFont(QFont(font, 4*fontFactor));
+
+    QRect r(QPoint(), QSize(630, 304));
 
     // draw additional text if special network
     if(!titleAddText.isEmpty()) {
-        QFont boldFont = QFont(font, 10*fontFactor);
-        boldFont.setWeight(QFont::Bold);
-        pixPaint.setFont(boldFont);
+        pixPaint.setFont(QFont(font, 12*fontFactor));
         fm = pixPaint.fontMetrics();
         int titleAddTextWidth  = fm.width(titleAddText);
-        pixPaint.drawText(pixmap.width()-titleAddTextWidth-10,pixmap.height()-25,titleAddText);
+        pixPaint.drawText(r.size().width()-titleAddTextWidth-10,r.size().height()-15,titleAddText);
     }
 
     pixPaint.end();
 
     // Resize window and move to center of desktop, disallow resizing
-    QRect r(QPoint(), pixmap.size());
     resize(r.size());
     setFixedSize(r.size());
     move(QApplication::desktop()->screenGeometry().center() - r.center());
@@ -141,8 +141,8 @@ static void InitMessage(SplashScreen *splash, const std::string &message)
     QMetaObject::invokeMethod(splash, "showMessage",
         Qt::QueuedConnection,
         Q_ARG(QString, QString::fromStdString(message)),
-        Q_ARG(int, Qt::AlignBottom|Qt::AlignHCenter),
-        Q_ARG(QColor, QColor(55,55,55)));
+        Q_ARG(int, Qt::AlignVCenter|Qt::AlignLeft),
+        Q_ARG(QColor, QColor(32,84,199)));
 }
 
 static void ShowProgress(SplashScreen *splash, const std::string &title, int nProgress)
@@ -203,7 +203,9 @@ void SplashScreen::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.drawPixmap(0, 0, pixmap);
-    QRect r = rect().adjusted(5, 5, -5, -5);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter.setFont(QFont(font, 10));
+    QRect r = rect().adjusted(233, 50, -5, -5);
     painter.setPen(curColor);
     painter.drawText(r, curAlignment, curMessage);
 }

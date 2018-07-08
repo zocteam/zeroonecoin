@@ -38,6 +38,10 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
     ui->passEdit2->installEventFilter(this);
     ui->passEdit3->installEventFilter(this);
 
+    ui->passEdit1->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->passEdit2->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->passEdit3->setAttribute(Qt::WA_MacShowFocusRect,0);
+
     switch(mode)
     {
         case Encrypt: // Ask passphrase x2

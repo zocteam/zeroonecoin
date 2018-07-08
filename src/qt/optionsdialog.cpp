@@ -47,8 +47,18 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     /* Main elements init */
     ui->databaseCache->setMinimum(nMinDbCache);
     ui->databaseCache->setMaximum(nMaxDbCache);
+    ui->databaseCache->setAttribute(Qt::WA_MacShowFocusRect,0);
     ui->threadsScriptVerif->setMinimum(-GetNumCores());
     ui->threadsScriptVerif->setMaximum(MAX_SCRIPTCHECK_THREADS);
+    ui->threadsScriptVerif->setAttribute(Qt::WA_MacShowFocusRect,0);
+
+    ui->privateSendRounds->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->privateSendAmount->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->proxyIp->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->proxyPort->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->proxyIpTor->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->proxyPortTor->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->thirdPartyTxUrls->setAttribute(Qt::WA_MacShowFocusRect,0);
 
     /* Network elements init */
 #ifndef USE_UPNP
@@ -93,10 +103,10 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     
     /* Theme selector */
     ui->theme->addItem(QString("ZOC-light"), QVariant("light"));
-    ui->theme->addItem(QString("ZOC-light-hires"), QVariant("light-hires"));
+    /*ui->theme->addItem(QString("ZOC-light-hires"), QVariant("light-hires"));
     ui->theme->addItem(QString("ZOC-blue"), QVariant("drkblue"));
     ui->theme->addItem(QString("ZOC-Crownium"), QVariant("crownium"));
-    ui->theme->addItem(QString("ZOC-traditional"), QVariant("trad"));
+    ui->theme->addItem(QString("ZOC-traditional"), QVariant("trad"));*/
     
     /* Language selector */
     QDir translations(":translations");
@@ -145,6 +155,11 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     connect(ui->proxyIpTor, SIGNAL(validationDidChange(QValidatedLineEdit *)), this, SLOT(updateProxyValidationState()));
     connect(ui->proxyPort, SIGNAL(textChanged(const QString&)), this, SLOT(updateProxyValidationState()));
     connect(ui->proxyPortTor, SIGNAL(textChanged(const QString&)), this, SLOT(updateProxyValidationState()));
+    ui->proxyIp->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->proxyIpTor->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->proxyPort->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->proxyPortTor->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->thirdPartyTxUrls->setAttribute(Qt::WA_MacShowFocusRect,0);
 }
 
 OptionsDialog::~OptionsDialog()

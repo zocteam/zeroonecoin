@@ -46,6 +46,9 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *platformStyle, QWidget *pare
     GUIUtil::setupAddressWidget(ui->payTo, this);
     // just a label for displaying zeroone address(es)
     ui->payTo_is->setFont(GUIUtil::fixedPitchFont());
+    ui->payTo->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->addAsLabel->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->payAmount->setAttribute(Qt::WA_MacShowFocusRect,0);
 
     // Connect signals
     connect(ui->payAmount, SIGNAL(valueChanged()), this, SIGNAL(payAmountChanged()));

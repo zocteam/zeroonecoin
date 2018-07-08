@@ -53,6 +53,9 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *pa
         ui->sendButton->setIcon(QIcon(":/icons/" + theme + "/send"));
     }
 
+    ui->lineEditCoinControlChange->setAttribute(Qt::WA_MacShowFocusRect,0);
+    ui->customFee->setAttribute(Qt::WA_MacShowFocusRect,0);
+
     GUIUtil::setupAddressWidget(ui->lineEditCoinControlChange, this);
 
     addEntry();
@@ -64,6 +67,7 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *pa
     connect(ui->pushButtonCoinControl, SIGNAL(clicked()), this, SLOT(coinControlButtonClicked()));
     connect(ui->checkBoxCoinControlChange, SIGNAL(stateChanged(int)), this, SLOT(coinControlChangeChecked(int)));
     connect(ui->lineEditCoinControlChange, SIGNAL(textEdited(const QString &)), this, SLOT(coinControlChangeEdited(const QString &)));
+    coinControlChangeChecked(0);
 
     // ZeroOne specific
     QSettings settings;
@@ -845,6 +849,7 @@ void SendCoinsDialog::coinControlChangeChecked(int state)
         coinControlChangeEdited(ui->lineEditCoinControlChange->text());
 
     ui->lineEditCoinControlChange->setEnabled((state == Qt::Checked));
+    ui->lineEditCoinControlChange->setVisible((state == Qt::Checked));
 }
 
 // Coin Control: custom change address changed
