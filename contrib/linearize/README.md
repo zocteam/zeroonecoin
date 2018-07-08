@@ -3,7 +3,7 @@ Construct a linear, no-fork, best version of the blockchain.
 
 ## Step 0: Install zeroone_hash
 
-https://github.com/zeroonecoin/zeroone_hash
+TODO: https://github.com/zocteam/zeroone_hash
 
 ## Step 1: Download hash list
 
@@ -27,8 +27,8 @@ output.
 * "output_file" for bootstrap.dat or "output" for output directory for linearized blocks/blkNNNNN.dat output
 
 Optional config file setting for linearize-data:
-* "netmagic": network magic number (default is 'cee2caff', testnet)
-* "genesis": genesis block hash (default is '00000bafbc94add76cb75e2ec92894837288a481e5c005f6563d91623bf8bc2c', testnet)
+* "netmagic": network magic number (default is 'd12bb37a', testnet)
+* "genesis": genesis block hash (default is '00000ebe61e5bc70bc968b9cf4e5ed85ec996a85a68853361557876ae37a1648', testnet)
 * "max_out_sz": maximum output file size (default 100 \* 1000 \* 1000)
 * "split_timestamp": Split files when a new month is first seen, in addition to
 reaching a maximum file size.
