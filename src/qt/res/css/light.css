@@ -8,10 +8,23 @@ padding-bottom: 10px;
 QStatusBar {
 background-color:#060437;
 color:white;
+border:none;
+}
+
+QStatusBar::item {
+    border:none;
+}
+
+QLabel {
+	border:none;
 }
 
 QRadioButton {
     color:white;
+}
+
+QPushButton {
+    qproperty-icon: none;
 }
 
 .QFrame {
@@ -29,9 +42,14 @@ border-bottom:2px solid #232660;
     color:white;
 }
 
+#groupBox{
+	border:none;
+}
+
 QProgressBar {
     color:white;
     font-size:9px;
+	border:none;
 }
 
 QProgressBar:horizontal {
@@ -436,15 +454,13 @@ background-image: url(':/images/light/drkblue_rightArrow_small');
 /*******************************************************/
 
 /* DIALOG BOXES */
-
-QDialog .QTabWidget {
+QTabBar, QTabBar::tab, .QTabWidget::pane,
+.QTabWidget::pane *{
+    background-color:#050138;
 }
 
-QDialog .QTabWidget::pane {
-}
-
-QDialog .QTabWidget QTabBar::tab {
-background-color:transparent;
+.QTabWidget QTabBar::tab {
+background-color:#050138;
 color:white;
 padding-left:10px;
 padding-right:10px;
@@ -452,15 +468,15 @@ padding-top:5px;
 padding-bottom:5px;
 }
 
-QDialog .QTabWidget QTabBar::tab:selected, QDialog .QTabWidget QTabBar::tab:hover {
+.QTabWidget QTabBar::tab:selected, QDialog .QTabWidget QTabBar::tab:hover {
 border-bottom:1px solid white;
 }
 
-QDialog .QTabWidget .QWidget {
+.QTabWidget .QWidget {
 background-color:transparent;
 }
 
-QDialog QWidget { /* Remove Annoying Focus Rectangle */
+QWidget { /* Remove Annoying Focus Rectangle */
 outline: 0;
 }
 
