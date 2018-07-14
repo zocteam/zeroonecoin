@@ -100,6 +100,13 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
+      <widget class="QTextEdit" name="helpMessage">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>     
+     <item>
       <widget class="QScrollArea" name="scrollArea">
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
@@ -120,13 +127,6 @@
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QTextEdit" name="helpMessage">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
          <item>
           <widget class="QLabel" name="aboutMessage">
            <property name="cursor">
