@@ -6,12 +6,11 @@ architectures:
 - "amd64"
 packages:
 - "faketime"
-reference_datetime: "2017-01-01 00:00:00"
 remotes:
 - "url": "https://github.com/zeroonecoin/zeroone-detached-sigs.git"
   "dir": "signature"
 files:
-- "zeroone-osx-unsigned.tar.gz"
+- "zeroonecore-osx-unsigned.tar.gz"
 script: |
   WRAP_DIR=$HOME/wrapped
   mkdir -p ${WRAP_DIR}
@@ -28,10 +27,11 @@ script: |
     chmod +x ${WRAP_DIR}/${prog}
   done
 
-  UNSIGNED=zeroone-osx-unsigned.tar.gz
-  SIGNED=zeroone-osx-signed.dmg
+  UNSIGNED=zeroonecore-osx-unsigned.tar.gz
+  SIGNED=zeroonecore-osx-signed.dmg
 
   tar -xf ${UNSIGNED}
+  OSX_VOLNAME="$(cat osx_volname)"
   ./detached-sig-apply.sh ${UNSIGNED} signature/osx
-  ${WRAP_DIR}/genisoimage -no-cache-inodes -D -l -probe -V "ZeroOne-Core" -no-pad -r -dir-mode 0755 -apple -o uncompressed.dmg signed-app
+  ${WRAP_DIR}/genisoimage -no-cache-inodes -D -l -probe -V "${OSX_VOLNAME}" -no-pad -r -dir-mode 0755 -apple -o uncompressed.dmg signed-app
   ${WRAP_DIR}/dmg dmg uncompressed.dmg ${OUTDIR}/${SIGNED}

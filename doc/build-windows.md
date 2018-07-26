@@ -14,7 +14,8 @@ of Windows that are not compatible with the Windows Subsystem for Linux.
 Compiling with Windows Subsystem For Linux
 -------------------------------------------
 
-With Windows 10, [see install-wsl](https://docs.microsoft.com/en-us/windows/wsl/install-win10), Microsoft has a feature named the [Windows Subsystem for Linux](https://msdn.microsoft.com/commandline/wsl/about). This
+With Windows 10, Microsoft has released a new feature named the [Windows
+Subsystem for Linux](https://msdn.microsoft.com/commandline/wsl/about). This
 feature allows you to run a bash shell directly on Windows in an Ubuntu-based
 environment. Within this environment you can cross compile for Windows without
 the need for a separate Linux VM or server.
@@ -54,25 +55,9 @@ First, install the general dependencies:
 
     sudo apt-get install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl
 
-
-*TODO* complete list of dependencies for wsl-ubuntu16.04 :
-
-```
-    sudo apt-get install build-essential libtool autotools-dev autoconf automake pkg-config libssl-dev libevent-dev bsdmainutils curl
-    sudo apt-get update --fix-missing
-    sudo apt-get install libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev
-    sudo apt-get update
-    sudo apt-get install software-properties-common
-    sudo add-apt-repository ppa:bitcoin/bitcoin
-    sudo apt-get update
-    sudo apt-get install libdb4.8-dev libdb4.8++-dev libevent-dev
-``` 
-
 A host toolchain (`build-essential`) is necessary because some dependency
 packages (such as `protobuf`) need to build host utilities that are used in the
 build process.
-
-
 
 ## Building for 64-bit Windows
 
@@ -114,6 +99,6 @@ Installation
 After building using the Windows subsystem it can be useful to copy the compiled
 executables to a directory on the windows drive in the same directory structure
 as they appear in the release `.zip` archive. This can be done in the following
-way. This will install to `c:\workspace\01coin`, for example:
+way. This will install to `c:\workspace\zeroone`, for example:
 
-    make install DESTDIR=/mnt/c/workspace/01coin
+    make install DESTDIR=/mnt/c/workspace/zeroone

@@ -110,13 +110,8 @@ coverage_percent.txt
 linux-coverage-build
 linux-build
 win32-build
-qa/pull-tester/run-bitcoind-for-test.sh
 qa/pull-tester/tests_config.py
-qa/pull-tester/cache/*
-qa/pull-tester/test.*/*
-qa/tmp
-cache/
-share/BitcoindComparisonTool.jar
+qa/cache/*
 
 !src/leveldb*/Makefile
 
@@ -126,6 +121,7 @@ share/BitcoindComparisonTool.jar
 /doc/doxygen/
 
 libbitcoinconsensus.pc
+contrib/devtools/split-debug.sh
 src/qt/zeroone-qt.bash
 qa/pull-tester/tests-config.sh
 
@@ -134,3 +130,9 @@ zeroone-cli
 zerooned
 zeroone-qt
 make
+
+/docker/bin
+
+# CLion
+.idea
+cmake-build-debug
