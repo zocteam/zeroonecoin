@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>These are your ZeroOne addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Questi sono i tuoi indirizzi ZeroOne per inviare i pagamenti. Controlla sempre l'ammontare e l'indirizzo di destinazione prima di inviare i dash.</translation>
+        <translation>Questi sono i tuoi indirizzi ZeroOne per inviare i pagamenti. Controlla sempre l'ammontare e l'indirizzo di destinazione prima di inviare i zeroone.</translation>
     </message>
     <message>
         <source>These are your ZeroOne addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
@@ -2812,7 +2812,7 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Se la tariffa personalizzata è impostata su 1000 duff e la transazione è di soli 250 byte, paga solo 250 duff "per kilobyte" di Fee, &lt;br /&gt;mentre paga "in totale almeno" 1000 duff. Per le transazioni più grandi di un kilobyte pagate entrambi per kilobyte.</translation>
     </message>
     <message>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for dash transactions than the network can process.</source>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for zeroone transactions than the network can process.</source>
         <translation>Pagare solo la commissione minima va bene finché il volume di transazioni è minore rispetto allo spazio nei blocchi. &lt;br /&gt;Ma sii consapevole che questo potrebbe risultare in una transazione non confermata, una volta che ci fosse più richiesta di transazioni di ZeroOne di quanto la rete possa elaborare.</translation>
     </message>
     <message>
@@ -2949,7 +2949,7 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     </message>
     <message>
         <source>Confirm send coins</source>
-        <translation>Conferma l'invio di dash</translation>
+        <translation>Conferma l'invio di zeroone</translation>
     </message>
     <message>
         <source>The recipient address is not valid. Please recheck.</source>

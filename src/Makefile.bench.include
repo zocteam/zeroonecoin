@@ -28,7 +28,7 @@ bench_bench_zeroone_SOURCES = \
   bench/perf.h \
   bench/string_cast.cpp
 
-nodist_bench_bench_dash_SOURCES = $(GENERATED_TEST_FILES)
+nodist_bench_bench_zeroone_SOURCES = $(GENERATED_TEST_FILES)
 
 bench_bench_zeroone_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CLFAGS) $(EVENT_PTHREADS_CFLAGS) -I$(builddir)/bench/
 bench_bench_zeroone_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)

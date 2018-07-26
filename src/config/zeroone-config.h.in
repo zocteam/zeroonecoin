@@ -22,7 +22,16 @@
 /* Build revision */
 #undef CLIENT_VERSION_REVISION
 
-/* Version is release */
+/* Copyright holder(s) before %s replacement */
+#undef COPYRIGHT_HOLDERS
+
+/* Copyright holder(s) */
+#undef COPYRIGHT_HOLDERS_FINAL
+
+/* Replacement for %s in copyright holders string */
+#undef COPYRIGHT_HOLDERS_SUBSTITUTION
+
+/* Copyright year */
 #undef COPYRIGHT_YEAR
 
 /* Define to 1 to enable wallet functions */
@@ -88,6 +97,14 @@
    don't. */
 #undef HAVE_DECL_BSWAP_64
 
+/* Define to 1 if you have the declaration of `daemon', and to 0 if you don't.
+   */
+#undef HAVE_DECL_DAEMON
+
+/* Define to 1 if you have the declaration of `EVP_MD_CTX_new', and to 0 if
+   you don't. */
+#undef HAVE_DECL_EVP_MD_CTX_NEW
+
 /* Define to 1 if you have the declaration of `htobe16', and to 0 if you
    don't. */
 #undef HAVE_DECL_HTOBE16
@@ -147,12 +164,6 @@
 /* Define to 1 if the system has the `visibility' function attribute */
 #undef HAVE_FUNC_ATTRIBUTE_VISIBILITY
 
-/* Define this symbol if you have getaddrinfo_a */
-#undef HAVE_GETADDRINFO_A
-
-/* Define this symbol if you have inet_pton */
-#undef HAVE_INET_PTON
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
@@ -177,9 +188,6 @@
 /* Define to 1 if you have the `iphlpapi' library (-liphlpapi). */
 #undef HAVE_LIBIPHLPAPI
 
-/* Define to 1 if you have the `jpeg ' library (-ljpeg ). */
-#undef HAVE_LIBJPEG_
-
 /* Define to 1 if you have the `kernel32' library (-lkernel32). */
 #undef HAVE_LIBKERNEL32
 
@@ -194,9 +202,6 @@
 
 /* Define to 1 if you have the `oleaut32' library (-loleaut32). */
 #undef HAVE_LIBOLEAUT32
-
-/* Define to 1 if you have the `png ' library (-lpng ). */
-#undef HAVE_LIBPNG_
 
 /* Define to 1 if you have the `rpcrt4' library (-lrpcrt4). */
 #undef HAVE_LIBRPCRT4
@@ -230,6 +235,9 @@
 
 /* Define to 1 if you have the `z ' library (-lz ). */
 #undef HAVE_LIBZ_
+
+/* Define this symbol if you have mallopt with M_ARENA_MAX */
+#undef HAVE_MALLOPT_ARENA_MAX
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H

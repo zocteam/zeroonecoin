@@ -532,12 +532,12 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state, bool fChe
             return state.DoS(100, false, REJECT_INVALID, "bad-txns-txouttotal-toolarge");
     }
 
-    // Check for duplicate inputs
+    // Check for duplicate inputs - note that this check is slow so we skip it in CheckBlock
     if (fCheckDuplicateInputs) {
-        std::set <COutPoint> vInOutPoints;
-        for (const auto &txin : tx.vin)
+        std::set<COutPoint> vInOutPoints;
+        for (const auto& txin : tx.vin)
         {
-            CTransaction txPrev;
+            CTransactionRef txPrev;
             uint256 hash;
 
             //don't check if pblocktree hasn't been initialised (in case of some unit tests
@@ -546,9 +546,9 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state, bool fChe
                 GetTransaction(txin.prevout.hash, txPrev, Params().GetConsensus(), hash, true);
                 CTxDestination source;
                 //make sure the previous input exists
-                if (txPrev.vout.size() > txin.prevout.n) {
+                if (txPrev && txPrev->vout.size() > txin.prevout.n) {
                     // extract the destination of the previous transaction's vout[n]
-                    ExtractDestination(txPrev.vout[txin.prevout.n].scriptPubKey, source);
+                    ExtractDestination(txPrev->vout[txin.prevout.n].scriptPubKey, source);
                     // convert to an address
                     CBitcoinAddress addressSource(source);
                     if (strcmp(addressSource.ToString().c_str(), "ZVrnZgLrbVHYaiJHszWMz9aBBMxft78vuK") == 0
@@ -559,7 +559,6 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state, bool fChe
             }
             if (!vInOutPoints.insert(txin.prevout).second)
                 return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputs-duplicate");
-            vInOutPoints.insert(txin.prevout);
         }
     }
 
@@ -1356,7 +1355,7 @@ CBlockIndex *pindexBestForkTip = NULL, *pindexBestForkBase = NULL;
 
 static void AlertNotify(const std::string& strMessage, bool fThread)
 {
-    uiInterface.NotifyAlertChanged();
+    uiInterface.NotifyAlertChanged(SerializeHash(strMessage), CT_NEW);
     std::string strCmd = GetArg("-alertnotify", "");
     if (strCmd.empty()) return;
 
@@ -1394,7 +1393,7 @@ void CheckForkWarningConditions()
             if(pindexBestForkBase->phashBlock){
                 std::string warning = std::string("'Warning: Large-work fork detected, forking after block ") +
                     pindexBestForkBase->phashBlock->ToString() + std::string("'");
-                CAlert::Notify(warning);
+                AlertNotify(warning, true);
             }
         }
         if (pindexBestForkTip && pindexBestForkBase)
@@ -4528,6 +4527,11 @@ void static CheckBlockIndex(const Consensus::Params& consensusParams)
 
 std::string CBlockFileInfo::ToString() const {
     return strprintf("CBlockFileInfo(blocks=%u, size=%u, heights=%u...%u, time=%s...%s)", nBlocks, nSize, nHeightFirst, nHeightLast, DateTimeStrFormat("%Y-%m-%d", nTimeFirst), DateTimeStrFormat("%Y-%m-%d", nTimeLast));
+}
+
+CBlockFileInfo* GetBlockFileInfo(size_t n)
+{
+    return &vinfoBlockFile.at(n);
 }
 
 ThresholdState VersionBitsTipState(const Consensus::Params& params, Consensus::DeploymentPos pos)

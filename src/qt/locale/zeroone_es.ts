@@ -1891,8 +1891,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Error en solicitud de pago</translation>
     </message>
     <message>
-        <source>Cannot start dash: click-to-pay handler</source>
-        <translation>No se pudo iniciar dash: manejador de pago-por-clic</translation>
+        <source>Cannot start zeroone: click-to-pay handler</source>
+        <translation>No se pudo iniciar zeroone: manejador de pago-por-clic</translation>
     </message>
     <message>
         <source>URI handling</source>
@@ -2812,7 +2812,7 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Si la comisión personalizada se establece en 1000 duffs y la transacción sólo ocupa 250 bytes, entonces "por kilobyte" sólo se pagan 250 duffs de comisión,&lt;br /&gt;mientras que "total como mínimo" paga 1000 duffs. Para transacciones mayores de un kilobyte ambas pagan por kilobyte.</translation>
     </message>
     <message>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for dash transactions than the network can process.</source>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for zeroone transactions than the network can process.</source>
         <translation>Pagar sólo la comisión mínima está bien mientras el volumen de transacciones sea menor al espacio en los bloques.&lt;br /&gt;No obstante, tenga en cuenta que esto puede acabar en una transacción que nunca se confirme una vez haya más demanda de transacciones ZeroOne que lo que la red puede procesar.</translation>
     </message>
     <message>
@@ -3079,7 +3079,7 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Mensaje:</translation>
     </message>
     <message>
-        <source>A message that was attached to the dash: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the ZeroOne network.</source>
+        <source>A message that was attached to the zeroone: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the ZeroOne network.</source>
         <translation>Un mensaje que se adjuntó al ZeroOne: URI que será almacenada con la transacción para su referencia. Nota: Este mensaje no se enviará a través de la red ZeroOne.</translation>
     </message>
     <message>

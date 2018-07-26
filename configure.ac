@@ -14,10 +14,10 @@ AC_CONFIG_HEADERS([src/config/zeroone-config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
 
-BITCOIN_DAEMON_NAME=dashd
-BITCOIN_GUI_NAME=dash-qt
-BITCOIN_CLI_NAME=dash-cli
-BITCOIN_TX_NAME=dash-tx
+BITCOIN_DAEMON_NAME=zerooned
+BITCOIN_GUI_NAME=zeroone-qt
+BITCOIN_CLI_NAME=zeroone-cli
+BITCOIN_TX_NAME=zeroone-tx
 
 AC_CANONICAL_HOST
 
@@ -929,7 +929,7 @@ AC_MSG_CHECKING([whether to build libraries])
 AM_CONDITIONAL([BUILD_BITCOIN_LIBS], [test x$build_bitcoin_libs = xyes])
 if test x$build_bitcoin_libs = xyes; then
   AC_DEFINE(HAVE_CONSENSUS_LIB, 1, [Define this symbol if the consensus lib has been built])
-  AC_CONFIG_FILES([libdashconsensus.pc:libdashconsensus.pc.in])
+  AC_CONFIG_FILES([libzerooneconsensus.pc:libzerooneconsensus.pc.in])
 fi
 AC_MSG_RESULT($build_bitcoin_libs)
 

@@ -5,7 +5,6 @@
 
 #include "activemasternode.h"
 #include "addrman.h"
-#include "alert.h"
 #include "clientversion.h"
 #include "governance.h"
 #include "masternode-payments.h"
@@ -14,6 +13,7 @@
 #include "messagesigner.h"
 #include "netfulfilledman.h"
 #include "netmessagemaker.h"
+#include "validation.cpp"
 #ifdef ENABLE_WALLET
 #include "privatesend-client.h"
 #endif // ENABLE_WALLET
@@ -1737,7 +1737,7 @@ void CMasternodeMan::WarnMasternodeDaemonUpdates()
     // trigger GUI update
     uiInterface.NotifyAlertChanged(SerializeHash(strWarning), CT_NEW);
     // trigger cmd-line notification
-    CAlert::Notify(strWarning);
+    AlertNotify(strWarning, CT_NEW);
 
     fWarned = true;
 }

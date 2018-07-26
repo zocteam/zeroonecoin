@@ -17,10 +17,10 @@
 
 #include <boost/test/unit_test.hpp>
 
-static const string strSecret1     ("7fS1o5gp8tSxfzb73Z7z71NDUSh53gEBRg3jBAAUU1p9JfPuJa3");
-static const string strSecret2     ("7dvK3SbYPiYwx1wERqtJHBqjqGPu522ZoP2DUq5aaActdAowNVa");
-static const string strSecret1C    ("WQdQWPgj3p5aj7BXgGmq3Wce48Prrp9B1uM39qSpEEb5edEY6EHK");
-static const string strSecret2C    ("WHxJdmyTZGQ1Xq8NGemRGSr842x4pjXumiCN5qDDBPTQrHLMNUMo");
+static const std::string strSecret1     ("7fS1o5gp8tSxfzb73Z7z71NDUSh53gEBRg3jBAAUU1p9JfPuJa3");
+static const std::string strSecret2     ("7dvK3SbYPiYwx1wERqtJHBqjqGPu522ZoP2DUq5aaActdAowNVa");
+static const std::string strSecret1C    ("WQdQWPgj3p5aj7BXgGmq3Wce48Prrp9B1uM39qSpEEb5edEY6EHK");
+static const std::string strSecret2C    ("WHxJdmyTZGQ1Xq8NGemRGSr842x4pjXumiCN5qDDBPTQrHLMNUMo");
 static const CBitcoinAddress addr1 ("ZLq2LaXoh4ymTka8k4gprggXBx8MpCwpBW");
 static const CBitcoinAddress addr2 ("ZXbQqTdbqPswZctRZLsGRxUYvdXcXTWkrM");
 static const CBitcoinAddress addr1C("ZL8j66BxiC6BZVgPk3UpZZ4uaaEwfJBb9p");

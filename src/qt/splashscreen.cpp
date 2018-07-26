@@ -5,7 +5,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/dash-config.h"
+#include "config/zeroone-config.h"
 #endif
 
 #include "splashscreen.h"
@@ -40,7 +40,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
 
     // set reference point, paddings
     int paddingLeft             = 14;
-    int paddingTop              = 235;
+    int paddingTop              = 250;
     int titleVersionVSpace      = 17;
     int titleCopyrightVSpace    = 22;
 
@@ -56,8 +56,6 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     if(GetBoolArg("-regtest", false))
         splashScreenPath = ":/images/" + GUIUtil::getThemeName() + "/splash_testnet";
     if(GetBoolArg("-testnet", false))
-        splashScreenPath = ":/images/" + GUIUtil::getThemeName() + "/splash_testnet";
-    if(IsArgSet("-devnet"))
         splashScreenPath = ":/images/" + GUIUtil::getThemeName() + "/splash_testnet";
 
     font = QApplication::font().toString();
@@ -92,7 +90,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
         QRect copyrightRect(x, y, pixmap.width() - x, pixmap.height() - y);
         pixPaint.drawText(copyrightRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap, copyrightText);
     }
-
+    QRect r(QPoint(), QSize(630, 304));
     // draw additional text if special network
     if(!titleAddText.isEmpty()) {
         pixPaint.setFont(QFont(font, 12*fontFactor));

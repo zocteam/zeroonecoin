@@ -278,7 +278,7 @@
 <translation>&amp;Prijať</translation>
 </message>
 <message>
-<source>Request payments (generates QR codes and dash: URIs)</source>
+<source>Request payments (generates QR codes and zeroone: URIs)</source>
 <translation>Vyžiadať platby (vygeneruje QR kódy a ZeroOne: URI)</translation>
 </message>
 <message>
@@ -474,8 +474,8 @@
 <translation>Otvoriť &amp;URI...</translation>
 </message>
 <message>
-<source>Open a dash: URI or payment request</source>
-<translation>Otvoriť dash: URI alebo žiadosť o platbu </translation>
+<source>Open a zeroone: URI or payment request</source>
+<translation>Otvoriť zeroone: URI alebo žiadosť o platbu </translation>
 </message>
 <message>
 <source>&amp;Command-line options</source>
@@ -1892,7 +1892,7 @@
 <translation>Chyba pri vyžiadaní platby</translation>
 </message>
 <message>
-<source>Cannot start dash: click-to-pay handler</source>
+<source>Cannot start zeroone: click-to-pay handler</source>
 <translation>ZeroOne sa nedá spustiť: click-to-pay handler</translation>
 </message>
 <message>
@@ -2813,7 +2813,7 @@
 <translation>Ak je vlastný poplatok nastavený na 1000 duffov a transakcia je len 250 bytov, v tom prípade "za kilobajt" zaplatí iba 250 duffov na poplatkoch, &lt;br /&gt;zatiaľ čo "celkovo pri najmenšom" zaplatí 1000 duffov. Pre transakcie väčšie ako jeden kilobajt, obe zaplatia rovnako za kilobajt. </translation>
 </message>
 <message>
-<source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for dash transactions than the network can process.</source>
+<source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for zeroone transactions than the network can process.</source>
 <translation>Platenie minimálneho poplatku je v poriadku pokiaľ je objem transakcií menší ako je miesto v bloku. &lt;br /&gt;Buďte opatrný pretože to môže skončiť s nikdy nepotvrdenými transakciami, akonáhle je dopyt po ZeroOne transakciách väčší ako dokáže sieť ZeroOne spracovať.</translation>
 </message>
 <message>
@@ -3080,8 +3080,8 @@
 <translation>Správa:</translation>
 </message>
 <message>
-<source>A message that was attached to the dash: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the ZeroOne network.</source>
-<translation>Správa ktorá bola pripojená ku dash: URI ktorá sa uchová spolu s transakciou pre Vašu referenciu. Poznámka: Táto správa nebude poslaná cez sieť ZeroOne.</translation>
+<source>A message that was attached to the zeroone: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the ZeroOne network.</source>
+<translation>Správa ktorá bola pripojená ku zeroone: URI ktorá sa uchová spolu s transakciou pre Vašu referenciu. Poznámka: Táto správa nebude poslaná cez sieť ZeroOne.</translation>
 </message>
 <message>
 <source>This is an unauthenticated payment request.</source>
@@ -3864,7 +3864,7 @@
 </message>
 </context>
 <context>
-<name>dash-core</name>
+<name>zeroone-core</name>
 <message>
 <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
                                                                                     <translation>Spojiť s danou adresou a vždy na nej počúvať. Použite zápis [host]:port pre IPv6</translation>

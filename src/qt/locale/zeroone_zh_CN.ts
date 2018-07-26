@@ -278,7 +278,7 @@
 <translation>接收(&amp;R)</translation>
 </message>
 <message>
-<source>Request payments (generates QR codes and dash: URIs)</source>
+<source>Request payments (generates QR codes and zeroone: URIs)</source>
 <translation>请求付款(生成二维码和达世币付款协议的URI)</translation>
 </message>
 <message>
@@ -474,7 +474,7 @@
 <translation>打开 &amp;URI...</translation>
 </message>
 <message>
-<source>Open a dash: URI or payment request</source>
+<source>Open a zeroone: URI or payment request</source>
 <translation>打开一个达世币协议的URI或付款请求</translation>
 </message>
 <message>
@@ -1887,7 +1887,7 @@ https://www.transifex.com/projects/p/dash/</translation>
     <translation>支付请求出错</translation>
     </message>
     <message>
-    <source>Cannot start dash: click-to-pay handler</source>
+    <source>Cannot start zeroone: click-to-pay handler</source>
     <translation>无法启动达世币程序：click-to-pay handler</translation>
     </message>
     <message>
@@ -2804,7 +2804,7 @@ https://www.transifex.com/projects/p/dash/</translation>
     <translation>如果自定手续费设定为1000 duffs，而交易信息只有250字节的话，那么选择“每千字节”就只会支付250 duffs的手续费，&lt;br /&gt;而"总共至少"会支付1000 duffs。但如果交易信息大于一千字节，那么两者都要按每千字节付费。</translation>
     </message>
     <message>
-    <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for dash transactions than the network can process.</source>
+    <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for zeroone transactions than the network can process.</source>
     <translation>当交易量少于区块可容纳的空间时，只需支付最低手续费。&lt;br /&gt;但当交易量的需求增长到超过总体网络可处理的量时，可能会造成一笔一直不被确认的交易。</translation>
     </message>
     <message>
@@ -3071,7 +3071,7 @@ https://www.transifex.com/projects/p/dash/</translation>
     <translation>消息：</translation>
     </message>
     <message>
-    <source>A message that was attached to the dash: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the ZeroOne network.</source>
+    <source>A message that was attached to the zeroone: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the ZeroOne network.</source>
     <translation>附加在达世币付款协议URI中的信息，会和交易内容一并存储，可供您参考。提示：此信息不会发送到达世币网络上。</translation>
     </message>
     <message>
@@ -3855,7 +3855,7 @@ https://www.transifex.com/projects/p/dash/</translation>
     </message>
     </context>
     <context>
-    <name>dash-core</name>
+    <name>zeroone-core</name>
     <message>
     <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
                                                                                         <translation>与提供地址绑定，持续监听。IPv6请用[host]:port格式</translation>

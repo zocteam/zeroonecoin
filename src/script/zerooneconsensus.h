@@ -33,38 +33,38 @@ extern "C" {
 
 #define BITCOINCONSENSUS_API_VER 0
 
-typedef enum dashconsensus_error_t
+typedef enum zerooneconsensus_error_t
 {
-    dashconsensus_ERR_OK = 0,
-    dashconsensus_ERR_TX_INDEX,
-    dashconsensus_ERR_TX_SIZE_MISMATCH,
-    dashconsensus_ERR_TX_DESERIALIZE,
-    dashconsensus_ERR_INVALID_FLAGS,
-} dashconsensus_error;
+    zerooneconsensus_ERR_OK = 0,
+    zerooneconsensus_ERR_TX_INDEX,
+    zerooneconsensus_ERR_TX_SIZE_MISMATCH,
+    zerooneconsensus_ERR_TX_DESERIALIZE,
+    zerooneconsensus_ERR_INVALID_FLAGS,
+} zerooneconsensus_error;
 
 /** Script verification flags */
 enum
 {
-    dashconsensus_SCRIPT_FLAGS_VERIFY_NONE                = 0,
-    dashconsensus_SCRIPT_FLAGS_VERIFY_P2SH                = (1U << 0), // evaluate P2SH (BIP16) subscripts
-    dashconsensus_SCRIPT_FLAGS_VERIFY_DERSIG              = (1U << 2), // enforce strict DER (BIP66) compliance
-    dashconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY           = (1U << 4), // enforce NULLDUMMY (BIP147)
-    dashconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY = (1U << 9), // enable CHECKLOCKTIMEVERIFY (BIP65)
-    dashconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY = (1U << 10), // enable CHECKSEQUENCEVERIFY (BIP112)
-    dashconsensus_SCRIPT_FLAGS_VERIFY_ALL                 = dashconsensus_SCRIPT_FLAGS_VERIFY_P2SH | dashconsensus_SCRIPT_FLAGS_VERIFY_DERSIG |
-                                                            dashconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY | dashconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY |
-                                                            dashconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY
+    zerooneconsensus_SCRIPT_FLAGS_VERIFY_NONE                = 0,
+    zerooneconsensus_SCRIPT_FLAGS_VERIFY_P2SH                = (1U << 0), // evaluate P2SH (BIP16) subscripts
+    zerooneconsensus_SCRIPT_FLAGS_VERIFY_DERSIG              = (1U << 2), // enforce strict DER (BIP66) compliance
+    zerooneconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY           = (1U << 4), // enforce NULLDUMMY (BIP147)
+    zerooneconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY = (1U << 9), // enable CHECKLOCKTIMEVERIFY (BIP65)
+    zerooneconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY = (1U << 10), // enable CHECKSEQUENCEVERIFY (BIP112)
+    zerooneconsensus_SCRIPT_FLAGS_VERIFY_ALL                 = zerooneconsensus_SCRIPT_FLAGS_VERIFY_P2SH | zerooneconsensus_SCRIPT_FLAGS_VERIFY_DERSIG |
+                                                            zerooneconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY | zerooneconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY |
+                                                            zerooneconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY
 };
 
 /// Returns 1 if the input nIn of the serialized transaction pointed to by
 /// txTo correctly spends the scriptPubKey pointed to by scriptPubKey under
 /// the additional constraints specified by flags.
 /// If not NULL, err will contain an error/success code for the operation
-EXPORT_SYMBOL int dashconsensus_verify_script(const unsigned char *scriptPubKey, unsigned int scriptPubKeyLen,
+EXPORT_SYMBOL int zerooneconsensus_verify_script(const unsigned char *scriptPubKey, unsigned int scriptPubKeyLen,
                                     const unsigned char *txTo        , unsigned int txToLen,
-                                    unsigned int nIn, unsigned int flags, dashconsensus_error* err);
+                                    unsigned int nIn, unsigned int flags, zerooneconsensus_error* err);
 
-EXPORT_SYMBOL unsigned int dashconsensus_version();
+EXPORT_SYMBOL unsigned int zerooneconsensus_version();
 
 #ifdef __cplusplus
 } // extern "C"
