@@ -49,6 +49,7 @@ public:
                       const QModelIndex &index ) const
     {
         painter->save();
+        painter->setRenderHint(QPainter::SmoothPixmapTransform);
 
         QIcon icon = qvariant_cast<QIcon>(index.data(TransactionTableModel::RawDecorationRole));
         QRect mainRect = option.rect;

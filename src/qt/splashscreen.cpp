@@ -90,6 +90,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
         QRect copyrightRect(x, y, pixmap.width() - x, pixmap.height() - y);
         pixPaint.drawText(copyrightRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap, copyrightText);
     }
+
     QRect r(QPoint(), QSize(630, 304));
     // draw additional text if special network
     if(!titleAddText.isEmpty()) {
@@ -205,8 +206,8 @@ void SplashScreen::showMessage(const QString &message, int alignment, const QCol
 void SplashScreen::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.drawPixmap(0, 0, pixmap);
     painter.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter.drawPixmap(0, 0, pixmap);
     painter.setFont(QFont(font, 10));
     QRect r = rect().adjusted(233, 50, -5, -5);
     painter.setPen(curColor);
