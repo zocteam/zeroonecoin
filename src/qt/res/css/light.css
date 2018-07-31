@@ -697,8 +697,9 @@ QDialog#HelpMessageDialog {
     border-image: url(:/images/light/drkblue_walletFrame_bg) 0 0 0 0 stretch stretch;
 }
 
-QDialog#HelpMessageDialog QScrollArea * {
+QDialog#HelpMessageDialog QScrollArea *,  QDialog #helpMessage{
 background-color:transparent;
+    color:white;
 }
 
 QDialog#HelpMessageDialog QScrollBar:vertical, QDialog#HelpMessageDialog QScrollBar:horizontal {
