@@ -154,6 +154,11 @@ QComboBox QListView {
     border:1px solid white;
     padding-right:1px;
     padding-left:1px;
+    color:white;
+}
+
+QComboBox::item {
+    color:white;
 }
 
 QComboBox::item:selected {
@@ -709,6 +714,10 @@ border: none;
 /* About ZeroOne Dialog */
 QDialog#AboutDialog {
     border-image: url(:/images/light/drkblue_walletFrame_bg) 0 0 0 0 stretch stretch;
+}
+
+QDialog#AboutDialog * {
+    color:white;
 }
 
 QDialog#AboutDialog QLabel#label, QDialog#AboutDialog QLabel#copyrightLabel, QDialog#AboutDialog QLabel#label_2 { /* About ZeroOne Contents */
