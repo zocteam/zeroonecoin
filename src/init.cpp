@@ -622,7 +622,26 @@ std::string LicenseInfo()
            strprintf(_("Distributed under the MIT software license, see the accompanying file %s or %s"), "COPYING", "<https://opensource.org/licenses/MIT>") + "\n" +
            "\n" +
            strprintf(_("This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit %s and cryptographic software written by Eric Young and UPnP software written by Thomas Bernard."), "<https://www.openssl.org>") +
-           "\n";
+           "\n\n" +
+           strprintf(_("This program uses Qt version 5.10.1.")) +
+           "\n\n" +
+           strprintf(_("Qt is a C++ toolkit for cross-platform application development.\n"
+                        "\n"
+                        "Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.\n"
+                        "\n"
+                        "Qt is available under three different licensing options designed to accommodate the needs of our various users.\n"
+                        "\n"
+                        "Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3.\n"
+                        "\n"
+                        "Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt applications provided you can comply with the terms and conditions of the GNU LGPL version 3.\n"
+                        "\n"
+                        "Please see qt.io/licensing for an overview of Qt licensing.\n"
+                        "\n"
+                        "Copyright (C) 2017 The Qt Company Ltd and other contributors.\n"
+                        "\n"
+                        "Qt and the Qt logo are trademarks of The Qt Company Ltd.\n"
+                        "\n"
+                        "Qt is The Qt Company Ltd product developed as an open source project. See qt.io for more information."));
 }
 
 static void BlockNotifyCallback(bool initialSync, const CBlockIndex *pBlockIndex)
