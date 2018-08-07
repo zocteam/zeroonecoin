@@ -1152,8 +1152,8 @@ static const CRPCCommand commands[] =
     { "addressindex",       "getaddressbalance",      &getaddressbalance,      false, {"addresses"} },
 
     /* ZeroOne features */
-    { "zeroone",               "mnsync",                 &mnsync,                 true,  {} },
-    { "zeroone",               "spork",                  &spork,                  true,  {"value"} },
+    { "zeroOne",               "mnsync",                 &mnsync,                 true,  {} },
+    { "zeroOne",               "spork",                  &spork,                  true,  {"value"} },
 
     /* Not shown in help */
     { "hidden",             "setmocktime",            &setmocktime,            true,  {"timestamp"}},
