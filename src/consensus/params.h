@@ -53,7 +53,6 @@ struct Params {
     int nBudgetPaymentsStartBlock;
     int nBudgetPaymentsCycleBlocks;
     int nBudgetPaymentsWindowBlocks;
-    int nStartenforcingVersionFrom; // in blockheight
     int nBudgetProposalEstablishingTime; // in seconds
     int nSuperblockStartBlock;
     uint256 nSuperblockStartHash;

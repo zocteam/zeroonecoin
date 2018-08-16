@@ -100,7 +100,6 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
         consensus.nPowDGWHeight = 300;
         consensus.nPowKGWHeight = 300;
-        consensus.nStartenforcingVersionFrom = 84472;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
@@ -187,8 +186,6 @@ public:
         strSporkAddress = "ZKMVhZfkKCMoGKRKa3yPTZKBugsd2hpn6U";
 
         checkpointData = (CCheckpointData) {
-                boost::assign::map_list_of
-                        (   0, uint256S("0x00000c8e2be06ce7e6ea78cd9f6ea60e22821d70f8c8fbb714b6baa7b4f2150c"))
         };
 
         chainTxData = ChainTxData{
@@ -241,7 +238,6 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
         consensus.nPowDGWHeight = 350;
         consensus.nPowKGWHeight = 350;
-        consensus.nStartenforcingVersionFrom = 22400;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
@@ -312,8 +308,6 @@ public:
         strSporkAddress = "nJqRtXk5iKZTv7R5Xs8jUEX5E7LBZFTmMu";
 
         checkpointData = (CCheckpointData) {
-                boost::assign::map_list_of
-                        ( 0, uint256S("0x00000c8e2be06ce7e6ea78cd9f6ea60e22821d70f8c8fbb714b6baa7b4f2150c"))
         };
 
         chainTxData = ChainTxData{
@@ -405,8 +399,6 @@ public:
         strSporkAddress = "yj949n1UH6fDhw6HtVE5VMj2iSTaSWBMcW";
 
         checkpointData = (CCheckpointData){
-                boost::assign::map_list_of
-                        ( 0, uint256S("0x1914dc2be327e62ffa37b9fb4b8fd9507fec61448bae9a82ea5e33b3e7cba128"))
         };
         // Regtest ZeroOne addresses start with 'n'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,112);
