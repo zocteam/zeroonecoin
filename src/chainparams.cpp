@@ -185,8 +185,6 @@ public:
 
         strSporkAddress = "ZKMVhZfkKCMoGKRKa3yPTZKBugsd2hpn6U";
 
-        checkpointData = (CCheckpointData) {
-        };
 
         chainTxData = ChainTxData{
             1531950233, // * UNIX timestamp of last known number of transactions
@@ -307,8 +305,6 @@ public:
 
         strSporkAddress = "nJqRtXk5iKZTv7R5Xs8jUEX5E7LBZFTmMu";
 
-        checkpointData = (CCheckpointData) {
-        };
 
         chainTxData = ChainTxData{
             1531950233, // * UNIX timestamp of last known number of transactions
@@ -398,8 +394,6 @@ public:
         // privKey: cP4EKFyJsHT39LDqgdcB43Y3YXjNyjb5Fuas1GQSeAtjnZWmZEQK
         strSporkAddress = "yj949n1UH6fDhw6HtVE5VMj2iSTaSWBMcW";
 
-        checkpointData = (CCheckpointData){
-        };
         // Regtest ZeroOne addresses start with 'n'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,112);
         // Regtest ZeroOne script addresses start with '9'
