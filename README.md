@@ -1,6 +1,6 @@
 ![ZeroOne](doc/splash.png)
 
-01coin Community v0.12.1.6
+01coin Community v0.12.3.2
 ==================================
 
 [Bitcointalk ANN thread](https://bitcointalk.org/index.php?topic=3457534.0)
