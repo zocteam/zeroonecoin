@@ -123,7 +123,7 @@ public Q_SLOTS:
     void updateMnTimer();
     void updateNumConnections(int numConnections);
     void updateNetworkActive(bool networkActive);
-    void updateAlert();
+    void updateAlert(const QString &hash, int status);
     void updateBanlist();
 };
 

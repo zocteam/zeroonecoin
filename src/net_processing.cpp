@@ -5,6 +5,7 @@
 
 #include "net_processing.h"
 
+#include "alert.h"
 #include "addrman.h"
 #include "arith_uint256.h"
 #include "blockencodings.h"
@@ -1389,11 +1390,10 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             return false;
         }
 
-        LogPrintf("check peer %i\n", pindexBestHeader->nHeight);
         if (nVersion < MIN_PEER_PROTO_VERSION)
         {
             // disconnect from peers older than this proto version
-            LogPrintf("peer=%d using obsolete version %i; disconnecting %i\n", pfrom->id, nVersion, pindexBestHeader->nHeight);
+            LogPrintf("peer=%d using obsolete version %i; disconnecting\n", pfrom->id, nVersion);
             connman.PushMessage(pfrom, CNetMsgMaker(INIT_PROTO_VERSION).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
                                strprintf("Version must be %d or greater", MIN_PEER_PROTO_VERSION)));
             pfrom->fDisconnect = true;
@@ -1494,6 +1494,13 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
                 pfrom->fGetAddr = true;
             }
             connman.MarkAddressGood(pfrom->addr);
+        }
+
+        // Relay alerts
+        {
+            LOCK(cs_mapAlerts);
+            BOOST_FOREACH(PAIRTYPE(const uint256, CAlert)& item, mapAlerts)
+                item.second.RelayTo(pfrom, connman);
         }
 
         std::string remoteAddr;
@@ -2714,6 +2721,37 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         }
         if (bPingFinished) {
             pfrom->nPingNonceSent = 0;
+        }
+    }
+
+
+    else if (fAlerts && strCommand == NetMsgType::ALERT)
+    {
+        CAlert alert;
+        vRecv >> alert;
+
+        uint256 alertHash = alert.GetHash();
+        if (pfrom->setKnown.count(alertHash) == 0)
+        {
+            if (alert.ProcessAlert(chainparams.AlertKey()))
+            {
+                // Relay
+                pfrom->setKnown.insert(alertHash);
+                {
+                    connman.ForEachNode([&alert, &connman](CNode* pnode) {
+                        alert.RelayTo(pnode, connman);
+                    });
+                }
+            }
+            else {
+                // Small DoS penalty so peers that send us lots of
+                // duplicate/expired/invalid-signature/whatever alerts
+                // eventually get banned.
+                // This isn't a Misbehaving(100) (immediate ban) because the
+                // peer might be an older or different implementation with
+                // a different signature key, etc.
+                Misbehaving(pfrom->GetId(), 10);
+            }
         }
     }
 

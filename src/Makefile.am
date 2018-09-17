@@ -81,6 +81,7 @@ BITCOIN_CORE_H = \
   addressindex.h \
   spentindex.h \
   addrman.h \
+  alert.h \
   base58.h \
   bip39.h \
   bip39_english.h \
@@ -209,6 +210,7 @@ libzeroone_server_a_SOURCES = \
   activemasternode.cpp \
   addrman.cpp \
   addrdb.cpp \
+  alert.cpp \
   bloom.cpp \
   blockencodings.cpp \
   chain.cpp \
@@ -253,6 +255,7 @@ libzeroone_server_a_SOURCES = \
   rpc/server.cpp \
   script/sigcache.cpp \
   script/ismine.cpp \
+  sendalert.cpp \
   spork.cpp \
   timedata.cpp \
   torcontrol.cpp \

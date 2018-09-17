@@ -7,6 +7,7 @@
 #include "clientversion.h"
 #include "util.h"
 #include "warnings.h"
+#include "alert.h"
 #include "hash.h"
 
 CCriticalSection cs_warnings;
@@ -83,19 +84,19 @@ std::string GetWarnings(const std::string& strFor)
         strGUI += (strGUI.empty() ? "" : uiAlertSeperator) + _("Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.");
     }
 
-//    // Alerts
-//    {
-//        LOCK(cs_mapAlerts);
-//        for (const auto& item : mapAlerts)
-//        {
-//            const CAlert& alert = item.second;
-//            if (alert.AppliesToMe() && alert.nPriority > nPriority)
-//            {
-//                nPriority = alert.nPriority;
-//                strStatusBar = strGUI = alert.strStatusBar;
-//            }
-//        }
-//    }
+    // Alerts
+    {
+        LOCK(cs_mapAlerts);
+        for (const auto& item : mapAlerts)
+        {
+            const CAlert& alert = item.second;
+            if (alert.AppliesToMe() && alert.nPriority > nPriority)
+            {
+                nPriority = alert.nPriority;
+                strStatusBar = strGUI = alert.strStatusBar;
+            }
+        }
+    }
 
     if (strFor == "gui")
         return strGUI;
