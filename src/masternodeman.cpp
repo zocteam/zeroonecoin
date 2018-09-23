@@ -1003,10 +1003,11 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
 
     rank_pair_vec_t vecMasternodeRanks;
     GetMasternodeRanks(vecMasternodeRanks, nCachedBlockHeight - 1, MIN_POSE_PROTO_VERSION);
-
-    LOCK(cs);
-
+    std::vector<CAddress> vAddr;
     int nCount = 0;
+
+    {
+    LOCK(cs);
 
     int nMyRank = -1;
     int nRanksTotal = (int)vecMasternodeRanks.size();
@@ -1058,13 +1059,26 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
         }
         LogPrint("masternode", "CMasternodeMan::DoFullVerificationStep -- Verifying masternode %s rank %d/%d address %s\n",
                     it->second.outpoint.ToStringShort(), it->first, nRanksTotal, it->second.addr.ToString());
-        if(SendVerifyRequest(CAddress(it->second.addr, NODE_NETWORK), vSortedByAddr, connman)) {
+
+        CAddress addr = CAddress(it->second.addr, NODE_NETWORK);
+        if(SendVerifyRequest(addr, vSortedByAddr, connman)) {
+            vAddr.push_back(addr);
             nCount++;
             if(nCount >= MAX_POSE_CONNECTIONS) break;
         }
         nOffset += MAX_POSE_CONNECTIONS;
         if(nOffset >= (int)vecMasternodeRanks.size()) break;
         it += MAX_POSE_CONNECTIONS;
+    }
+    } // end lock CS
+
+    for (const auto& addr : vAddr) {
+        connman.AddPendingMasternode(addr);
+        // use random nonce, store it and require node to reply with correct one later
+        CMasternodeVerification mnv(addr, GetRandInt(999999), nCachedBlockHeight - 1);
+        LOCK(cs_mapPendingMNV);
+        mapPendingMNV.insert(std::make_pair(addr, std::make_pair(GetTime(), mnv)));
+        LogPrintf("CMasternodeMan::SendVerifyRequest -- verifying node using nonce %d addr=%s\n", mnv.nonce, addr.ToString());
     }
 
     LogPrint("masternode", "CMasternodeMan::DoFullVerificationStep -- Sent verification requests to %d masternodes\n", nCount);
@@ -1137,13 +1151,6 @@ bool CMasternodeMan::SendVerifyRequest(const CAddress& addr, const std::vector<c
     }
 
     if (connman.IsMasternodeOrDisconnectRequested(addr)) return false;
-
-    connman.AddPendingMasternode(addr);
-    // use random nonce, store it and require node to reply with correct one later
-    CMasternodeVerification mnv(addr, GetRandInt(999999), nCachedBlockHeight - 1);
-    LOCK(cs_mapPendingMNV);
-    mapPendingMNV.insert(std::make_pair(addr, std::make_pair(GetTime(), mnv)));
-    LogPrintf("CMasternodeMan::SendVerifyRequest -- verifying node using nonce %d addr=%s\n", mnv.nonce, addr.ToString());
     return true;
 }
 
