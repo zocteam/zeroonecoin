@@ -1061,7 +1061,7 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
                     it->second.outpoint.ToStringShort(), it->first, nRanksTotal, it->second.addr.ToString());
 
         CAddress addr = CAddress(it->second.addr, NODE_NETWORK);
-        if(SendVerifyRequest(addr, vSortedByAddr, connman)) {
+        if(VerifyRequest(addr, connman)) {
             vAddr.push_back(addr);
             nCount++;
             if(nCount >= MAX_POSE_CONNECTIONS) break;
@@ -1142,7 +1142,7 @@ void CMasternodeMan::CheckSameAddr()
     }
 }
 
-bool CMasternodeMan::SendVerifyRequest(const CAddress& addr, const std::vector<const CMasternode*>& vSortedByAddr, CConnman& connman)
+bool CMasternodeMan::VerifyRequest(const CAddress& addr, CConnman& connman)
 {
     if(netfulfilledman.HasFulfilledRequest(addr, strprintf("%s", NetMsgType::MNVERIFY)+"-request")) {
         // we already asked for verification, not a good idea to do this too often, skip it
@@ -1150,8 +1150,7 @@ bool CMasternodeMan::SendVerifyRequest(const CAddress& addr, const std::vector<c
         return false;
     }
 
-    if (connman.IsMasternodeOrDisconnectRequested(addr)) return false;
-    return true;
+    return !connman.IsMasternodeOrDisconnectRequested(addr);
 }
 
 void CMasternodeMan::ProcessPendingMnvRequests(CConnman& connman)
