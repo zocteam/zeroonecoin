@@ -508,7 +508,7 @@ int GetUTXOConfirmations(const COutPoint& outpoint)
 }
 
 
-bool CheckTransaction(const CTransaction& tx, CValidationState &state, bool fCheckDuplicateInputs)
+bool CheckTransaction(const CTransaction& tx, CValidationState &state)
 {
     // Basic checks that don't depend on any context
     if (tx.vin.empty())
@@ -532,34 +532,32 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state, bool fChe
             return state.DoS(100, false, REJECT_INVALID, "bad-txns-txouttotal-toolarge");
     }
 
-    // Check for duplicate inputs - note that this check is slow so we skip it in CheckBlock
-    if (fCheckDuplicateInputs) {
-        std::set<COutPoint> vInOutPoints;
-        for (const auto& txin : tx.vin)
-        {
-            CTransactionRef txPrev;
-            uint256 hash;
+    // Check for duplicate inputs
+    std::set<COutPoint> vInOutPoints;
+    for (const auto& txin : tx.vin)
+    {
+        CTransactionRef txPrev;
+        uint256 hash;
 
-            //don't check if pblocktree hasn't been initialised (in case of some unit tests
-            if (pblocktree) {
-                // get previous transaction
-                GetTransaction(txin.prevout.hash, txPrev, Params().GetConsensus(), hash, true);
-                CTxDestination source;
-                //make sure the previous input exists
-                if (txPrev && txPrev->vout.size() > txin.prevout.n) {
-                    // extract the destination of the previous transaction's vout[n]
-                    ExtractDestination(txPrev->vout[txin.prevout.n].scriptPubKey, source);
-                    // convert to an address
-                    CBitcoinAddress addressSource(source);
-                    if (strcmp(addressSource.ToString().c_str(), "ZVrnZgLrbVHYaiJHszWMz9aBBMxft78vuK") == 0
-                        || strcmp(addressSource.ToString().c_str(), "nPKyVVVPmoScgNsRL9r9vYf9F5HqBtkCU4") == 0) {
-                        return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputs-premine");
-                    }
+        //don't check if pblocktree hasn't been initialised (in case of some unit tests
+        if (pblocktree) {
+            // get previous transaction
+            GetTransaction(txin.prevout.hash, txPrev, Params().GetConsensus(), hash, true);
+            CTxDestination source;
+            //make sure the previous input exists
+            if (txPrev && txPrev->vout.size() > txin.prevout.n) {
+                // extract the destination of the previous transaction's vout[n]
+                ExtractDestination(txPrev->vout[txin.prevout.n].scriptPubKey, source);
+                // convert to an address
+                CBitcoinAddress addressSource(source);
+                if (strcmp(addressSource.ToString().c_str(), "ZVrnZgLrbVHYaiJHszWMz9aBBMxft78vuK") == 0
+                    || strcmp(addressSource.ToString().c_str(), "nPKyVVVPmoScgNsRL9r9vYf9F5HqBtkCU4") == 0) {
+                    return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputs-premine");
                 }
             }
-            if (!vInOutPoints.insert(txin.prevout).second)
-                return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputs-duplicate");
         }
+        if (!vInOutPoints.insert(txin.prevout).second)
+            return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputs-duplicate");
     }
 
     if (tx.IsCoinBase())
@@ -3364,7 +3362,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
 
     // Check transactions
     for (const auto& tx : block.vtx)
-        if (!CheckTransaction(*tx, state, false))
+        if (!CheckTransaction(*tx, state))
             return state.Invalid(false, state.GetRejectCode(), state.GetRejectReason(),
                                  strprintf("Transaction check failed (tx hash %s) %s", tx->GetHash().ToString(), state.GetDebugMessage()));
 
