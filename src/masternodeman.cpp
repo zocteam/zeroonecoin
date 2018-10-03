@@ -1078,7 +1078,7 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
         CMasternodeVerification mnv(addr, GetRandInt(999999), nCachedBlockHeight - 1);
         LOCK(cs_mapPendingMNV);
         mapPendingMNV.insert(std::make_pair(addr, std::make_pair(GetTime(), mnv)));
-        LogPrintf("CMasternodeMan::SendVerifyRequest -- verifying node using nonce %d addr=%s\n", mnv.nonce, addr.ToString());
+        LogPrintf("CMasternodeMan::DoFullVerificationStep -- verifying node using nonce %d addr=%s\n", mnv.nonce, addr.ToString());
     }
 
     LogPrint("masternode", "CMasternodeMan::DoFullVerificationStep -- Sent verification requests to %d masternodes\n", nCount);
