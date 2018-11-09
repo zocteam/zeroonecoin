@@ -1,7 +1,7 @@
-ZeroOne Core 0.12.1
+ZeroOne Core 0.12.3
 =====================
 
-This is the official reference wallet for ZeroOne digital currency and comprises the backbone of the ZeroOne peer-to-peer network. You can [download ZeroOne Core](https://www.zeroone.org/downloads/) or [build it yourself](#building) using the guides below.
+This is the official reference wallet for ZeroOne digital currency and comprises the backbone of the ZeroOne peer-to-peer network. You can [download ZeroOne Core](https://github.com/zocteam/zeroonecoin/releases) or [build it yourself](#building) using the guides below.
 
 Running
 ---------------------
@@ -11,8 +11,8 @@ The following are some helpful notes on how to run ZeroOne on your native platfo
 
 Unpack the files into a directory and run:
 
-- `bin/dash-qt` (GUI) or
-- `bin/dashd` (headless)
+- `bin/zeroone-qt` (GUI) or
+- `bin/zerooned` (headless)
 
 ### Windows
 
@@ -24,8 +24,6 @@ Drag ZeroOne-Qt to your applications folder, and then run ZeroOne-Qt.
 
 ### Need Help?
 
-* See the [ZeroOne documentation](https://zeroonecoin.atlassian.net/wiki/display/DOC)
-for help and more information.
 * Ask for help on [ZeroOne Discord](https://discord.gg/PShrdBM)
 
 Building
