@@ -2107,12 +2107,12 @@ static bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockInd
     /// ZOC: Check superblock start
 
     // make sure old budget is the real one
-    if (pindex->nHeight == chainparams.GetConsensus().nSuperblockStartBlock &&
+ /* if (pindex->nHeight == chainparams.GetConsensus().nSuperblockStartBlock &&
         chainparams.GetConsensus().nSuperblockStartHash != uint256() &&
         block.GetHash() != chainparams.GetConsensus().nSuperblockStartHash)
             return state.DoS(100, error("ConnectBlock(): invalid superblock start"),
                              REJECT_INVALID, "bad-sb-start");
-
+ */
     /// END ZOC
 
     // BIP16 didn't become active until Apr 1 2012

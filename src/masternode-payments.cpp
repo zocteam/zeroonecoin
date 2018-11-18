@@ -129,6 +129,7 @@ bool IsBlockValueValid(const CBlock& block, int nBlockHeight, CAmount blockRewar
         }
     }
 
+    LogPrint("mnpayments", "IsBlockValueValid -- block.vtx[0]->GetValueOut() %lld <= blockReward %lld\n", block.vtx[0]->GetValueOut(), blockReward);
     // it MUST be a regular block
     return isBlockRewardValueMet;
 }
@@ -292,7 +293,7 @@ int CMasternodePayments::GetMinMasternodePaymentsProto() const {
 
 void CMasternodePayments::ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman)
 {
-    if(fLiteMode) return; // disable all Dash specific functionality
+    if(fLiteMode) return; // disable all Zoc specific functionality
 
     if (strCommand == NetMsgType::MASTERNODEPAYMENTSYNC) { //Masternode Payments Request Sync
 
@@ -563,7 +564,8 @@ bool CMasternodeBlockPayees::GetBestPayee(CScript& payeeRet) const
             nVotes = payee.GetVoteCount();
         }
     }
-
+    
+    LogPrint("mnpayments", "CMasternodeBlockPayees::GetBestPayee -- nVotes=%d\n", nVotes);
     return (nVotes > -1);
 }
 
@@ -598,8 +600,11 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew) const
         }
     }
 
-    // if we don't have at least MNPAYMENTS_SIGNATURES_REQUIRED signatures on a payee, approve whichever is the longest chain
-    if(nMaxSignatures < MNPAYMENTS_SIGNATURES_REQUIRED) return true;
+    // if we don't have at least MNPAYMENTS_SIGNATURES_REQUIRED signatures on a payee, approve whichever is the longest chain    
+    if(nMaxSignatures < MNPAYMENTS_SIGNATURES_REQUIRED) {
+       LogPrint("mnpayments", "CMasternodeBlockPayees::IsTransactionValid -- approve any when Votes(%d) < VotesRequired(%d)\n", nMaxSignatures, MNPAYMENTS_SIGNATURES_REQUIRED);
+       return true;
+    }
 
     for (const auto& payee : vecPayees) {
         if (payee.GetVoteCount() >= MNPAYMENTS_SIGNATURES_REQUIRED) {
