@@ -45,7 +45,7 @@ The ZeroOne Core repo's [root README](/README.md) contains relevant information 
 - [Release Process](release-process.md)
 - Source Code Documentation ***TODO***
 - Translation Process ***n/a***
-- [Translation Strings Policy](translation_strings_policy.md)
+- Translation Strings Policy ***n/a***
 - [Travis CI](travis-ci.md)
 - [Unauthenticated REST Interface](REST-interface.md)
 - [Shared Libraries](shared-libraries.md)
