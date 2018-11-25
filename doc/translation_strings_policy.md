@@ -1,3 +1,5 @@
+This file is n/a to 01coin at this time.
+
 Translation Strings Policy
 ===========================
 
