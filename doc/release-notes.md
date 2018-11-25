@@ -29,7 +29,7 @@ Because release 0.12.3.4 is a mandatory upgrade release, downgrading to an earli
 - Enforces Spork 8 as of block 159551 (approx. Nov. 24)
 - All masternode owners and miners should upgrade as soon as possible
 
-### 0.12.3.3 Change log
+### 0.12.3.4 Change log
 
 See detailed [set of changes](https://github.com/zocteam/zeroonecoin/compare/v0.12.3.3...zocteam:v0.12.3.4).
 
