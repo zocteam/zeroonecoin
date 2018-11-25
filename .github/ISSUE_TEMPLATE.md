@@ -1,10 +1,8 @@
 <!--- Remove sections that do not apply -->
 
-This issue tracker is only for technical issues related to Dash Core.
+The GitHub issue tracker is only for technical issues related to 01coin.
 
-General Dash questions and/or support requests and are best directed to the [Dashpay Reddit](https://www.reddit.com/r/dashpay/).
-
-To report critical security issues, email infosec@dash.org instead of creating Github issues.
+General 01coin questions and/or support requests are best directed to the [01coin Discord server](https://discord.gg/wq5xD6M), where our large and dedicated community will be willing and happy to help you.
 
 ### Describe the issue
 
@@ -23,8 +21,8 @@ Tell us what happens instead
 ### Screenshots.
 If the issue is related to the GUI, screenshots can be added to this issue via drag & drop.
 
-### What version of Dash Core are you using?
-List the version number/commit ID, and if it is an official binary, self compiled or a distribution package such as PPA.
+### What version of 01coin are you using?
+List the client and protocol version number, whether it was self-compiled or downloaded as a pre-compiled binary, and - if the latter - your download source.
 
 ### Machine specs:
 - OS:
