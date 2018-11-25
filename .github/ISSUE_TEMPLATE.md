@@ -13,10 +13,10 @@ General 01coin questions and/or support requests are best directed to the [01coi
 3.
 
 ### Expected behaviour:
-Tell us what should happen
+Tell us what should happen.
 
 ### Actual behaviour:
-Tell us what happens instead
+Tell us what happens instead.
 
 ### Screenshots:
 If the issue is related to the GUI, screenshots can be added to this issue via drag & drop.
