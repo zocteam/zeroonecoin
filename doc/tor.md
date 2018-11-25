@@ -99,23 +99,7 @@ for normal IPv4/IPv6 communication, use:
 	./zerooned -onion=127.0.0.1:9050 -externalip=ssapp53tmftyjmjb.onion -discover
 
 
-3. List of known ZeroOne Core Tor relays
-------------------------------------
-
-* [darkcoinie7ghp67.onion](http://darkcoinie7ghp67.onion/)
-* [drktalkwaybgxnoq.onion](http://drktalkwaybgxnoq.onion/)
-* [drkcoinooditvool.onion](http://drkcoinooditvool.onion/)
-* [darkcoxbtzggpmcc.onion](http://darkcoxbtzggpmcc.onion/)
-* [ssapp53tmftyjmjb.onion](http://ssapp53tmftyjmjb.onion/)
-* [j2dfl3cwxyxpbc7s.onion](http://j2dfl3cwxyxpbc7s.onion/)
-* [vf6d2mxpuhh2cbxt.onion](http://vf6d2mxpuhh2cbxt.onion/)
-* [rj24sicr6i4vsnkv.onion](http://rj24sicr6i4vsnkv.onion/)
-* [wrwx2dy7jyh32o53.onion](http://wrwx2dy7jyh32o53.onion/)
-* [f5ekot4ajkbe23gt.onion](http://f5ekot4ajkbe23gt.onion/)
-* [dshtord4mqvgzqev.onion](http://dshtord4mqvgzqev.onion/)
-
-
-4. Automatically listen on Tor
+3. Automatically listen on Tor
 --------------------------------
 
 Starting with Tor version 0.2.7.1 it is possible, through Tor's control socket
@@ -142,7 +126,7 @@ which has the appropriate permissions. An alternative authentication method is t
 of the `-torpassword` flag and a `hash-password` which can be enabled and specified in 
 Tor configuration.
 
-4. Privacy recommendations
+5. Privacy recommendations
 ---------------------------
 
 - Do not add anything but bitcoin ports to the hidden service created in section 2.
