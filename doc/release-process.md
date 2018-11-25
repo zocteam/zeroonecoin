@@ -238,20 +238,12 @@ rm SHA256SUMS
 (the digest algorithm is forced to sha256 to avoid confusion of the `Hash:` header that GPG adds with the SHA256 used for the files)
 Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spurious/nonsensical entry.
 
-- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the zeroone.org server
+- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the 01coin.io server
 
-- Update zeroone.org
+- Update 01coin.io
 
-- Announce the release:
+- Announce the release on *all* social media channels
 
-  - Release on ZeroOne forum: https://www.zeroone.org/forum/topic/official-announcements.54/
+- ...
 
-  - Optionally Discord, twitter, reddit, ... but this will usually sort out itself
-
-  - Notify flare so that he can start building [the PPAs](https://launchpad.net/~dash.org/+archive/ubuntu/dash)
-
-  - Archive release notes for the new version to `doc/release-notes/` (branch `master` and branch of the release)
-
-  - Create a [new GitHub release](https://github.com/zocteam/zeroonecoin/releases/new) with a link to the archived release notes.
-
-  - Celebrate
+- PROFIT!
