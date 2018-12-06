@@ -11,7 +11,7 @@ Tool to verify that every merge commit was signed by a developer using the above
 ### [Linearize](/contrib/linearize) ###
 Construct a linear, no-fork, best version of the blockchain.
 
-### [Qos](/contrib/qos) ###
+### [QoS](/contrib/qos) ###
 
 A Linux bash script that will set up traffic control (tc) to limit the outgoing bandwidth for connections to the ZeroOne network. This means one can have an always-on zerooned instance running, and another local zerooned/zeroone-qt instance which connects to this node and receives blocks from it.
 
