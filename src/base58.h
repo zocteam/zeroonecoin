@@ -96,9 +96,9 @@ public:
 };
 
 /** base58-encoded ZeroOne addresses.
- * Public-key-hash-addresses have version 76 (or 140 testnet).
+ * Public-key-hash-addresses have version 80 (or 112 testnet).
  * The data vector contains RIPEMD160(SHA256(pubkey)), where pubkey is the serialized public key.
- * Script-hash-addresses have version 16 (or 19 testnet).
+ * Script-hash-addresses have version 10 (or 20 testnet).
  * The data vector contains RIPEMD160(SHA256(cscript)), where cscript is the serialized redemption script.
  */
 class CBitcoinAddress : public CBase58Data {
