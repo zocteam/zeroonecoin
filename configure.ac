@@ -6,7 +6,7 @@ define(_CLIENT_VERSION_REVISION, 3)
 define(_CLIENT_VERSION_BUILD, 4)
 define(_CLIENT_VERSION_IS_RELEASE, false)
 define(_COPYRIGHT_YEAR, 2019)
-define(_COPYRIGHT_HOLDERS,[The %s developers])
+define(_COPYRIGHT_HOLDERS,[The %s developers pmin])
 define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[ZeroOne Core]])
 AC_INIT([ZeroOne Core],[_CLIENT_VERSION_MAJOR._CLIENT_VERSION_MINOR._CLIENT_VERSION_REVISION],[https://github.com/zocteam/zeroonecoin/issues],[zeroonecore])
 AC_CONFIG_SRCDIR([src/validation.cpp])
@@ -169,14 +169,14 @@ AC_ARG_WITH([system-univalue],
   [AS_HELP_STRING([--with-system-univalue],
   [Build with system UniValue (default is no)])],
   [system_univalue=$withval],
-  [system_univalue=no]
-)
+  [system_univalue=no])
+
 AC_ARG_ENABLE([zmq],
   [AS_HELP_STRING([--disable-zmq],
   [disable ZMQ notifications])],
   [use_zmq=$enableval],
   [use_zmq=yes])
-  
+
 AC_ARG_ENABLE([mini],
   [AS_HELP_STRING([--enable-mini],
   [attempt to reduce memory resources used in the executables (default is no)])],
@@ -970,6 +970,16 @@ else
   AC_MSG_RESULT(no)
 fi
 
+dnl enable mini
+AC_MSG_CHECKING([if mini should be enabled])
+if test x$enable_mini != xno; then
+  AC_MSG_RESULT(yes)
+  AC_DEFINE_UNQUOTED([ENABLE_MINI],[1],[Define to 1 to enable mini functions])
+
+else
+  AC_MSG_RESULT(no)
+fi
+
 dnl enable upnp support
 AC_MSG_CHECKING([whether to build with support for UPnP])
 if test x$have_miniupnpc = xno; then
@@ -1038,7 +1048,6 @@ if test x$bitcoin_enable_qt != xno; then
 fi
 
 AM_CONDITIONAL([ENABLE_ZMQ], [test "x$use_zmq" = "xyes"])
-AM_CONDITIONAL([ENABLE_MINI], [test "x$use_mini" = "xyes"])
 
 AC_MSG_CHECKING([whether to build test_zeroone])
 if test x$use_tests = xyes; then
@@ -1064,6 +1073,7 @@ AM_CONDITIONAL([TARGET_DARWIN], [test x$TARGET_OS = xdarwin])
 AM_CONDITIONAL([BUILD_DARWIN], [test x$BUILD_OS = xdarwin])
 AM_CONDITIONAL([TARGET_WINDOWS], [test x$TARGET_OS = xwindows])
 AM_CONDITIONAL([ENABLE_WALLET],[test x$enable_wallet = xyes])
+AM_CONDITIONAL([ENABLE_MINI],[test x$enable_mini = xyes])
 AM_CONDITIONAL([ENABLE_TESTS],[test x$BUILD_TEST = xyes])
 AM_CONDITIONAL([ENABLE_QT],[test x$bitcoin_enable_qt = xyes])
 AM_CONDITIONAL([ENABLE_QT_TESTS],[test x$BUILD_TEST_QT = xyes])
