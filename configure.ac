@@ -176,6 +176,12 @@ AC_ARG_ENABLE([zmq],
   [disable ZMQ notifications])],
   [use_zmq=$enableval],
   [use_zmq=yes])
+  
+AC_ARG_ENABLE([mini],
+  [AS_HELP_STRING([--enable-mini],
+  [attempt to reduce memory resources used in the executables (default is no)])],
+  [use_mini=$enableval],
+  [use_mini=no])
 
 AC_ARG_WITH([protoc-bindir],[AS_HELP_STRING([--with-protoc-bindir=BIN_DIR],[specify protoc bin path])], [protoc_bin_path=$withval], [])
 
@@ -1032,6 +1038,7 @@ if test x$bitcoin_enable_qt != xno; then
 fi
 
 AM_CONDITIONAL([ENABLE_ZMQ], [test "x$use_zmq" = "xyes"])
+AM_CONDITIONAL([ENABLE_MINI], [test "x$use_mini" = "xyes"])
 
 AC_MSG_CHECKING([whether to build test_zeroone])
 if test x$use_tests = xyes; then
@@ -1177,6 +1184,7 @@ if test x$bitcoin_enable_qt != xno; then
     echo "    with qr     = $use_qr"
 fi
 echo "  with zmq      = $use_zmq"
+echo "  with mini     = $use_mini"
 echo "  with test     = $use_tests"
 echo "  with bench    = $use_bench"
 echo "  with upnp     = $use_upnp"
