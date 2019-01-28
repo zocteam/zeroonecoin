@@ -972,12 +972,12 @@ fi
 
 dnl enable mini
 AC_MSG_CHECKING([if mini should be enabled])
-if test x$enable_mini != xno; then
-  AC_MSG_RESULT(yes)
-  AC_DEFINE_UNQUOTED([ENABLE_MINI],[1],[Define to 1 to enable mini functions])
+if test x$enable_mini = x; then
+  AC_MSG_RESULT(no)
 
 else
-  AC_MSG_RESULT(no)
+  AC_MSG_RESULT(yes)
+  AC_DEFINE_UNQUOTED([ENABLE_MINI],[1],[Define to 1 to enable mini functions]) 
 fi
 
 dnl enable upnp support
