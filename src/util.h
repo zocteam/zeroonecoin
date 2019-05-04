@@ -42,6 +42,14 @@
 #define DBG( x ) 
 #endif
 
+#ifdef ENABLE_MINI
+#define ZOCMINIF 3
+#define FACTOR_BY( v , n ) v/n
+#else
+#define ZOCMINIF 1
+#define FACTOR_BY( v , n ) v
+#endif
+
 //ZeroOne only features
 
 extern bool fMasternodeMode;
