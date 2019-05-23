@@ -39,7 +39,7 @@
 #define DO_STRINGIZE(X) #X
 
 //! Copyright string used in Windows .rc files
-#define COPYRIGHT_STR "2009-" STRINGIZE(COPYRIGHT_YEAR) " The Bitcoin Core Developers, 2017-" STRINGIZE(COPYRIGHT_YEAR) " The 01coin Developers"
+#define COPYRIGHT_STR "2009-" STRINGIZE(COPYRIGHT_YEAR) " The Bitcoin Core Developers, 2018-" STRINGIZE(COPYRIGHT_YEAR) " The 01coin Developers"
 
 /**
  * zerooned-res.rc includes this file, but it cannot cope with real c++ code.
