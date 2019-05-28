@@ -46,6 +46,7 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QDesktopWidget>
+#include <QDesktopServices>
 #include <QDragEnterEvent>
 #include <QListWidget>
 #include <QMenuBar>
@@ -227,6 +228,58 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
     frameBlocksLayout->addWidget(labelBlocksIcon);
     frameBlocksLayout->addStretch();
 
+    //status bar social media icons
+    QFrame* frameSocMedia = new QFrame();
+
+    //fill in frameSocMedia
+    {
+        QString buttonTheme = GUIUtil::getThemeName();
+
+        frameSocMedia->setContentsMargins(0, 0, 0, 0);
+        frameSocMedia->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        QHBoxLayout* frameLayout = new QHBoxLayout(frameSocMedia);
+        frameLayout->setContentsMargins(6, 0, 6, 0);
+        frameLayout->setSpacing(10);
+
+        pushButtonTelegram = new QPushButton(frameSocMedia);
+        pushButtonTelegram->setToolTip(tr("Go to") + " Telegram");
+        connect(pushButtonTelegram, &QPushButton::clicked,
+                this, [](){QDesktopServices::openUrl(QUrl("https://t.me/ZOCCoinOfficial"));});
+        pushButtonTelegram->setIcon(QIcon(QPixmap(":/icons/" + buttonTheme + "/overview.png").scaledToHeight(STATUSBAR_ICONSIZE,Qt::SmoothTransformation)));
+
+        pushButtonDiscord = new QPushButton(frameSocMedia);
+        pushButtonDiscord->setToolTip(tr("Go to") + " Discord");
+        connect(pushButtonDiscord, &QPushButton::clicked,
+                this, [](){QDesktopServices::openUrl(QUrl("https://discord.gg/Qndw4Vg"));});
+        pushButtonDiscord->setIcon(QIcon(":/icons/" + buttonTheme + "/overview.png").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
+
+        pushButtonTwitter = new QPushButton(frameSocMedia);
+        pushButtonTwitter->setToolTip(tr("Go to") + " Twitter");
+        connect(pushButtonTwitter, &QPushButton::clicked,
+                this, [](){QDesktopServices::openUrl(QUrl("https://twitter.com/01CoinTeam"));});
+        pushButtonTwitter->setIcon(QIcon(":/icons/" + buttonTheme + "/overview.png").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
+
+        pushButtonGithub = new QPushButton(frameSocMedia);
+        pushButtonGithub->setToolTip(tr("Go to") + " GitHub");
+        connect(pushButtonGithub, &QPushButton::clicked,
+                this, [](){QDesktopServices::openUrl(QUrl("https://github.com/zocteam/zeroonecoin"));});
+        pushButtonGithub->setIcon(QIcon(":/icons/" + buttonTheme + "/overview.png").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
+
+        auto buttons = frameSocMedia->findChildren<QPushButton* >();
+        QString styleSheet = ".QPushButton { background-color: transparent;"
+                                        "border: none;"
+                                        "qproperty-text: \"\" }";
+        for(auto but : buttons)
+        {
+            frameLayout->addWidget(but);
+            but->setMinimumSize(30, STATUSBAR_ICONSIZE);
+            but->setMaximumSize(30, STATUSBAR_ICONSIZE);
+            but->setIconSize(QSize(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
+            but->setCursor(Qt::PointingHandCursor);
+            but->setStyleSheet(styleSheet);
+        }
+    }
+
     // Progress bar and label for blocks download
     progressBarLabel = new QLabel();
     progressBarLabel->setVisible(true);
@@ -250,6 +303,7 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
 
     statusBar()->addWidget(progressBarLabel);
     statusBar()->addWidget(progressBar);
+    statusBar()->addPermanentWidget(frameSocMedia);
     statusBar()->addPermanentWidget(frameBlocks);
 
     // Install event filter to be able to catch status tip events (QEvent::StatusTip)
@@ -423,7 +477,7 @@ void BitcoinGUI::createActions()
     openConfEditorAction = new QAction(QIcon(":/icons/" + theme + "/edit"), tr("Open Wallet &Configuration File"), this);
     openConfEditorAction->setStatusTip(tr("Open configuration file"));
     openMNConfEditorAction = new QAction(QIcon(":/icons/" + theme + "/edit"), tr("Open &Masternode Configuration File"), this);
-    openMNConfEditorAction->setStatusTip(tr("Open Masternode configuration file"));    
+    openMNConfEditorAction->setStatusTip(tr("Open Masternode configuration file"));
     showBackupsAction = new QAction(QIcon(":/icons/" + theme + "/browse"), tr("Show Automatic &Backups"), this);
     showBackupsAction->setStatusTip(tr("Show automatically created wallet backups"));
     // initially disable the debug window menu items
@@ -470,7 +524,7 @@ void BitcoinGUI::createActions()
 
     // Get restart command-line parameters and handle restart
     connect(rpcConsole, SIGNAL(handleRestart(QStringList)), this, SLOT(handleRestart(QStringList)));
-    
+
     // prevents an open debug window from becoming stuck/unusable on client shutdown
     connect(quitAction, SIGNAL(triggered()), rpcConsole, SLOT(hide()));
 
@@ -612,7 +666,7 @@ void BitcoinGUI::setClientModel(ClientModel *_clientModel)
             MacDockIconHandler *dockIconHandler = MacDockIconHandler::instance();
             dockIconHandler->setMainWindow((QMainWindow *)this);
             dockIconMenu = dockIconHandler->dockMenu();
- 
+
             createIconMenu(dockIconMenu);
 #endif
         }
