@@ -401,7 +401,7 @@ void CPrivateSendServer::ChargeFees(CConnman& connman)
     if(!fMasternodeMode) return;
 
     //we don't need to charge collateral for every offence.
-    if(GetRandInt(100) > 33) return;
+    //if(GetRandInt(100) > 33) return;
 
     std::vector<CTransactionRef> vecOffendersCollaterals;
 
@@ -436,7 +436,7 @@ void CPrivateSendServer::ChargeFees(CConnman& connman)
     if(vecOffendersCollaterals.empty()) return;
 
     //mostly offending? Charge sometimes
-    if((int)vecOffendersCollaterals.size() >= Params().PoolMaxTransactions() - 1 && GetRandInt(100) > 33) return;
+    //if((int)vecOffendersCollaterals.size() >= Params().PoolMaxTransactions() - 1 && GetRandInt(100) > 33) return;
 
     //everyone is an offender? That's not right
     if((int)vecOffendersCollaterals.size() >= Params().PoolMaxTransactions()) return;
