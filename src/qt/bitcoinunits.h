@@ -53,7 +53,7 @@ class BitcoinUnits: public QAbstractListModel
 public:
     explicit BitcoinUnits(QObject *parent);
 
-    /** ZeroOne units.
+    /** ZOC units.
       @note Source: https://en.bitcoin.it/wiki/Units . Please add only sensible ones
      */
     enum Unit
@@ -61,7 +61,7 @@ public:
         ZOC,
         mZOC,
         uZOC,
-        duffs
+        zuffs
     };
 
     enum SeparatorStyle
