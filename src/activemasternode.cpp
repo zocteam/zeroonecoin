@@ -149,7 +149,7 @@ void CActiveMasternode::ManageStateInitial(CConnman& connman)
             empty = false;
             if (pnode->addr.IsIPv4())
                 fFoundLocal = GetLocal(service, &pnode->addr) && CMasternode::IsValidNetAddr(service);
-            if (pnode->addr.IsIPv6())
+            if (sporkManager.IsSporkActive(SPORK_16_MASTERNODE_IN_IPV6) && pnode->addr.IsIPv6())
                 fFoundLocal = GetLocal(service, &pnode->addr) && CMasternode::IsValidNetAddr(service);
             return !fFoundLocal;
         });
@@ -164,7 +164,9 @@ void CActiveMasternode::ManageStateInitial(CConnman& connman)
 
     if(!fFoundLocal) {
         nState = ACTIVE_MASTERNODE_NOT_CAPABLE;
-        strNotCapableReason = "Can't detect valid external address. Please consider using the externalip configuration option if problem persists. Make sure to use IPv4 or IPv6 address only.";
+        strNotCapableReason = "Can't detect valid external address. Please consider using the externalip configuration option if problem persists. Make sure to use IPv4";
+		if (sporkManager.IsSporkActive(SPORK_16_MASTERNODE_IN_IPV6)) strNotCapableReason+=" or IPv6";
+		strNotCapableReason+=" address only.";
         LogPrintf("CActiveMasternode::ManageStateInitial -- %s: %s\n", GetStateString(), strNotCapableReason);
         return;
     }

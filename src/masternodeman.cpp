@@ -398,7 +398,6 @@ int CMasternodeMan::CountEnabled(int nProtocolVersion)
     return nCount;
 }
 
-/* Only IPv4 masternodes are allowed in 12.1, saving this for later */
 int CMasternodeMan::CountByIP(int nNetworkType)
 {
     LOCK(cs);
@@ -413,7 +412,6 @@ int CMasternodeMan::CountByIP(int nNetworkType)
 
     return nNodeCount;
 }
-/* */
 
 void CMasternodeMan::DsegUpdate(CNode* pnode, CConnman& connman)
 {

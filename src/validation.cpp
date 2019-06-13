@@ -1539,6 +1539,16 @@ namespace Consensus {
                     return state.Invalid(false,
                                          REJECT_INVALID, "bad-txns-premature-spend-of-coinbase",
                                          strprintf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
+
+                // check block reward from sharky miner will not mature
+                int64_t cointime = 0;
+				if (sporkManager.IsSporkActive(SPORK_15_UNMATURE_SINGLECB_ZEROTXBLK) && GetBlockTime( &cointime, coin.nHeight )) {
+                 if (cointime > sporkManager.GetSporkValue(SPORK_15_UNMATURE_SINGLECB_ZEROTXBLK))
+                   if (coin.out.nValue == GetBlockSubsidy(0, coin.nHeight, chainparams.GetConsensus()))
+                    return state.Invalid(false,
+                                         REJECT_INVALID, "bad-txns-sharky-spend-of-coinbase",
+                                         strprintf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
+                }
             }
 
             // Check for negative or overflow input values
@@ -1974,6 +1984,16 @@ bool GetBlockHash(uint256& hashRet, int nBlockHeight)
     if(nBlockHeight < -1 || nBlockHeight > chainActive.Height()) return false;
     if(nBlockHeight == -1) nBlockHeight = chainActive.Height();
     hashRet = chainActive[nBlockHeight]->GetBlockHash();
+    return true;
+}
+
+bool GetBlockTime(int64_t& timeRet, int nBlockHeight)
+{
+    LOCK(cs_main);
+    if(chainActive.Tip() == NULL) return false;
+    if(nBlockHeight < -1 || nBlockHeight > chainActive.Height()) return false;
+    if(nBlockHeight == -1) nBlockHeight = chainActive.Height();
+    timeRet = chainActive[nBlockHeight]->GetBlockTime();
     return true;
 }
 

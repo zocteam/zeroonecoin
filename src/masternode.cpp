@@ -278,7 +278,7 @@ bool CMasternode::IsValidNetAddr(CService addrIn)
     // should probably be a bit smarter if one day we start to implement tests for this
     return Params().NetworkIDString() == CBaseChainParams::REGTEST ||
             (addrIn.IsIPv4() && IsReachable(addrIn) && addrIn.IsRoutable()) ||
-			(addrIn.IsIPv6() && IsReachable(addrIn) && addrIn.IsRoutable()) ;
+			(addrIn.IsIPv6() && IsReachable(addrIn) && addrIn.IsRoutable() && sporkManager.IsSporkActive(SPORK_16_MASTERNODE_IN_IPV6));
 }
 
 masternode_info_t CMasternode::GetInfo() const
