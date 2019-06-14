@@ -1547,7 +1547,7 @@ namespace Consensus {
                       LogPrintf("Consensus::%s -- ERROR: GetBlockTime() failed at nBlockHeight %d\n", __func__, coin.nHeight);
                   } else {
                       int64_t sp15value = sporkManager.GetSporkValue(SPORK_15_UNMATURE_SINGLECB_ZEROTXBLK);
-                      CAmount nCBs = GetBlockSubsidy(0, coin.nHeight, GetConsensus());
+                      CAmount nCBs = GetBlockSubsidy(0, coin.nHeight, ::Params().GetConsensus());
                       if (cointime > sp15value) {
                         if (coin.out.nValue == nCBs) {
                           LogPrintf("CheckTxInputs(ZOC): spork15 is on, tried to spend sharky coinbase %d at nHeight %d\n", coin.nHeight, nSpendHeight);
