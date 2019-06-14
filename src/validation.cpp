@@ -1541,13 +1541,27 @@ namespace Consensus {
                                          strprintf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
 
                 // check block reward from sharky miner will not mature
-                int64_t cointime = 0;
-				if (sporkManager.IsSporkActive(SPORK_15_UNMATURE_SINGLECB_ZEROTXBLK) && GetBlockTime( &cointime, coin.nHeight )) {
-                 if (cointime > sporkManager.GetSporkValue(SPORK_15_UNMATURE_SINGLECB_ZEROTXBLK))
-                   if (coin.out.nValue == GetBlockSubsidy(0, coin.nHeight, chainparams.GetConsensus()))
-                    return state.Invalid(false,
-                                         REJECT_INVALID, "bad-txns-sharky-spend-of-coinbase",
-                                         strprintf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
+                if (sporkManager.IsSporkActive(SPORK_15_UNMATURE_SINGLECB_ZEROTXBLK)) {
+                  int64_t cointime = 0;
+                  GetBlockTime( &cointime, coin.nHeight );
+                  int64_t sp15value = sporkManager.GetSporkValue(SPORK_15_UNMATURE_SINGLECB_ZEROTXBLK);
+                  CAmount nCBs = GetBlockSubsidy(0, coin.nHeight, Params().GetConsensus());
+                  if (cointime > sp15value) {
+                    if (coin.out.nValue == nCBs) {
+                      LogPrintf("CheckTxInputs(ZOC): spork15 is on, tried to spend sharky coinbase %d at nHeight %d\n", coin.nHeight, nSpendHeight);
+                      return state.Invalid(false,
+                                           REJECT_INVALID, "bad-txns-sharky-spend-of-coinbase",
+                                           strprintf("tried to spend coinbase %d at nHeight %d\n", coin.nHeight, nSpendHeight));
+                    } else if (coin.out.nValue >= nCBs) {
+                      LogPrintf("CheckTxInputs(ZOC): spork15 is on, spend greedy coinbase %d at nHeight %d\n", coin.nHeight, nSpendHeight);
+                    }
+                  } else {
+                    if (coin.out.nValue == nCBs) {
+                      LogPrintf("CheckTxInputs(ZOC): spork15 is on since %d, spend sharky coinbase %d at nHeight %d\n", sp15value, coin.nHeight, nSpendHeight);
+                    } else if (coin.out.nValue >= nCBs) {
+                      LogPrintf("CheckTxInputs(ZOC): spork15 is on since %d, spend greedy coinbase %d at nHeight %d\n", sp15value, coin.nHeight, nSpendHeight);
+                    }
+                  }
                 }
             }
 
