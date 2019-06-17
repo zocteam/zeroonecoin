@@ -1541,12 +1541,12 @@ namespace Consensus {
                                          strprintf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
 
                 // check block reward from sharky miner will not mature
-                if (sporkManager.IsSporkActive(SPORK_15_UNMATURE_SINGLECB_ZEROTXBLK)) {
+                if (sporkManager.IsSporkActive(SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK)) {
                   int64_t cointime = 0;
                   if (!GetBlockTime(cointime, coin.nHeight)) {
                       LogPrintf("Consensus::%s -- ERROR: GetBlockTime() failed at nBlockHeight %d\n", __func__, coin.nHeight);
                   } else {
-                      int64_t sp15value = sporkManager.GetSporkValue(SPORK_15_UNMATURE_SINGLECB_ZEROTXBLK);
+                      int64_t sp15value = sporkManager.GetSporkValue(SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK);
                       CAmount nCBs = GetBlockSubsidy(0, coin.nHeight, ::Params().GetConsensus());
                       if (cointime > sp15value) {
                         if (coin.out.nValue == nCBs) {

@@ -1,5 +1,5 @@
-// Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -149,7 +149,7 @@ void CActiveMasternode::ManageStateInitial(CConnman& connman)
             empty = false;
             if (pnode->addr.IsIPv4())
                 fFoundLocal = GetLocal(service, &pnode->addr) && CMasternode::IsValidNetAddr(service);
-            if (sporkManager.IsSporkActive(SPORK_16_MASTERNODE_IN_IPV6) && pnode->addr.IsIPv6())
+            if (pnode->addr.IsIPv6())
                 fFoundLocal = GetLocal(service, &pnode->addr) && CMasternode::IsValidNetAddr(service);
             return !fFoundLocal;
         });
@@ -164,9 +164,7 @@ void CActiveMasternode::ManageStateInitial(CConnman& connman)
 
     if(!fFoundLocal) {
         nState = ACTIVE_MASTERNODE_NOT_CAPABLE;
-        strNotCapableReason = "Can't detect valid external address. Please consider using the externalip configuration option if problem persists. Make sure to use IPv4";
-		if (sporkManager.IsSporkActive(SPORK_16_MASTERNODE_IN_IPV6)) strNotCapableReason+=" or IPv6";
-		strNotCapableReason+=" address only.";
+        strNotCapableReason = "Can't detect valid external address. Please consider using the externalip configuration option if problem persists. Make sure to use IPv4 or IPv6 address only.";
         LogPrintf("CActiveMasternode::ManageStateInitial -- %s: %s\n", GetStateString(), strNotCapableReason);
         return;
     }
