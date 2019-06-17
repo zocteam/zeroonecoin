@@ -175,7 +175,7 @@ int CSporkManager::GetSporkIDByName(const std::string& strName)
     if (strName == "SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT")    return SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT;
     if (strName == "SPORK_9_SUPERBLOCKS_ENABLED")               return SPORK_9_SUPERBLOCKS_ENABLED;
     if (strName == "SPORK_10_MASTERNODE_PAY_UPDATED_NODES")     return SPORK_10_MASTERNODE_PAY_UPDATED_NODES;
-    if (strName == "SPORK_11_MNSIG_REQ")                        return SPORK_11_MNSIG_REQ;
+    if (strName == "SPORK_11_MNSIG_TOTAL")                      return SPORK_11_MNSIG_TOTAL;
     if (strName == "SPORK_12_RECONSIDER_BLOCKS")                return SPORK_12_RECONSIDER_BLOCKS;
     if (strName == "SPORK_13_TESTMNGB")                         return SPORK_13_TESTMNGB;
     if (strName == "SPORK_14_REQUIRE_SENTINEL_FLAG")            return SPORK_14_REQUIRE_SENTINEL_FLAG;
@@ -189,14 +189,14 @@ std::string CSporkManager::GetSporkNameByID(int nSporkID)
     switch (nSporkID) {
         case SPORK_2_INSTANTSEND_ENABLED:               return "SPORK_2_INSTANTSEND_ENABLED";
         case SPORK_3_INSTANTSEND_BLOCK_FILTERING:       return "SPORK_3_INSTANTSEND_BLOCK_FILTERING";
-        case SPORK_4_MNSIG_REQ:                return "SPORK_4_MNSIG_REQ";
+        case SPORK_4_MNSIG_REQ:                         return "SPORK_4_MNSIG_REQ";
         case SPORK_5_INSTANTSEND_MAX_VALUE:             return "SPORK_5_INSTANTSEND_MAX_VALUE";
         case SPORK_6_NEW_SIGS:                          return "SPORK_6_NEW_SIGS";
         case SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK:       return "SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK";
         case SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT:    return "SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT";
         case SPORK_9_SUPERBLOCKS_ENABLED:               return "SPORK_9_SUPERBLOCKS_ENABLED";
         case SPORK_10_MASTERNODE_PAY_UPDATED_NODES:     return "SPORK_10_MASTERNODE_PAY_UPDATED_NODES";
-        case SPORK_11_MNSIG_REQ:                        return "SPORK_11_MNSIG_REQ";
+        case SPORK_11_MNSIG_TOTAL:                      return "SPORK_11_MNSIG_TOTAL";
         case SPORK_12_RECONSIDER_BLOCKS:                return "SPORK_12_RECONSIDER_BLOCKS";
         case SPORK_13_TESTMNGB:                         return "SPORK_13_TESTMNGB";
         case SPORK_14_REQUIRE_SENTINEL_FLAG:            return "SPORK_14_REQUIRE_SENTINEL_FLAG";
