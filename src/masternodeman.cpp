@@ -1,5 +1,5 @@
-// Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -195,7 +195,7 @@ void CMasternodeMan::CheckAndRemove(CConnman& connman)
             CMasternodeBroadcast mnb = CMasternodeBroadcast(it->second);
             uint256 hash = mnb.GetHash();
             // If collateral was spent ...
-            if (it->second.IsOutpointSpent()) {
+            if (it->second.IsOutpointSpent() || it->second.IsUpdateRequired() || it->second.IsPoSeBanned()) {
                 LogPrint("masternode", "CMasternodeMan::CheckAndRemove -- Removing Masternode: %s  addr=%s  %i now\n", it->second.GetStateString(), it->second.addr.ToString(), size() - 1);
 
                 // erase all of the broadcasts we've seen from this txin, ...
@@ -791,6 +791,8 @@ void CMasternodeMan::ProcessPendingMnbRequests(CConnman& connman)
         if (fDone || (GetTime() - nTimeAdded > 15)) {
             if (!fDone) {
                 LogPrint("masternode", "CMasternodeMan::%s -- failed to connect to %s\n", __func__, itPendingMNB->first.ToString());
+                //Punish not reachable MN , required cs_main
+                //PunishNode(itPendingMNB->first,connman);
             }
             mapPendingMNB.erase(itPendingMNB++);
         } else {
@@ -802,7 +804,7 @@ void CMasternodeMan::ProcessPendingMnbRequests(CConnman& connman)
 
 void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman)
 {
-    if(fLiteMode) return; // disable all Dash specific functionality
+    if(fLiteMode) return; // disable all ZOC specific functionality
 
     if (strCommand == NetMsgType::MNANNOUNCE) { //Masternode Broadcast
 
@@ -992,6 +994,27 @@ void CMasternodeMan::PushDsegInvs(CNode* pnode, const CMasternode& mn)
     mapSeenMasternodePing.insert(std::make_pair(hashMNP, mnp));
 }
 
+
+void CMasternodeMan::PunishNode(const CService& addr, CConnman& connman);
+{
+    CNode* found = nullptr;
+    {
+    LOCK(cs_vNodes);
+      for (auto&& pnode : vNodes) {
+          if((CService)pnode->addr == addr) {
+              found = pnode;
+              break;
+          }
+      }
+    }
+	LogPrint("masternode", "CMasternodeMan::%s -- Misbehaving to %s\n", __func__, addr.ToString());
+    if(found != nullptr){
+      LOCK(cs_main);
+      Misbehaving(found->id, 20);
+    }
+}
+
+
 // Verification of masternodes via unique direct requests.
 
 void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
@@ -1154,6 +1177,7 @@ bool CMasternodeMan::VerifyRequest(const CAddress& addr, CConnman& connman)
 void CMasternodeMan::ProcessPendingMnvRequests(CConnman& connman)
 {
     LOCK(cs_mapPendingMNV);
+	//LOCK2(cs_mapPendingMNV,cs_main);
 
     std::map<CService, std::pair<int64_t, CMasternodeVerification> >::iterator itPendingMNV = mapPendingMNV.begin();
 
@@ -1172,6 +1196,8 @@ void CMasternodeMan::ProcessPendingMnvRequests(CConnman& connman)
         if (fDone || (GetTime() - nTimeAdded > 15)) {
             if (!fDone) {
                 LogPrint("masternode", "CMasternodeMan::%s -- failed to connect to %s\n", __func__, itPendingMNV->first.ToString());
+                // Punish not reachable MN , required cs_main
+                PunishNode(itPendingMNV->first,connman);
             }
             mapPendingMNV.erase(itPendingMNV++);
         } else {
