@@ -995,20 +995,11 @@ void CMasternodeMan::PushDsegInvs(CNode* pnode, const CMasternode& mn)
 }
 
 
-void CMasternodeMan::PunishNode(const CService& addr, CConnman& connman);
+void CMasternodeMan::PunishNode(const CService& addr, CConnman& connman)
 {
-    CNode* found = nullptr;
-    {
-    LOCK(cs_vNodes);
-      for (auto&& pnode : vNodes) {
-          if((CService)pnode->addr == addr) {
-              found = pnode;
-              break;
-          }
-      }
-    }
-	LogPrint("masternode", "CMasternodeMan::%s -- Misbehaving to %s\n", __func__, addr.ToString());
-    if(found != nullptr){
+    CNode* found = connman.FindNode(addr);
+    LogPrint("masternode", "CMasternodeMan::%s -- to %s\n", __func__, addr.ToString());
+    if(found){
       LOCK(cs_main);
       Misbehaving(found->id, 20);
     }
