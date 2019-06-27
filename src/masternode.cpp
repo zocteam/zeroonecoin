@@ -1,5 +1,5 @@
-// Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -277,7 +277,8 @@ bool CMasternode::IsValidNetAddr(CService addrIn)
     // TODO: regtest is fine with any addresses for now,
     // should probably be a bit smarter if one day we start to implement tests for this
     return Params().NetworkIDString() == CBaseChainParams::REGTEST ||
-            (addrIn.IsIPv4() && IsReachable(addrIn) && addrIn.IsRoutable());
+            (addrIn.IsIPv4() && IsReachable(addrIn) && addrIn.IsRoutable()) ||
+            (addrIn.IsIPv6() && IsReachable(addrIn) && addrIn.IsRoutable());
 }
 
 masternode_info_t CMasternode::GetInfo() const

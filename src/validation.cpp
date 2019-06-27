@@ -1,7 +1,7 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
+// Copyright (c) 2009-2019 Satoshi Nakamoto
+// Copyright (c) 2009-2019 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1539,7 +1539,34 @@ namespace Consensus {
                     return state.Invalid(false,
                                          REJECT_INVALID, "bad-txns-premature-spend-of-coinbase",
                                          strprintf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));
-            }
+
+                // check block reward from sharky miner will not mature
+                if (sporkManager.IsSporkActive(SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK)) {
+                  int64_t cointime = 0;
+                  if (!GetBlockTime(cointime, coin.nHeight)) {
+                      LogPrintf("Consensus::%s -- ERROR: GetBlockTime() failed at nBlockHeight %d\n", __func__, coin.nHeight);
+                  } else {
+                      int64_t sp7value = sporkManager.GetSporkValue(SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK);
+                      CAmount nCBs = GetBlockSubsidy(0, coin.nHeight, ::Params().GetConsensus());
+                      if (cointime > sp7value) {
+                        if (coin.out.nValue == nCBs) {
+                          LogPrint("spork","Consensus::CheckTxInputs(ZOC): spork7, rej bad sharky coinbase %d at nHeight %d\n", coin.nHeight, nSpendHeight);
+                          return state.Invalid(false,
+                                               REJECT_INVALID, "bad-txns-sharky-spend-of-coinbase",
+                                               strprintf("tried to spend coinbase %d at nHeight %d\n", coin.nHeight, nSpendHeight));
+                        } else if (coin.out.nValue >= nCBs) {
+                          LogPrint("spork","Consensus::CheckTxInputs(ZOC): spork7, spend greedy coinbase %d at nHeight %d\n", coin.nHeight, nSpendHeight);
+                        }
+                      } else {
+                        if (coin.out.nValue == nCBs) {
+                          LogPrint("spork","Consensus::CheckTxInputs(ZOC): spork7 %d, spend sharky coinbase %d at nHeight %d\n", sp7value, coin.nHeight, nSpendHeight);
+                        } else if (coin.out.nValue >= nCBs) {
+                          LogPrint("spork","Consensus::CheckTxInputs(ZOC): spork7 %d, spend greedy coinbase %d at nHeight %d\n", sp7value, coin.nHeight, nSpendHeight);
+                        }
+                      }
+                  }
+                }
+            } // coin.IsCoinBase 
 
             // Check for negative or overflow input values
             nValueIn += coin.out.nValue;
@@ -1974,6 +2001,16 @@ bool GetBlockHash(uint256& hashRet, int nBlockHeight)
     if(nBlockHeight < -1 || nBlockHeight > chainActive.Height()) return false;
     if(nBlockHeight == -1) nBlockHeight = chainActive.Height();
     hashRet = chainActive[nBlockHeight]->GetBlockHash();
+    return true;
+}
+
+bool GetBlockTime(int64_t& timeRet, int nBlockHeight)
+{
+    LOCK(cs_main);
+    if(chainActive.Tip() == NULL) return false;
+    if(nBlockHeight < -1 || nBlockHeight > chainActive.Height()) return false;
+    if(nBlockHeight == -1) nBlockHeight = chainActive.Height();
+    timeRet = chainActive[nBlockHeight]->GetBlockTime();
     return true;
 }
 

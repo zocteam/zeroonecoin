@@ -23,7 +23,7 @@ QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
     unitlist.append(ZOC);
     unitlist.append(mZOC);
     unitlist.append(uZOC);
-    unitlist.append(duffs);
+    unitlist.append(zuffs);
     return unitlist;
 }
 
@@ -34,7 +34,7 @@ bool BitcoinUnits::valid(int unit)
     case ZOC:
     case mZOC:
     case uZOC:
-    case duffs:
+    case zuffs:
         return true;
     default:
         return false;
@@ -50,7 +50,7 @@ QString BitcoinUnits::name(int unit)
             case ZOC: return QString("ZOC");
             case mZOC: return QString("mZOC");
             case uZOC: return QString::fromUtf8("μZOC");
-            case duffs: return QString("duffs");
+            case zuffs: return QString("zuffs");
             default: return QString("???");
         }
     }
@@ -61,7 +61,7 @@ QString BitcoinUnits::name(int unit)
             case ZOC: return QString("tZOC");
             case mZOC: return QString("mtZOC");
             case uZOC: return QString::fromUtf8("μtZOC");
-            case duffs: return QString("tduffs");
+            case zuffs: return QString("tzuffs");
             default: return QString("???");
         }
     }
@@ -73,10 +73,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case ZOC: return QString("ZeroOne");
-            case mZOC: return QString("Milli-ZeroOne (1 / 1" THIN_SP_UTF8 "000)");
-            case uZOC: return QString("Micro-ZeroOne (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-ZeroOne (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case ZOC: return QString("ZOC");
+            case mZOC: return QString("Milli-ZOC (1 / 1" THIN_SP_UTF8 "000)");
+            case uZOC: return QString("Micro-ZOC (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case zuffs: return QString("Ten Nano-ZOC (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -84,10 +84,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case ZOC: return QString("TestZeroOnes");
-            case mZOC: return QString("Milli-TestZeroOne (1 / 1" THIN_SP_UTF8 "000)");
-            case uZOC: return QString("Micro-TestZeroOne (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-TestZeroOne (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case ZOC: return QString("TestZOC");
+            case mZOC: return QString("Milli-TestZOC (1 / 1" THIN_SP_UTF8 "000)");
+            case uZOC: return QString("Micro-TestZOC (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case zuffs: return QString("Ten Nano-TestZOC (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -100,7 +100,7 @@ qint64 BitcoinUnits::factor(int unit)
     case ZOC:  return 100000000;
     case mZOC: return 100000;
     case uZOC: return 100;
-    case duffs: return 1;
+    case zuffs: return 1;
     default:   return 100000000;
     }
 }
@@ -112,7 +112,7 @@ int BitcoinUnits::decimals(int unit)
     case ZOC: return 8;
     case mZOC: return 5;
     case uZOC: return 2;
-    case duffs: return 0;
+    case zuffs: return 0;
     default: return 0;
     }
 }
