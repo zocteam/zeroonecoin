@@ -17,7 +17,7 @@ class CMasternodePayments;
 class CMasternodePaymentVote;
 class CMasternodeBlockPayees;
 
-//moved into sporks for better test fine-tune
+//See now as sporks tunable values:
 //static const int MNPAYMENTS_SIGNATURES_REQUIRED         = 6;
 //static const int MNPAYMENTS_SIGNATURES_TOTAL            = 10;
 

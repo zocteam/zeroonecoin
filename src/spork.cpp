@@ -20,17 +20,17 @@ std::map<uint256, CSporkMessage> mapSporks;
 std::map<int, int64_t> mapSporkDefaults = {
     {SPORK_2_INSTANTSEND_ENABLED,            0},             // ON
     {SPORK_3_INSTANTSEND_BLOCK_FILTERING,    0},             // ON
-    {SPORK_4_MNSIG_REQ,                      6},             // ON
-    {SPORK_5_INSTANTSEND_MAX_VALUE,          10000},         // 10000 ZOC
+    {SPORK_4_MNSIG_REQ,                      6},             // ON - MNPAYMENTS_SIGNATURES_REQUIRED (tunable)
+    {SPORK_5_INSTANTSEND_MAX_VALUE,          100001},        // ON - InstaSend up to 100000 ZOC
     {SPORK_6_NEW_SIGS,                       4070908800ULL}, // OFF
-    {SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK,    1561939199ULL}, // ON - GMT: Sunday, 30 June 2019 23:59:59
+    {SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK,    4070908800ULL}, // OFF
     {SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT, 0},             // ON
     {SPORK_9_SUPERBLOCKS_ENABLED,            4070908800ULL}, // OFF
-    {SPORK_10_MASTERNODE_PAY_UPDATED_NODES,  1561939199ULL}, // ON - GMT: Sunday, 30 June 2019 23:59:59
-    {SPORK_11_MNSIG_TOTAL,                   10},            // ON
+    {SPORK_10_MASTERNODE_PAY_UPDATED_NODES,  1562371199ULL}, // ON - GMT: Friday, 5 July 2019 23:59:59
+    {SPORK_11_MNSIG_TOTAL,                   10},            // ON - MNPAYMENTS_SIGNATURES_TOTAL (tunable)
     {SPORK_12_RECONSIDER_BLOCKS,             0},             // 0 BLOCKS
     {SPORK_13_TESTMNGB,                      4070908800ULL}, // OFF
-    {SPORK_14_REQUIRE_SENTINEL_FLAG,         0},             // ON
+    {SPORK_14_REQUIRE_SENTINEL_FLAG,         1562371199ULL}, // ON - GMT: Friday, 5 July 2019 23:59:59
 };
 
 void CSporkManager::ProcessSpork(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman)

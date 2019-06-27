@@ -397,7 +397,7 @@ public:
 
     void WakeMessageHandler();
 
-    // ZOC: FindNode is used in masternode.cpp
+    // ZOC: FindNode is used in masternodeman.cpp
     CNode* FindNode(const CService& addr);
 
 private:
