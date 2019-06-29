@@ -345,6 +345,10 @@ RES_ICONS = \
   qt/res/icons/light/fontsmaller.png \
   qt/res/icons/light/transaction_abandoned.png \
   qt/res/icons/light/network_disabled.png \
+  qt/res/icons/light/twitter.png \
+  qt/res/icons/light/discord.png \
+  qt/res/icons/light/github.png \
+  qt/res/icons/light/telegram.png \
   qt/res/icons/light-retro/add.png \
   qt/res/icons/light-retro/address-book.png \
   qt/res/icons/light-retro/browse.png \
