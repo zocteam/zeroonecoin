@@ -145,6 +145,10 @@
         <file alias="history">res/icons/light/history.png</file>
         <file alias="masternodes">res/icons/light/masternodes.png</file>
         <file alias="overview">res/icons/light/overview.png</file>
+        <file alias="twitter">res/icons/light/twitter.png</file>
+        <file alias="discord">res/icons/light/discord.png</file>
+        <file alias="github">res/icons/light/github.png</file>
+        <file alias="telegram">res/icons/light/telegram.png</file>
         <file alias="export">res/icons/light/export.png</file>
         <file alias="synced">res/icons/light/synced.png</file>
         <file alias="remove">res/icons/light/remove.png</file>

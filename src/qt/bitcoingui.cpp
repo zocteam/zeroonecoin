@@ -46,6 +46,7 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QDesktopWidget>
+#include <QDesktopServices>
 #include <QDragEnterEvent>
 #include <QListWidget>
 #include <QMenuBar>
@@ -77,6 +78,12 @@ const std::string BitcoinGUI::DEFAULT_UIPLATFORM =
         "other"
 #endif
         ;
+
+struct SocialButton{
+    QString link;
+    QString name;
+    QString icon;
+};
 
 /** Display name for default wallet name. Uses tilde to avoid name
  * collisions in the future with additional wallets */
@@ -212,6 +219,35 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
     labelWalletHDStatusIcon = new QLabel();
     labelConnectionsIcon = new GUIUtil::ClickableLabel();
 
+    //fill in frameSocMedia
+    {
+        SocialButton buttons[] = {
+            {"https://twitter.com/01CoinTeam", "Twitter", "twitter"},
+            {"https://t.me/ZOCCoinOfficial", "Telegram", "telegram"},
+            {"https://discord.gg/Qndw4Vg", "Discord", "discord"},
+            {"https://github.com/zocteam/zeroonecoin", "Github", "github"},
+        };
+
+        QString buttonTheme = GUIUtil::getThemeName();
+
+
+        frameBlocksLayout->addStretch();
+        for(auto but : buttons) {
+            auto labelTelegram = new GUIUtil::ClickableLabel();
+            labelTelegram->setToolTip(tr("Go to") + " " + but.name);
+            connect(labelTelegram, &GUIUtil::ClickableLabel::clicked,
+                    [but]() { QDesktopServices::openUrl(QUrl(but.link)); });
+            auto pixMap = platformStyle
+                    ->SingleColorIcon(":/icons/" + buttonTheme + "/" + but.icon)
+                    .pixmap(STATUSBAR_ICONSIZE * 1.2f, STATUSBAR_ICONSIZE);
+            pixMap.setDevicePixelRatio(2);
+            labelTelegram->setPixmap(pixMap);
+
+            frameBlocksLayout->addWidget(labelTelegram);
+        }
+        frameBlocksLayout->addStretch();
+    }
+
     labelBlocksIcon = new GUIUtil::ClickableLabel();
     if(enableWallet)
     {
@@ -226,6 +262,7 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
     frameBlocksLayout->addStretch();
     frameBlocksLayout->addWidget(labelBlocksIcon);
     frameBlocksLayout->addStretch();
+
 
     // Progress bar and label for blocks download
     progressBarLabel = new QLabel();
@@ -423,7 +460,7 @@ void BitcoinGUI::createActions()
     openConfEditorAction = new QAction(QIcon(":/icons/" + theme + "/edit"), tr("Open Wallet &Configuration File"), this);
     openConfEditorAction->setStatusTip(tr("Open configuration file"));
     openMNConfEditorAction = new QAction(QIcon(":/icons/" + theme + "/edit"), tr("Open &Masternode Configuration File"), this);
-    openMNConfEditorAction->setStatusTip(tr("Open Masternode configuration file"));    
+    openMNConfEditorAction->setStatusTip(tr("Open Masternode configuration file"));
     showBackupsAction = new QAction(QIcon(":/icons/" + theme + "/browse"), tr("Show Automatic &Backups"), this);
     showBackupsAction->setStatusTip(tr("Show automatically created wallet backups"));
     // initially disable the debug window menu items
@@ -470,7 +507,7 @@ void BitcoinGUI::createActions()
 
     // Get restart command-line parameters and handle restart
     connect(rpcConsole, SIGNAL(handleRestart(QStringList)), this, SLOT(handleRestart(QStringList)));
-    
+
     // prevents an open debug window from becoming stuck/unusable on client shutdown
     connect(quitAction, SIGNAL(triggered()), rpcConsole, SLOT(hide()));
 
@@ -612,7 +649,7 @@ void BitcoinGUI::setClientModel(ClientModel *_clientModel)
             MacDockIconHandler *dockIconHandler = MacDockIconHandler::instance();
             dockIconHandler->setMainWindow((QMainWindow *)this);
             dockIconMenu = dockIconHandler->dockMenu();
- 
+
             createIconMenu(dockIconMenu);
 #endif
         }
