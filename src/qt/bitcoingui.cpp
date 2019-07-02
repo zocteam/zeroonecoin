@@ -240,7 +240,7 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
             auto pixMap = platformStyle
                     ->SingleColorIcon(":/icons/" + buttonTheme + "/" + but.icon)
                     .pixmap(STATUSBAR_ICONSIZE * 1.2f, STATUSBAR_ICONSIZE);
-            pixMap.setDevicePixelRatio(2);
+            //pixMap.setDevicePixelRatio(2);
             labelTelegram->setPixmap(pixMap);
 
             frameBlocksLayout->addWidget(labelTelegram);
