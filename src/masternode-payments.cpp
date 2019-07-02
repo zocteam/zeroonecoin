@@ -1,5 +1,5 @@
-// Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -600,14 +600,15 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew) const
         }
     }
 
-    // if we don't have at least MNPAYMENTS_SIGNATURES_REQUIRED signatures on a payee, approve whichever is the longest chain    
-    if(nMaxSignatures < MNPAYMENTS_SIGNATURES_REQUIRED) {
-       LogPrint("mnpayments", "CMasternodeBlockPayees::IsTransactionValid -- approve any when Votes(%d) < VotesRequired(%d)\n", nMaxSignatures, MNPAYMENTS_SIGNATURES_REQUIRED);
+    // if we don't have at least MNPAYMENTS_SIGNATURES_REQUIRED signatures on a payee, approve whichever is the longest chain
+    int sigreq = sporkManager.GetSporkValue(SPORK_4_MNSIG_REQ);
+    if(nMaxSignatures < sigreq) {
+       LogPrint("mnpayments", "CMasternodeBlockPayees::IsTransactionValid -- approve any when Votes(%d) < VotesRequired(%d)\n", nMaxSignatures, sigreq);
        return true;
     }
 
     for (const auto& payee : vecPayees) {
-        if (payee.GetVoteCount() >= MNPAYMENTS_SIGNATURES_REQUIRED) {
+        if (payee.GetVoteCount() >= sigreq) {
             for (const auto& txout : txNew.vout) {
                 if (payee.GetPayee() == txout.scriptPubKey && nMasternodePayment == txout.nValue) {
                     LogPrint("mnpayments", "CMasternodeBlockPayees::IsTransactionValid -- Found required payment\n");
@@ -734,14 +735,15 @@ bool CMasternodePaymentVote::IsValid(CNode* pnode, int nValidationHeight, std::s
         return false;
     }
 
-    if(nRank > MNPAYMENTS_SIGNATURES_TOTAL) {
+    int sigtotal = sporkManager.GetSporkValue(SPORK_11_MNSIG_TOTAL);
+    if(nRank > sigtotal) { // MNPAYMENTS_SIGNATURES_TOTAL
         // It's common to have masternodes mistakenly think they are in the top 10
         // We don't want to print all of these messages in normal mode, debug mode should print though
-        strError = strprintf("Masternode %s is not in the top %d (%d)", masternodeOutpoint.ToStringShort(), MNPAYMENTS_SIGNATURES_TOTAL, nRank);
+        strError = strprintf("Masternode %s is not in the top %d (%d)", masternodeOutpoint.ToStringShort(), sigtotal, nRank);
         // Only ban for new mnw which is out of bounds, for old mnw MN list itself might be way too much off
-        if(nRank > MNPAYMENTS_SIGNATURES_TOTAL*2 && nBlockHeight > nValidationHeight) {
+        if(nRank > sigtotal*2 && nBlockHeight > nValidationHeight) {
             LOCK(cs_main);
-            strError = strprintf("Masternode %s is not in the top %d (%d)", masternodeOutpoint.ToStringShort(), MNPAYMENTS_SIGNATURES_TOTAL*2, nRank);
+            strError = strprintf("Masternode %s is not in the top %d (%d)", masternodeOutpoint.ToStringShort(), sigtotal*2, nRank);
             LogPrintf("CMasternodePaymentVote::IsValid -- Error: %s\n", strError);
             Misbehaving(pnode->GetId(), 20);
         }
@@ -770,8 +772,9 @@ bool CMasternodePayments::ProcessBlock(int nBlockHeight, CConnman& connman)
         return false;
     }
 
-    if (nRank > MNPAYMENTS_SIGNATURES_TOTAL) {
-        LogPrint("mnpayments", "CMasternodePayments::ProcessBlock -- Masternode not in the top %d (%d)\n", MNPAYMENTS_SIGNATURES_TOTAL, nRank);
+    int sigtotal = sporkManager.GetSporkValue(SPORK_11_MNSIG_TOTAL);
+    if (nRank > sigtotal) { // MNPAYMENTS_SIGNATURES_TOTAL
+        LogPrint("mnpayments", "CMasternodePayments::ProcessBlock -- Masternode not in the top %d (%d)\n", sigtotal, nRank);
         return false;
     }
 
@@ -871,7 +874,7 @@ void CMasternodePayments::CheckBlockVotes(int nBlockHeight)
                                   mn.second.outpoint.ToStringShort());
         }
 
-        if (++i >= MNPAYMENTS_SIGNATURES_TOTAL) break;
+        if (++i >= sporkManager.GetSporkValue(SPORK_11_MNSIG_TOTAL)) break; // MNPAYMENTS_SIGNATURES_TOTAL
     }
 
     if (mapMasternodesDidNotVote.empty()) {
@@ -1020,8 +1023,9 @@ void CMasternodePayments::RequestLowDataPaymentBlocks(CNode* pnode, CConnman& co
     while(it != mapMasternodeBlocks.end()) {
         int nTotalVotes = 0;
         bool fFound = false;
+        int sigreq = sporkManager.GetSporkValue(SPORK_4_MNSIG_REQ);
         for (const auto& payee : it->second.vecPayees) {
-            if(payee.GetVoteCount() >= MNPAYMENTS_SIGNATURES_REQUIRED) {
+            if(payee.GetVoteCount() >= sigreq) { // MNPAYMENTS_SIGNATURES_REQUIRED
                 fFound = true;
                 break;
             }
@@ -1029,7 +1033,8 @@ void CMasternodePayments::RequestLowDataPaymentBlocks(CNode* pnode, CConnman& co
         }
         // A clear winner (MNPAYMENTS_SIGNATURES_REQUIRED+ votes) was found
         // or no clear winner was found but there are at least avg number of votes
-        if(fFound || nTotalVotes >= (MNPAYMENTS_SIGNATURES_TOTAL + MNPAYMENTS_SIGNATURES_REQUIRED)/2) {
+        int nAverageVotes = (sporkManager.GetSporkValue(SPORK_11_MNSIG_TOTAL) + sporkManager.GetSporkValue(SPORK_4_MNSIG_REQ))/2 ;
+        if(fFound || nTotalVotes >= nAverageVotes) { // (MNPAYMENTS_SIGNATURES_TOTAL + MNPAYMENTS_SIGNATURES_REQUIRED)/2 
             // so just move to the next block
             ++it;
             continue;
@@ -1079,7 +1084,8 @@ std::string CMasternodePayments::ToString() const
 
 bool CMasternodePayments::IsEnoughData() const
 {
-    float nAverageVotes = (MNPAYMENTS_SIGNATURES_TOTAL + MNPAYMENTS_SIGNATURES_REQUIRED) / 2;
+  //float nAverageVotes = (MNPAYMENTS_SIGNATURES_TOTAL + MNPAYMENTS_SIGNATURES_REQUIRED) / 2;
+    float nAverageVotes = (sporkManager.GetSporkValue(SPORK_11_MNSIG_TOTAL) + sporkManager.GetSporkValue(SPORK_4_MNSIG_REQ)) / 2;
     int nStorageLimit = GetStorageLimit();
     return GetBlockCount() > nStorageLimit && GetVoteCount() > nStorageLimit * nAverageVotes;
 }

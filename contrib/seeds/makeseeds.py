@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # Copyright (c) 2013-2016 The Bitcoin Core developers
+# Copyright (c) 2018-2019 The 01Coin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
@@ -10,7 +11,7 @@ NSEEDS=512
 
 MAX_SEEDS_PER_ASN=4
 
-MIN_PROTOCOL_VERSION = 70208
+MIN_PROTOCOL_VERSION = 70210
 MAX_LAST_SEEN_DIFF = 60 * 60 * 24 * 1 # 1 day
 MAX_LAST_PAID_DIFF = 60 * 60 * 24 * 30 # 1 month
 

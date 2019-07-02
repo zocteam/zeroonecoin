@@ -1,7 +1,7 @@
 // Copyright (c) 2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin Core developers
-// Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
+// Copyright (c) 2009-2019 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -275,9 +275,13 @@ public:
         assert(genesis.hashMerkleRoot == uint256S("0xac77519bea8d4afceb11cfafd74d19643f660d5f94fd89c84ca84f884fa20648"));
 
         vFixedSeeds.clear();
+        vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
         vSeeds.clear();
-        //vSeeds.push_back(CDNSSeedData("zeroone.network",  "testnet-dns.zeroone.network"));
-        //vSeeds.push_back(CDNSSeedData("zeroone.network",  "testnet2-dns.zeroone.network"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "testseed1.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "testseed2.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "testseed3.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "testseed4.01coin.io"));
+        vSeeds.push_back(CDNSSeedData("01coin.io", "testseed5.01coin.io"));
 
         // Testnet ZeroOne addresses start with 'n'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,112);

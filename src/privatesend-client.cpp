@@ -1,4 +1,5 @@
-// Copyright (c) 2014-2017 The Dash Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #include "privatesend-client.h"
@@ -23,7 +24,7 @@ CPrivateSendClient privateSendClient;
 void CPrivateSendClient::ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman)
 {
     if(fMasternodeMode) return;
-    if(fLiteMode) return; // ignore all Dash related functionality
+    if(fLiteMode) return; // ignore all ZOC related functionality
     if(!masternodeSync.IsBlockchainSynced()) return;
 
     if(strCommand == NetMsgType::DSQUEUE) {
@@ -1451,7 +1452,7 @@ void CPrivateSendClient::UpdatedBlockTip(const CBlockIndex *pindex)
 //TODO: Rename/move to core
 void ThreadCheckPrivateSendClient(CConnman& connman)
 {
-    if(fLiteMode) return; // disable all Dash specific functionality
+    if(fLiteMode) return; // disable all ZOC specific functionality
     if(fMasternodeMode) return; // no client-side mixing on masternodes
 
     static bool fOneThread;

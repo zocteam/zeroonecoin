@@ -1,5 +1,7 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2019 Satoshi Nakamoto
+// Copyright (c) 2009-2019 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -394,6 +396,10 @@ public:
     unsigned int GetReceiveFloodSize() const;
 
     void WakeMessageHandler();
+
+    // ZOC: FindNode is used in masternodeman.cpp
+    CNode* FindNode(const CService& addr);
+
 private:
     struct ListenSocket {
         SOCKET socket;
@@ -416,7 +422,7 @@ private:
     CNode* FindNode(const CNetAddr& ip);
     CNode* FindNode(const CSubNet& subNet);
     CNode* FindNode(const std::string& addrName);
-    CNode* FindNode(const CService& addr);
+  //CNode* FindNode(const CService& addr);
 
     bool AttemptToEvictConnection();
     CNode* ConnectNode(CAddress addrConnect, const char *pszDest = NULL, bool fCountFailure = false);

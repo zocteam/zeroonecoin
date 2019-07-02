@@ -1,5 +1,5 @@
-// Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -20,13 +20,17 @@ std::map<uint256, CSporkMessage> mapSporks;
 std::map<int, int64_t> mapSporkDefaults = {
     {SPORK_2_INSTANTSEND_ENABLED,            0},             // ON
     {SPORK_3_INSTANTSEND_BLOCK_FILTERING,    0},             // ON
-    {SPORK_5_INSTANTSEND_MAX_VALUE,          1000},          // 1000 ZOC
+    {SPORK_4_MNSIG_REQ,                      6},             // ON - MNPAYMENTS_SIGNATURES_REQUIRED (tunable)
+    {SPORK_5_INSTANTSEND_MAX_VALUE,          100001},        // ON - InstaSend up to 100000 ZOC
     {SPORK_6_NEW_SIGS,                       4070908800ULL}, // OFF
-    {SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT, 4070908800ULL}, // OFF
+    {SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK,    4070908800ULL}, // OFF
+    {SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT, 0},             // ON
     {SPORK_9_SUPERBLOCKS_ENABLED,            4070908800ULL}, // OFF
-    {SPORK_10_MASTERNODE_PAY_UPDATED_NODES,  4070908800ULL}, // OFF
+    {SPORK_10_MASTERNODE_PAY_UPDATED_NODES,  1562371199ULL}, // ON - GMT: Friday, 5 July 2019 23:59:59
+    {SPORK_11_MNSIG_TOTAL,                   10},            // ON - MNPAYMENTS_SIGNATURES_TOTAL (tunable)
     {SPORK_12_RECONSIDER_BLOCKS,             0},             // 0 BLOCKS
-    {SPORK_14_REQUIRE_SENTINEL_FLAG,         4070908800ULL}, // OFF
+    {SPORK_13_TESTMNGB,                      4070908800ULL}, // OFF
+    {SPORK_14_REQUIRE_SENTINEL_FLAG,         1562371199ULL}, // ON - GMT: Friday, 5 July 2019 23:59:59
 };
 
 void CSporkManager::ProcessSpork(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman)
@@ -164,12 +168,16 @@ int CSporkManager::GetSporkIDByName(const std::string& strName)
 {
     if (strName == "SPORK_2_INSTANTSEND_ENABLED")               return SPORK_2_INSTANTSEND_ENABLED;
     if (strName == "SPORK_3_INSTANTSEND_BLOCK_FILTERING")       return SPORK_3_INSTANTSEND_BLOCK_FILTERING;
+    if (strName == "SPORK_4_MNSIG_REQ")                         return SPORK_4_MNSIG_REQ;
     if (strName == "SPORK_5_INSTANTSEND_MAX_VALUE")             return SPORK_5_INSTANTSEND_MAX_VALUE;
     if (strName == "SPORK_6_NEW_SIGS")                          return SPORK_6_NEW_SIGS;
+    if (strName == "SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK")       return SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK;
     if (strName == "SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT")    return SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT;
     if (strName == "SPORK_9_SUPERBLOCKS_ENABLED")               return SPORK_9_SUPERBLOCKS_ENABLED;
     if (strName == "SPORK_10_MASTERNODE_PAY_UPDATED_NODES")     return SPORK_10_MASTERNODE_PAY_UPDATED_NODES;
+    if (strName == "SPORK_11_MNSIG_TOTAL")                      return SPORK_11_MNSIG_TOTAL;
     if (strName == "SPORK_12_RECONSIDER_BLOCKS")                return SPORK_12_RECONSIDER_BLOCKS;
+    if (strName == "SPORK_13_TESTMNGB")                         return SPORK_13_TESTMNGB;
     if (strName == "SPORK_14_REQUIRE_SENTINEL_FLAG")            return SPORK_14_REQUIRE_SENTINEL_FLAG;
 
     LogPrint("spork", "CSporkManager::GetSporkIDByName -- Unknown Spork name '%s'\n", strName);
@@ -181,12 +189,16 @@ std::string CSporkManager::GetSporkNameByID(int nSporkID)
     switch (nSporkID) {
         case SPORK_2_INSTANTSEND_ENABLED:               return "SPORK_2_INSTANTSEND_ENABLED";
         case SPORK_3_INSTANTSEND_BLOCK_FILTERING:       return "SPORK_3_INSTANTSEND_BLOCK_FILTERING";
+        case SPORK_4_MNSIG_REQ:                         return "SPORK_4_MNSIG_REQ";
         case SPORK_5_INSTANTSEND_MAX_VALUE:             return "SPORK_5_INSTANTSEND_MAX_VALUE";
         case SPORK_6_NEW_SIGS:                          return "SPORK_6_NEW_SIGS";
+        case SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK:       return "SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK";
         case SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT:    return "SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT";
         case SPORK_9_SUPERBLOCKS_ENABLED:               return "SPORK_9_SUPERBLOCKS_ENABLED";
         case SPORK_10_MASTERNODE_PAY_UPDATED_NODES:     return "SPORK_10_MASTERNODE_PAY_UPDATED_NODES";
+        case SPORK_11_MNSIG_TOTAL:                      return "SPORK_11_MNSIG_TOTAL";
         case SPORK_12_RECONSIDER_BLOCKS:                return "SPORK_12_RECONSIDER_BLOCKS";
+        case SPORK_13_TESTMNGB:                         return "SPORK_13_TESTMNGB";
         case SPORK_14_REQUIRE_SENTINEL_FLAG:            return "SPORK_14_REQUIRE_SENTINEL_FLAG";
         default:
             LogPrint("spork", "CSporkManager::GetSporkNameByID -- Unknown Spork ID %d\n", nSporkID);

@@ -101,7 +101,7 @@ script:
     - if [ "$RUN_TESTS" = "true" ]; then travis_wait 30 make $MAKEJOBS check VERBOSE=1; fi
     - if [ "$RUN_TESTS" = "true" ]; then qa/pull-tester/rpc-tests.py --coverage; fi
     - cd ../..
-    - if [ "$DOCKER_BUILD" = "true" ]; then BUILD_DIR=build/dashcore-$HOST ./docker/build-docker.sh; fi
+    - if [ "$DOCKER_BUILD" = "true" ]; then BUILD_DIR=build/zeroonecore-$HOST ./docker/build-docker.sh; fi
 after_script:
     - echo $TRAVIS_COMMIT_RANGE
     - echo $TRAVIS_COMMIT_LOG

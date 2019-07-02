@@ -1031,8 +1031,8 @@
     </message>
     <message>
         <location line="+9"/>
-        <source>Can vary +/- %1 duff(s) per input.</source>
-        <translation>Can vary +/- %1 duff(s) per input.</translation>
+        <source>Can vary +/- %1 zuff(s) per input.</source>
+        <translation>Can vary +/- %1 zuff(s) per input.</translation>
     </message>
     <message>
         <location line="+43"/>
@@ -3635,13 +3635,13 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     </message>
     <message>
         <location line="-455"/>
-        <source>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 duffs in fee,&lt;br /&gt;while &quot;at least&quot; pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 duffs in fee,&lt;br /&gt;while &quot;at least&quot; pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</translation>
+        <source>If the custom fee is set to 1000 zuffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 zuffs in fee,&lt;br /&gt;while &quot;at least&quot; pays 1000 zuffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>If the custom fee is set to 1000 zuffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 zuffs in fee,&lt;br /&gt;while &quot;at least&quot; pays 1000 zuffs. For transactions bigger than a kilobyte both pay by kilobyte.</translation>
     </message>
     <message>
         <location line="+16"/>
-        <source>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 duffs in fee,&lt;br /&gt;while &quot;total at least&quot; pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 duffs in fee,&lt;br /&gt;while &quot;total at least&quot; pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</translation>
+        <source>If the custom fee is set to 1000 zuffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 zuffs in fee,&lt;br /&gt;while &quot;total at least&quot; pays 1000 zuffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>If the custom fee is set to 1000 zuffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 zuffs in fee,&lt;br /&gt;while &quot;total at least&quot; pays 1000 zuffs. For transactions bigger than a kilobyte both pay by kilobyte.</translation>
     </message>
     <message>
         <location line="+33"/>

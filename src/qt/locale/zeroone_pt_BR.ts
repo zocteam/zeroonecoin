@@ -814,8 +814,8 @@
         <translation>Este texto fica vermelho se qualquer destinatário receber uma quantidade menor que que o dust.</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 duff(s) per input.</source>
-        <translation>Pode variar +/- %1 duff(s) por entrada.</translation>
+        <source>Can vary +/- %1 zuff(s) per input.</source>
+        <translation>Pode variar +/- %1 zuff(s) por entrada.</translation>
     </message>
     <message>
         <source>(no label)</source>
