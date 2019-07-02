@@ -23,6 +23,7 @@ const std::string CLIENT_NAME("ZeroOne Core");
 #define BUILD_SUFFIX 2E8EE
 
 
+
 /**
  * The following part of the code determines the CLIENT_BUILD variable.
  * Several mechanisms are used for this:
