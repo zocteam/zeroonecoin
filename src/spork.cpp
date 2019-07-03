@@ -26,11 +26,11 @@ std::map<int, int64_t> mapSporkDefaults = {
     {SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK,    4070908800ULL}, // OFF
     {SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT, 0},             // ON
     {SPORK_9_SUPERBLOCKS_ENABLED,            4070908800ULL}, // OFF
-    {SPORK_10_MASTERNODE_PAY_UPDATED_NODES,  1562371199ULL}, // ON - GMT: Friday, 5 July 2019 23:59:59
+    {SPORK_10_MASTERNODE_PAY_UPDATED_NODES,  1563623999ULL}, // ON - GMT: Saturday, 20 July 2019 11:59:59
     {SPORK_11_MNSIG_TOTAL,                   10},            // ON - MNPAYMENTS_SIGNATURES_TOTAL (tunable)
     {SPORK_12_RECONSIDER_BLOCKS,             0},             // 0 BLOCKS
     {SPORK_13_TESTMNGB,                      4070908800ULL}, // OFF
-    {SPORK_14_REQUIRE_SENTINEL_FLAG,         1562371199ULL}, // ON - GMT: Friday, 5 July 2019 23:59:59
+    {SPORK_14_REQUIRE_SENTINEL_FLAG,         1563623999ULL}, // ON - GMT: Saturday, 20 July 2019 11:59:59
 };
 
 void CSporkManager::ProcessSpork(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman)
