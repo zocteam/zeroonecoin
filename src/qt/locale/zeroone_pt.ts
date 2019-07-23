@@ -757,8 +757,8 @@ Endereço: %4
         <translation>média-alta</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 duff(s) per input.</source>
-        <translation>Pode variar +/- %1 duff(s) por input</translation>
+        <source>Can vary +/- %1 zuff(s) per input.</source>
+        <translation>Pode variar +/- %1 zuff(s) por input</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -3654,8 +3654,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Aviso: Por favor verifique que a data e a hora do computador está correcta! Se o relógio estiver errado o ZeroOne Core não vai funcionar correctamente.</translation>
     </message>
     <message>
-        <source>(9999 could be used only on mainnet)</source>
-        <translation>(9999 apenas pode ser usado para mainnet)</translation>
+        <source>(10000 could be used only on mainnet)</source>
+        <translation>(10000 apenas pode ser usado para mainnet)</translation>
     </message>
     <message>
         <source>(default: %s)</source>
@@ -3693,11 +3693,15 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     </message>
     <message>
         <source>Copyright (C) 2009-%i The Bitcoin Core Developers</source>
-        <translation>Copyright (C) 2009-%i The Bitcoin Core Developers</translation>
+        <translation>Copyright (C) 2009-%i Bitcoin Desenvolvedores</translation>
     </message>
     <message>
-        <source>Copyright (C) 2014-%i The ZeroOne Core Developers</source>
-        <translation>Copyright (C) 2014-%i ZeroOne Core Developers</translation>
+        <source>Copyright (C) 2014-%i The Dash Core Developers</source>
+        <translation>Copyright (C) 2014-%i Dash Desenvolvedores</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2018-%i The ZeroOne Core Developers</source>
+        <translation>Copyright (C) 2018-%i 01Coin Desenvolvedores</translation>
     </message>
     <message>
         <source>Could not parse -rpcbind value %s as network address</source>
@@ -4064,8 +4068,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>masternodeprivkey inválida. Por favor reveja a documentação.</translation>
     </message>
     <message>
-        <source>(must be 9999 for mainnet)</source>
-        <translation>(deve ser 9999 para mainnet)</translation>
+        <source>(must be 10000 for mainnet)</source>
+        <translation>(deve ser 10000 para mainnet)</translation>
     </message>
     <message>
         <source>Can't find random Masternode.</source>

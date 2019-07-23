@@ -1,5 +1,5 @@
-// Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -29,7 +29,7 @@ private:
 
     static const int LAST_PAID_SCAN_BLOCKS;
 
-    static const int MIN_POSE_PROTO_VERSION     = 70203;
+    static const int MIN_POSE_PROTO_VERSION     = 70210;
     static const int MAX_POSE_CONNECTIONS       = 10;
     static const int MAX_POSE_RANK              = 10;
     static const int MAX_POSE_BLOCKS            = 10;
@@ -87,6 +87,7 @@ private:
     void SyncAll(CNode* pnode, CConnman& connman);
 
     void PushDsegInvs(CNode* pnode, const CMasternode& mn);
+    void PunishNode(const CService& addr, CConnman& connman);
 
 public:
     // Keep track of all broadcasts I've seen
@@ -161,7 +162,7 @@ public:
     int CountEnabled(int nProtocolVersion = -1);
 
     /// Count Masternodes by network type - NET_IPV4, NET_IPV6, NET_TOR
-    // int CountByIP(int nNetworkType);
+    int CountByIP(int nNetworkType);
 
     void DsegUpdate(CNode* pnode, CConnman& connman);
 

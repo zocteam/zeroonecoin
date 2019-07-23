@@ -52,11 +52,11 @@ reachable from the Tor network. Add these lines to your /etc/tor/torrc (or equiv
 config file):
 
 	HiddenServiceDir /var/lib/tor/zeroonecore-service/
-	HiddenServicePort 9999 127.0.0.1:9999
-	HiddenServicePort 19999 127.0.0.1:19999
+	HiddenServicePort 10000 127.0.0.1:10000
+	HiddenServicePort 10002 127.0.0.1:10002
 
 The directory can be different of course, but (both) port numbers should be equal to
-your zerooned's P2P listen port (9999 by default).
+your zerooned's P2P listen port (10000 by default).
 
 	-externalip=X   You can tell ZeroOne Core about its publicly reachable address using
 	                this option, and this can be a .onion address. Given the above
@@ -91,7 +91,7 @@ as well, use `discover` instead:
 
 	./zerooned ... -discover
 
-and open port 9999 on your firewall (or use -upnp).
+and open port 10000 on your firewall (or use -upnp).
 
 If you only want to use Tor to reach onion addresses, but not use it as a proxy
 for normal IPv4/IPv6 communication, use:
@@ -99,23 +99,7 @@ for normal IPv4/IPv6 communication, use:
 	./zerooned -onion=127.0.0.1:9050 -externalip=ssapp53tmftyjmjb.onion -discover
 
 
-3. List of known ZeroOne Core Tor relays
-------------------------------------
-
-* [darkcoinie7ghp67.onion](http://darkcoinie7ghp67.onion/)
-* [drktalkwaybgxnoq.onion](http://drktalkwaybgxnoq.onion/)
-* [drkcoinooditvool.onion](http://drkcoinooditvool.onion/)
-* [darkcoxbtzggpmcc.onion](http://darkcoxbtzggpmcc.onion/)
-* [ssapp53tmftyjmjb.onion](http://ssapp53tmftyjmjb.onion/)
-* [j2dfl3cwxyxpbc7s.onion](http://j2dfl3cwxyxpbc7s.onion/)
-* [vf6d2mxpuhh2cbxt.onion](http://vf6d2mxpuhh2cbxt.onion/)
-* [rj24sicr6i4vsnkv.onion](http://rj24sicr6i4vsnkv.onion/)
-* [wrwx2dy7jyh32o53.onion](http://wrwx2dy7jyh32o53.onion/)
-* [f5ekot4ajkbe23gt.onion](http://f5ekot4ajkbe23gt.onion/)
-* [dshtord4mqvgzqev.onion](http://dshtord4mqvgzqev.onion/)
-
-
-4. Automatically listen on Tor
+3. Automatically listen on Tor
 --------------------------------
 
 Starting with Tor version 0.2.7.1 it is possible, through Tor's control socket
@@ -142,7 +126,7 @@ which has the appropriate permissions. An alternative authentication method is t
 of the `-torpassword` flag and a `hash-password` which can be enabled and specified in 
 Tor configuration.
 
-4. Privacy recommendations
+5. Privacy recommendations
 ---------------------------
 
 - Do not add anything but bitcoin ports to the hidden service created in section 2.

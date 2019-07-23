@@ -1,5 +1,6 @@
-# Copyright (c) 2013-2016 The Bitcoin Core developers
-# Copyright (c) 2014-2018 The Dash Core developers
+# Copyright (c) 2013-2019 The Bitcoin Core developers
+# Copyright (c) 2014-2019 The Dash Core developers
+# Copyright (c) 2018-2019 The ZeroOne Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -345,6 +346,10 @@ RES_ICONS = \
   qt/res/icons/light/fontsmaller.png \
   qt/res/icons/light/transaction_abandoned.png \
   qt/res/icons/light/network_disabled.png \
+  qt/res/icons/light/twitter.png \
+  qt/res/icons/light/discord.png \
+  qt/res/icons/light/github.png \
+  qt/res/icons/light/telegram.png \
   qt/res/icons/light-retro/add.png \
   qt/res/icons/light-retro/address-book.png \
   qt/res/icons/light-retro/browse.png \
