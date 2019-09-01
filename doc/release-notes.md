@@ -1,4 +1,4 @@
-# 01coin version 0.12.3.4
+# 01coin version 0.12.3.6
 
 Release is now available from:
 
@@ -19,19 +19,19 @@ If you are running an older version, shut it down. Wait until it has completely 
 
 ### Downgrade warning
 
-Downgrade to a version < 0.12.3.4
+Downgrade to a version < 0.12.3.6
 
-Because release 0.12.3.4 is a mandatory upgrade release, downgrading to an earlier version is not supported.
+Because release 0.12.3.6 is a mandatory upgrade release, downgrading to an earlier version is not supported.
 
 
 ## Notable changes
 
-- Enforces Spork 8 as of block 159551 (approx. Nov. 24)
+- Protocol 70211
 - All masternode owners and miners should upgrade as soon as possible
 
-### 0.12.3.4 Change log
+### 0.12.3.6 Change log
 
-See detailed [set of changes](https://github.com/zocteam/zeroonecoin/compare/v0.12.3.3...zocteam:v0.12.3.4).
+See detailed [set of changes](https://github.com/zocteam/zeroonecoin/compare/v0.12.3.5...zocteam:v0.12.3.6).
 
 
 ## Credits
