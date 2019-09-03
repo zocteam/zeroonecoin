@@ -121,10 +121,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nThreshold = 3226; // 80% of 4032
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000018ef4616e2f127"); // 92302
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000026d386e4a143b1"); // 303181
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x000000001f3e5914543cb7f4b76b54dcc01cd9b0002b1c8f5f69c97795567b08"); // 92302
+        consensus.defaultAssumeValid = uint256S("0x00000000270c57081c1a6c1c0e1c08eaf892577325e73a6921e6ef96fe027897"); // 303181
 
 
         /**
@@ -185,12 +185,18 @@ public:
 
         strSporkAddress = "ZKMVhZfkKCMoGKRKa3yPTZKBugsd2hpn6U";
 
+        checkpointData = (CCheckpointData) {
+            boost::assign::map_list_of
+            ( 101101, uint256S("0x000000001136784bed466075637c1885dc415c3bd65d7989bd159e7d851bc9f2"))
+            ( 202202, uint256S("0x000000002ab69b401bac78c200a92bb1c8c2273ba2217f07cf8f8d935f252e9f"))
+            ( 303202, uint256S("0x0000000095e87ff2246bc208bab6beaf4884dc18ef02bce5d672fd5cc91898fc"))
+        };
 
         chainTxData = ChainTxData{
-            1531950233, // * UNIX timestamp of last known number of transactions
-            118222,    // * total number of transactions between genesis and that timestamp
-            //   (the tx=... number in the SetBestChain debug.log lines)
-            0.014         // * estimated number of transactions per second after that timestamp
+            1567534245,// * UNIX timestamp of last known number of transactions
+            109482,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
+                       //   (the tx=... number in the SetBestChain debug.log lines)
+            0.002      // * estimated number of transactions per second after that timestamp (109482/(1567534245-1517407200)=0.002)
         };
     }
 };
@@ -257,10 +263,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nThreshold = 50; // 50% of 100
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000000000117a8d37ae"); // 143200
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000005328bc5753"); // 58802
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x00000f6b57a4e5ca58a71371716c1aabf580187938b4a86c5a78680468a1295a"); // 143200
+        consensus.defaultAssumeValid = uint256S("0x000000730644fcea8b9943c2b28e741da29fddb09886969f3a93b60ac4529359"); // 58802
 
         pchMessageStart[0] = 0xd1;
         pchMessageStart[1] = 0x2b;
@@ -309,12 +315,20 @@ public:
 
         strSporkAddress = "nJqRtXk5iKZTv7R5Xs8jUEX5E7LBZFTmMu";
 
+        checkpointData = (CCheckpointData) {
+            boost::assign::map_list_of
+            ( 10101, uint256S("0x000001e73cada5795a61a93a3ecb8670bb472ef2436bb9af4742f2afde7539af"))
+            ( 20202, uint256S("0x00000b2ec737f6bdca4b61b2d7eca2258cf492dbd57d9efc96ab487542283ff2"))
+            ( 30303, uint256S("0x00000c7c0529792aed25d679445000231c32c1440c2f5d135573790f30e93ee8"))
+            ( 40404, uint256S("0x00000c8afa54dd0191f1622b6c0cf09bc7dcfe59d06ad1f14970038eb94a18bc"))
+            ( 50505, uint256S("0x000002b5145f677980f59dd2ea2ab18e3d9470a72c20c058b3e7b5a96e717407"))
+        };
 
         chainTxData = ChainTxData{
-            1531950233, // * UNIX timestamp of last known number of transactions
-            24063,    // * total number of transactions between genesis and that timestamp
-            //   (the tx=... number in the SetBestChain debug.log lines)
-            0.0134         // * estimated number of transactions per second after that timestamp
+            1567534245,// * UNIX timestamp of last known number of transactions
+            49418,     // * total number of transactions between genesis and that timestamp (transactions from gettxoutsetinfo)
+                       //   (the tx=... number in the SetBestChain debug.log lines)
+            0.001      // * estimated number of transactions per second after that timestamp (49418/(1567534245-1517407200)=0.001)
         };
 
     }
