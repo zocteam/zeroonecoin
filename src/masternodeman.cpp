@@ -114,12 +114,7 @@ void CMasternodeMan::AskForMN(CNode* pnode, const COutPoint& outpoint, CConnman&
         LogPrintf("CMasternodeMan::AskForMN -- Asking peer %s for missing masternode entry for the first time: %s\n", addrSquashed.ToString(), outpoint.ToStringShort());
     }
     mWeAskedForMasternodeListEntry[outpoint][addrSquashed] = GetTime() + DSEG_UPDATE_SECONDS;
-
-    if (pnode->GetSendVersion() == 70208) {
-        connman.PushMessage(pnode, msgMaker.Make(NetMsgType::DSEG, CTxIn(outpoint)));
-    } else {
-        connman.PushMessage(pnode, msgMaker.Make(NetMsgType::DSEG, outpoint));
-    }
+    connman.PushMessage(pnode, msgMaker.Make(NetMsgType::DSEG, outpoint));
 }
 
 bool CMasternodeMan::AllowMixing(const COutPoint &outpoint)
@@ -428,12 +423,7 @@ void CMasternodeMan::DsegUpdate(CNode* pnode, CConnman& connman)
             }
         }
     }
-
-    if (pnode->GetSendVersion() == 70208) {
-        connman.PushMessage(pnode, msgMaker.Make(NetMsgType::DSEG, CTxIn()));
-    } else {
-        connman.PushMessage(pnode, msgMaker.Make(NetMsgType::DSEG, COutPoint()));
-    }
+    connman.PushMessage(pnode, msgMaker.Make(NetMsgType::DSEG, COutPoint()));
     int64_t askAgain = GetTime() + DSEG_UPDATE_SECONDS;
     mWeAskedForMasternodeList[addrSquashed] = askAgain;
 
@@ -882,14 +872,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand,
         if (!masternodeSync.IsSynced()) return;
 
         COutPoint masternodeOutpoint;
-
-        if (pfrom->nVersion == 70208) {
-            CTxIn vin;
-            vRecv >> vin;
-            masternodeOutpoint = vin.prevout;
-        } else {
-            vRecv >> masternodeOutpoint;
-        }
+        vRecv >> masternodeOutpoint;
 
         LogPrint("masternode", "DSEG -- Masternode list, masternode=%s\n", masternodeOutpoint.ToStringShort());
 
@@ -1150,8 +1133,8 @@ void CMasternodeMan::CheckSameAddr()
 
     // ban duplicates
     for (auto& pmn : vBan) {
-        LogPrintf("CMasternodeMan::CheckSameAddr -- increasing PoSe ban score for masternode %s\n", pmn->outpoint.ToStringShort());
-        pmn->IncreasePoSeBanScore();
+        LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban for masternode %s\n", pmn->outpoint.ToStringShort());
+        pmn->PoSeBan();
     }
 }
 
