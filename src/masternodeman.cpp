@@ -1141,9 +1141,10 @@ void CMasternodeMan::CheckSameAddr()
 bool CMasternodeMan::VerifyRequest(const CAddress& addr, CConnman& connman)
 {
     if(netfulfilledman.HasFulfilledRequest(addr, strprintf("%s", NetMsgType::MNVERIFY)+"-request")) {
-        // we already asked for verification, not a good idea to do this too often, skip it
-        LogPrint("masternode", "CMasternodeMan::SendVerifyRequest -- too many requests, skipping... addr=%s\n", addr.ToString());
-        return false;
+        // we already asked for verification, not a good idea to do this too often, but we can not skip it
+        LogPrint("masternode", "CMasternodeMan::SendVerifyRequest -- do we repeat request, just asking... addr=%s\n", addr.ToString());
+        // now, this is a little misbehaving only, we as real nodes we send requests
+        // return false;
     }
 
     return !connman.IsMasternodeOrDisconnectRequested(addr);
@@ -1196,7 +1197,8 @@ void CMasternodeMan::SendVerifyReply(CNode* pnode, CMasternodeVerification& mnv,
     if(netfulfilledman.HasFulfilledRequest(pnode->addr, strprintf("%s", NetMsgType::MNVERIFY)+"-reply")) {
         // peer should not ask us that often
         LogPrintf("MasternodeMan::SendVerifyReply -- ERROR: peer already asked me recently, peer=%d\n", pnode->id);
-        Misbehaving(pnode->id, 20);
+        // it is a little misbehaving only, probable only real nodes will send a request
+        Misbehaving(pnode->id, 02);        
         return;
     }
 
@@ -1248,7 +1250,9 @@ void CMasternodeMan::ProcessVerifyReply(CNode* pnode, CMasternodeVerification& m
     // did we even ask for it? if that's the case we should have matching fulfilled request
     if(!netfulfilledman.HasFulfilledRequest(pnode->addr, strprintf("%s", NetMsgType::MNVERIFY)+"-request")) {
         LogPrintf("CMasternodeMan::ProcessVerifyReply -- ERROR: we didn't ask for verification of %s, peer=%d\n", pnode->addr.ToString(), pnode->id);
-        Misbehaving(pnode->id, 20);
+        // we could have crashed and lost the copy requestd
+        // it is a little misbehaving only, probable only real nodes will send a reply
+        Misbehaving(pnode->id, 02);
         return;
     }
 
@@ -1278,8 +1282,10 @@ void CMasternodeMan::ProcessVerifyReply(CNode* pnode, CMasternodeVerification& m
     // we already verified this address, why node is spamming?
     if(netfulfilledman.HasFulfilledRequest(pnode->addr, strprintf("%s", NetMsgType::MNVERIFY)+"-done")) {
         LogPrintf("CMasternodeMan::ProcessVerifyReply -- ERROR: already verified %s recently\n", pnode->addr.ToString());
-        Misbehaving(pnode->id, 20);
-        return;
+        // it is a little misbehaving only, probable only real nodes will send a reply
+        Misbehaving(pnode->id, 02);
+        // process the reply anyway
+        // return;
     }
 
     {
@@ -1353,17 +1359,21 @@ void CMasternodeMan::ProcessVerifyReply(CNode* pnode, CMasternodeVerification& m
                 }
             }
         }
-        // no real masternode found?...
-        if(!prealMasternode) {
+        // real masternode found?...
+        if(prealMasternode) {
+            LogPrintf("CMasternodeMan::ProcessVerifyReply -- verified real masternode %s for addr %s\n",
+                    prealMasternode->outpoint.ToStringShort(), pnode->addr.ToString());
+        }
+        else {
+            // no real masternode found?...
             // this should never be the case normally,
             // only if someone is trying to game the system in some way or smth like that
             LogPrintf("CMasternodeMan::ProcessVerifyReply -- ERROR: no real masternode found for addr %s\n", pnode->addr.ToString());
-            Misbehaving(pnode->id, 20);
-            return;
+            // negative verify costs reputation
+            Misbehaving(pnode->id, 40);
+            // return;
         }
-        LogPrintf("CMasternodeMan::ProcessVerifyReply -- verified real masternode %s for addr %s\n",
-                    prealMasternode->outpoint.ToStringShort(), pnode->addr.ToString());
-        // increase ban score for everyone else
+        // increase ban score for everyone else found to be fake
         for (const auto& pmn : vpMasternodesToBan) {
             pmn->IncreasePoSeBanScore();
             LogPrint("masternode", "CMasternodeMan::ProcessVerifyReply -- increased PoSe ban score for %s addr %s, new score %d\n",
