@@ -61,8 +61,9 @@ void CInstantSend::ProcessMessage(CNode* pfrom, const std::string& strCommand, C
     {
         if(pfrom->nVersion < MIN_INSTANTSEND_PROTO_VERSION) {
             LogPrint("instantsend", "TXLOCKVOTE -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
-            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", MIN_INSTANTSEND_PROTO_VERSION)));
+            // don't waste time, process only relevant nodes
+            //connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
+            //                   strprintf("Version must be %d or greater", MIN_INSTANTSEND_PROTO_VERSION)));
             return;
         }
 
