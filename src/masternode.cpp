@@ -456,6 +456,9 @@ bool CMasternodeBroadcast::SimpleCheck(int& nDos)
     if(nProtocolVersion < mnpayments.GetMinMasternodePaymentsProto()) {
         LogPrintf("CMasternodeBroadcast::SimpleCheck -- outdated Masternode: masternode=%s  nProtocolVersion=%d\n", outpoint.ToStringShort(), nProtocolVersion);
         nActiveState = MASTERNODE_UPDATE_REQUIRED;
+        // dont waste time, disconnect
+        nDos = 100;
+        return false;
     }
 
     CScript pubkeyScript;
@@ -857,6 +860,8 @@ bool CMasternodePing::CheckAndUpdate(CMasternode* pmn, bool fFromNewBroadcast, i
     if(!fFromNewBroadcast) {
         if (pmn->IsUpdateRequired()) {
             LogPrint("masternode", "CMasternodePing::CheckAndUpdate -- masternode protocol is outdated, masternode=%s\n", masternodeOutpoint.ToStringShort());
+            // old node, disconnect
+            nDos = 100;
             return false;
         }
 
@@ -870,7 +875,8 @@ bool CMasternodePing::CheckAndUpdate(CMasternode* pmn, bool fFromNewBroadcast, i
         BlockMap::iterator mi = mapBlockIndex.find(blockHash);
         if ((*mi).second && (*mi).second->nHeight < chainActive.Height() - 24) {
             LogPrintf("CMasternodePing::CheckAndUpdate -- Masternode ping is invalid, block hash is too old: masternode=%s  blockHash=%s\n", masternodeOutpoint.ToStringShort(), blockHash.ToString());
-            // nDos = 1;
+            // invalid ping data causes damage to reputation
+            nDos = 1;
             return false;
         }
     }
