@@ -1011,22 +1011,25 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
     // send verify requests only if we are in top MAX_POSE_RANK
     rank_pair_vec_t::iterator it = vecMasternodeRanks.begin();
     while(it != vecMasternodeRanks.end()) {
-        if(it->first > MAX_POSE_RANK) {
-            LogPrint("masternode", "CMasternodeMan::DoFullVerificationStep -- Must be in top %d to send verify request\n",
-                        (int)MAX_POSE_RANK);
-            return;
-        }
         if(it->second.outpoint == activeMasternode.outpoint) {
             nMyRank = it->first;
-            LogPrint("masternode", "CMasternodeMan::DoFullVerificationStep -- Found self at rank %d/%d, verifying up to %d masternodes\n",
+            LogPrintf("CMasternodeMan::DoFullVerificationStep -- Found self at rank %d/%d, verifying up to %d masternodes\n",
                         nMyRank, nRanksTotal, (int)MAX_POSE_CONNECTIONS);
+            if(it->first > MAX_POSE_RANK) {
+                LogPrintf("CMasternodeMan::DoFullVerificationStep -- Must be in top %d to send verify request\n",
+                            (int)MAX_POSE_RANK);
+                return;
+            }
             break;
         }
         ++it;
     }
 
-    // edge case: list is too short and this masternode is not enabled
-    if(nMyRank == -1) return;
+    // edge case: list is too short or this masternode is not enabled
+    if(nMyRank == -1) {
+    	LogPrintf("CMasternodeMan::DoFullVerificationStep -- list is too short or this masternode is not enabled\n");
+        return;
+    }
 
     // send verify requests to up to MAX_POSE_CONNECTIONS masternodes
     // starting from MAX_POSE_RANK + nMyRank and using MAX_POSE_CONNECTIONS as a step
@@ -1145,7 +1148,7 @@ bool CMasternodeMan::VerifyRequest(const CAddress& addr, CConnman& connman)
 {
     if(netfulfilledman.HasFulfilledRequest(addr, strprintf("%s", NetMsgType::MNVERIFY)+"-request")) {
         // we already asked for verification, not a good idea to do this too often, but we can not skip it
-        LogPrint("masternode", "CMasternodeMan::SendVerifyRequest -- do we repeat request, just asking... addr=%s\n", addr.ToString());
+        LogPrintf("CMasternodeMan::SendVerifyRequest -- do we repeat request, just asking... addr=%s\n", addr.ToString());
         // now, this is a little misbehaving only, we as real nodes we send requests
         // return false;
     }
@@ -1284,7 +1287,7 @@ void CMasternodeMan::ProcessVerifyReply(CNode* pnode, CMasternodeVerification& m
 
     // we already verified this address, why node is spamming?
     if(netfulfilledman.HasFulfilledRequest(pnode->addr, strprintf("%s", NetMsgType::MNVERIFY)+"-done")) {
-        LogPrintf("CMasternodeMan::ProcessVerifyReply -- ERROR: already verified %s recently\n", pnode->addr.ToString());
+        LogPrintf("CMasternodeMan::ProcessVerifyReply -- WARN: already verified %s recently\n", pnode->addr.ToString());
         // it is a little misbehaving only, probable only real nodes will send a reply
         Misbehaving(pnode->id, 02);
         // process the reply anyway
