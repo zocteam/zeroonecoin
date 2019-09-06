@@ -26,8 +26,12 @@ Because release 0.12.3.6 is a mandatory upgrade release, downgrading to an earli
 
 ## Notable changes
 
-- Protocol 70211
-- All masternode owners and miners should upgrade as soon as possible
+- Node sw supports only protocol 70211
+- ZOC SLIP44 CoinType 399, HD(m/44'/399'/0'/0/0)
+- Sharky-miner-blocks are burnt, block reward not shared w/MN and w/no tx processed will become unmatured/unpsent/burned
+- Several cleanups and optimizations to speedup and unfreeze mnsync asset stages
+- All users, exchanges, masternode owners and miners should upgrade as soon as possible
+
 
 ### 0.12.3.6 Change log
 
