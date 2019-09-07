@@ -481,7 +481,7 @@ bool static ConnectSocketDirectly(const CService &addrConnect, SOCKET& hSocketRe
 #endif
         {
             nConnectRetCode = WSAGetLastError(); // eg. "Network is unreachable (101)"
-            LogPrintf("connect() to %s failed: %s\n", addrConnect.ToString(), NetworkErrorString(nRetCode));
+            LogPrintf("connect() to %s failed: %s\n", addrConnect.ToString(), NetworkErrorString(nConnectRetCode));
             CloseSocket(hSocket);
             return false;
         }
