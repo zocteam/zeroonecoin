@@ -1063,8 +1063,7 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
         if(VerifyRequest(addr, connman)) {
             vAddr.push_back(addr);
             nCount++;
-            // request more nodes in a batch to VerifyRequest
-            //if(nCount >= MAX_POSE_CONNECTIONS) break;
+            if(nCount >= MAX_POSE_CONNECTIONS) break;
         }
         nOffset += MAX_POSE_CONNECTIONS;
         if(nOffset >= (int)vecMasternodeRanks.size()) break;
@@ -1081,7 +1080,6 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
         LogPrintf("CMasternodeMan::DoFullVerificationStep -- verifying node using nonce %d addr=%s\n", mnv.nonce, addr.ToString());
     }
 
-    //LogPrint("masternode", "CMasternodeMan::DoFullVerificationStep -- Sent verification requests to %d masternodes\n", nCount);
     // show allways how many VerifyRequest we think we have sent
     LogPrintf("CMasternodeMan::DoFullVerificationStep -- Sent verification requests to %d masternodes\n", nCount);
 }
