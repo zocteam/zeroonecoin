@@ -1158,8 +1158,42 @@ void CMasternodeMan::CheckSameAddr()
             }
             pprevMasternode = pmn;
         }
+
+        CMasternode* pprevNode = NULL;
+        CMasternode* pverifiedNode = NULL;
+        for (const auto& pmn : vSortedByAddr) {
+            // check only the others not (pre)enabled masternodes
+            if(pmn->IsEnabled() || pmn->IsPreEnabled()) continue;
+            if(pmn->IsPoSeBanned() || pmn->IsOutpointSpent() || pmn->IsUpdateRequired()) {
+                // no need to check address
+                vBan.push_back(pmn);
+                continue;
+            }
+            // initial step
+            if(!pprevNode) {
+                pprevNode = pmn;
+                pverifiedNode = pmn->IsPoSeVerified() ? pmn : NULL;
+                continue;
+            }
+            // second+ step
+            if(pmn->addr == pprevNode->addr) {
+                if(pverifiedNode) {
+                    // another masternode with the same ip is verified, ban this one
+                    vBan.push_back(pmn);
+                } else if(pmn->IsPoSeVerified()) {
+                    // this masternode with the same ip is verified, ban previous one
+                    vBan.push_back(pprevNode);
+                    // and keep a reference to be able to ban following masternodes with the same ip
+                    pverifiedNode = pmn;
+                }
+            } else {
+                pverifiedNode = pmn->IsPoSeVerified() ? pmn : NULL;
+            }
+            pprevNode = pmn;
+        }
     }
 
+    LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban list num: %d\n", vBan.size);
     // ban duplicates
     for (auto& pmn : vBan) {
         LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban for masternode %s\n", pmn->outpoint.ToStringShort());
