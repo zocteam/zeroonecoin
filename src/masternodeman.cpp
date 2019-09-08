@@ -1008,7 +1008,7 @@ void CMasternodeMan::PunishNode(const CService& addr, CConnman& connman)
     LogPrint("masternode","CMasternodeMan::%s -- searching bad node-id at addr=%s\n", __func__, addr.ToString());
     if(found){
       LogPrintf("CMasternodeMan::PunishNode -- found Misbehaving node-id=%d at addr=%s\n", found->id, addr.ToString());
-      IncreasePoSeBanScore(outpoint);
+      //TODO: search MN and call also IncreasePoSeBanScore(outpoint);
       LOCK(cs_main);
       Misbehaving(found->id, 20);
     }
