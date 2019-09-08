@@ -894,6 +894,8 @@ void CMasternodePayments::CheckMissingVotes()
         return;
     }
 
+    LOCK(cs_mapMasternodePaymentVotes);
+
     std::string debugStr;
     debugStr += strprintf("CMasternodePayments::CheckMissingVotes -- nBlockHeight=%d, Missing voting MNs:\n", nCachedBlockHeight);
     if (mapMasternodesDidNotVote.empty()) {
