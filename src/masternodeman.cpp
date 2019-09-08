@@ -1223,6 +1223,7 @@ void CMasternodeMan::CheckMissingMasternodes()
 
     std::vector<CMasternode*> vBan;
     std::vector<CMasternode*> vSortedByAddr;
+    int enablecount = 0;
 
     {
         LOCK(cs);
@@ -1231,7 +1232,6 @@ void CMasternodeMan::CheckMissingMasternodes()
             vSortedByAddr.push_back(&mnpair.second);
         }
         sort(vSortedByAddr.begin(), vSortedByAddr.end(), CompareByAddr());
-        int enablecount = 0;
         for (const auto& pmn : vSortedByAddr) {
             // check only (pre)enabled masternodes
             if(!pmn->IsEnabled() && !pmn->IsPreEnabled()) continue;
