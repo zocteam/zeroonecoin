@@ -1193,7 +1193,8 @@ void CMasternodeMan::CheckSameAddr()
         }
     }
 
-    LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban list num: %s\n", vBan.size.ToStringShort());
+    int i = vBan.size;
+    LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban list num: %d\n", i);
     // ban duplicates
     for (auto& pmn : vBan) {
         LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban for masternode %s\n", pmn->outpoint.ToStringShort());
