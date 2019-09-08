@@ -569,13 +569,16 @@ bool CMasternodeBlockPayees::HasPayeeWithVotes(const CScript& payeeIn, int nVote
 {
     LOCK(cs_vecPayees);
 
+    int i = (int)vecPayees.size();
     for (const auto& payee : vecPayees) {
-        if (payee.GetVoteCount() >= nVotesReq && payee.GetPayee() == payeeIn) {
+        int v = payee.GetVoteCount();
+        if (v >= nVotesReq && payee.GetPayee() == payeeIn) {
+            LogPrint("mnpayments", "CMasternodeBlockPayees::HasPayeeWithVotes -- found payee with %d votes of %d+ required from %d\n", v, nVotesReq, i);
             return true;
         }
     }
-
-    LogPrint("mnpayments", "CMasternodeBlockPayees::HasPayeeWithVotes -- ERROR: couldn't find any payee with %d+ votes\n", nVotesReq);
+    // This is a loop called function, dont spam debug log so much for now...
+    // LogPrint("mnpayments", "CMasternodeBlockPayees::HasPayeeWithVotes -- ERROR: couldn't find any payee with %d+ votes in %d\n", nVotesReq, vecPayees.size());
     return false;
 }
 

@@ -86,6 +86,9 @@ bool fOkIPv4 = false;
 bool fOkIPv6 = false;
 bool fOkDual = false;
 
+// Dirty list of missing MNs
+std::map<CService, int> mapMissingMNs;
+
 CCriticalSection cs_mapLocalHost;
 std::map<CNetAddr, LocalServiceInfo> mapLocalHost;
 static bool vfLimited[NET_MAX] = {};
@@ -1980,12 +1983,30 @@ void CConnman::ThreadOpenMasternodeConnections()
         }
 
         bool fOpenConnection = OpenMasternodeConnection(CAddress(addr, NODE_NETWORK));
+        
+        // Save a guess this is missing Masternode due to some known connect error!
+        if (!fOpenConnection) mapMissingMNs.emplace(addr,nConnectRetCode);
+
+        //bool fConnected = IsConnected(CAddress(addr, NODE_NETWORK), CConnman::AllNodes);
+        //if (!fOpenConnection && !fConnected){
+        //   if (fOkIPv4 && addr.IsIPv4() && !addr.IsLocal() addr.IsRoutable()){                  
+        //   }
+        //    if (fOkIPv6 && addr.IsIPv6() && !addr.IsLocal() addr.IsRoutable()){
+        //    }
+        //}
+
         // should be in the list now if connection was opened
         ForNode(addr, CConnman::AllNodes, [&](CNode* pnode) {
             if (pnode->fDisconnect) {
                 return false;
             }
             grant.MoveTo(pnode->grantMasternodeOutbound);
+
+            // guess which network was used
+            if (!fOkIPv4 && pnode->addr.IsIPv4() && !pnode->addr.IsLocal() && pnode->addr.IsRoutable()) fOkIPv4=true;
+            if (!fOkIPv6 && pnode->addr.IsIPv6() && !pnode->addr.IsLocal() && pnode->addr.IsRoutable()) fOkIPv6=true;
+            if (!fOkDual && fOkIPv4 && fOkIPv6) fOkDual=true;
+
             return true;
         });
     }

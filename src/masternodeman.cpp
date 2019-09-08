@@ -1132,10 +1132,11 @@ void CMasternodeMan::CheckSameAddr()
         }
 
         sort(vSortedByAddr.begin(), vSortedByAddr.end(), CompareByAddr());
-
+        int enablecount = 0;
         for (const auto& pmn : vSortedByAddr) {
             // check only (pre)enabled masternodes
             if(!pmn->IsEnabled() && !pmn->IsPreEnabled()) continue;
+            enablecount++;
             // initial step
             if(!pprevMasternode) {
                 pprevMasternode = pmn;
@@ -1143,7 +1144,9 @@ void CMasternodeMan::CheckSameAddr()
                 continue;
             }
             // second+ step
-            if(pmn->addr == pprevMasternode->addr) {
+            CNetAddr ippmm = (CNetAddr)pmn->addr;
+            CNetAddr ippvMn = (CNetAddr)pprevMasternode->addr;
+            if(ippmm == ippvMn) {
                 if(pverifiedMasternode) {
                     // another masternode with the same ip is verified, ban this one
                     vBan.push_back(pmn);
@@ -1159,6 +1162,9 @@ void CMasternodeMan::CheckSameAddr()
             pprevMasternode = pmn;
         }
 
+        int i = (int)vBan.size();
+        LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe (pre)enabled ban list num: %d from %d\n", i, enablecount);
+
         CMasternode* pprevNode = NULL;
         CMasternode* pverifiedNode = NULL;
         for (const auto& pmn : vSortedByAddr) {
@@ -1172,13 +1178,18 @@ void CMasternodeMan::CheckSameAddr()
             // initial step
             if(!pprevNode) {
                 pprevNode = pmn;
-                pverifiedNode = pmn->IsPoSeVerified() ? pmn : NULL;
+                pverifiedNode = pmn->IsExpired() ? pmn : pverifiedNode;
+                pverifiedNode = pmn->IsNewStartRequired() ? pmn : pverifiedNode;
+                pverifiedNode = pmn->IsSentinelPingExpired() ? pmn : pverifiedNode;
+                pverifiedNode = pmn->IsPoSeVerified() ? pmn : pverifiedNode;
                 continue;
             }
             // second+ step
-            if(pmn->addr == pprevNode->addr) {
+            CNetAddr ippmmB = (CNetAddr)pmn->addr;
+            CNetAddr ippvMnB = (CNetAddr)pprevNode->addr;
+            if(ippmmB == ippvMnB) {
                 if(pverifiedNode) {
-                    // another masternode with the same ip is verified, ban this one
+                    // another masternode with the same ip exists, ban this one
                     vBan.push_back(pmn);
                 } else if(pmn->IsPoSeVerified()) {
                     // this masternode with the same ip is verified, ban previous one
@@ -1187,18 +1198,65 @@ void CMasternodeMan::CheckSameAddr()
                     pverifiedNode = pmn;
                 }
             } else {
-                pverifiedNode = pmn->IsPoSeVerified() ? pmn : NULL;
+                pverifiedNode = pmn->IsExpired() ? pmn : pverifiedNode;
+                pverifiedNode = pmn->IsNewStartRequired() ? pmn : pverifiedNode;
+                pverifiedNode = pmn->IsSentinelPingExpired() ? pmn : pverifiedNode;
+                pverifiedNode = pmn->IsPoSeVerified() ? pmn : pverifiedNode;
             }
             pprevNode = pmn;
         }
     }
 
     int i = (int)vBan.size();
-    LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban list num: %d\n", i);
+    int j = (int)vSortedByAddr.size();
+    LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe total ban list num: %d from %d\n", i, j);
     // ban duplicates
     for (auto& pmn : vBan) {
         LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban for masternode %s\n", pmn->outpoint.ToStringShort());
         pmn->PoSeBan();
+    }
+}
+
+void CMasternodeMan::CheckMissingMasternodes()
+{
+    if(!masternodeSync.IsSynced() || mapMasternodes.empty()) return;
+
+    std::vector<CMasternode*> vBan;
+    std::vector<CMasternode*> vSortedByAddr;
+
+    {
+        LOCK(cs);
+
+        for (auto& mnpair : mapMasternodes) {
+            vSortedByAddr.push_back(&mnpair.second);
+        }
+        sort(vSortedByAddr.begin(), vSortedByAddr.end(), CompareByAddr());
+        int enablecount = 0;
+        for (const auto& pmn : vSortedByAddr) {
+            // check only (pre)enabled masternodes
+            if(!pmn->IsEnabled() && !pmn->IsPreEnabled()) continue;
+            enablecount++;
+            auto it = mapMissingMNs.find(pmn->addr);
+            if (it != mapMissingMNs.end()) {
+                if((it->second == 111 || it->second == 13 || it->second == 113)
+                  && !pmn->addr.IsLocal() && pmn->addr.IsRoutable()
+                  && ((fOkIPv4 && pmn->addr.IsIPv4())||(fOkIPv6 && pmn->addr.IsIPv6()))){
+                    vBan.push_back(pmn);
+                    mapMissingMNs.erase(pmn->addr);
+                  }
+            }
+        }
+
+    } // end LOCK
+
+    int i = (int)vBan.size();
+    int j = (int)vSortedByAddr.size();
+    LogPrintf("CMasternodeMan::CheckMissingMasternodes -- Increase PoSe Ban Score list num: %d from %d (pre)enabled of total:%d\n", i, enablecount, j);
+
+    // ban missing service Masternodes
+    for (auto& pmn : vBan) {
+        LogPrintf("CMasternodeMan::CheckMissingMasternodes -- Increase PoSe Ban Score for masternode %s\n", pmn->outpoint.ToStringShort());
+        pmn->IncreasePoSeBanScore();
     }
 }
 

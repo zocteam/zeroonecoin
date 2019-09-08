@@ -552,7 +552,8 @@ void ThreadCheckPrivateSend(CConnman& connman)
             }
             if(fMasternodeMode && (nTick % (60 * 5) == 0)) {
                 mnodeman.DoFullVerificationStep(connman);
-                mnpayments.CheckMissingVotes();                
+                mnpayments.CheckMissingVotes();
+                mnodeman.CheckMissingMasternodes();
             }
 
             if(nTick % (60 * 5) == 0) {
