@@ -139,6 +139,8 @@ public:
     void AskForMN(CNode *pnode, const COutPoint& outpoint, CConnman& connman);
     void AskForMnb(CNode *pnode, const uint256 &hash);
 
+    bool IncreasePoSeBanScore(const COutPoint &outpoint);
+    bool DecreasePoSeBanScore(const COutPoint &outpoint);
     bool PoSeBan(const COutPoint &outpoint);
     bool AllowMixing(const COutPoint &outpoint);
     bool DisallowMixing(const COutPoint &outpoint);

@@ -230,11 +230,17 @@ bool CMasternodePayments::UpdateLastVote(const CMasternodePaymentVote& vote)
 {
     LOCK(cs_mapMasternodePaymentVotes);
 
-    const auto it = mapMasternodesLastVote.find(vote.masternodeOutpoint);
-    if (it != mapMasternodesLastVote.end()) {
-        if (it->second == vote.nBlockHeight)
+    const auto it1 = mapMasternodesDidNotVote.find(vote.masternodeOutpoint);
+    if (it1 != mapMasternodesDidNotVote.end()) {
+        mapMasternodesDidNotVote.erase(vote.masternodeOutpoint);
+        mnodeman.DecreasePoSeBanScore(vote.masternodeOutpoint);
+    }
+
+    const auto it2 = mapMasternodesLastVote.find(vote.masternodeOutpoint);
+    if (it2 != mapMasternodesLastVote.end()) {
+        if (it2->second == vote.nBlockHeight)
             return false;
-        it->second = vote.nBlockHeight;
+        it2->second = vote.nBlockHeight;
         return true;
     }
 
@@ -878,6 +884,36 @@ void CMasternodePayments::CheckBlockVotes(int nBlockHeight)
     }
 
     LogPrint("mnpayments", "%s", debugStr);
+}
+
+void CMasternodePayments::CheckMissingVotes()
+{
+    // Do not check until fully synced
+    if(!masternodeSync.IsSynced()) {
+        LogPrint("mnpayments", "CMasternodePayments::CheckMissingVotes -- won't check until fully synced\n");
+        return;
+    }
+
+    std::string debugStr;
+    debugStr += strprintf("CMasternodePayments::CheckMissingVotes -- nBlockHeight=%d, Missing voting MNs:\n", nCachedBlockHeight);
+    if (mapMasternodesDidNotVote.empty()) {
+        debugStr += "  empty list.\n";
+        LogPrint("mnpayments", "%s", debugStr);
+        return;
+    }
+
+    debugStr += "  Masternodes which missed a vote:\n";
+    for (const auto& item : mapMasternodesDidNotVote) {
+        debugStr += strprintf("    - %s: %d\n", item.first.ToStringShort(), item.second);
+        // MN is not doing its dutty
+        if(item.second > 1) {
+            mnodeman.IncreasePoSeBanScore(item.first);
+            item.second--;
+        }        
+    }
+    // TODO: after debug change into: LogPrint("mnpayments", "%s", debugStr);
+    LogPrintf("%s", debugStr);
+
 }
 
 void CMasternodePaymentVote::Relay(CConnman& connman) const

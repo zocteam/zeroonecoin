@@ -548,9 +548,11 @@ void ThreadCheckPrivateSend(CConnman& connman)
                 mnodeman.WarnMasternodeDaemonUpdates();
                 mnpayments.CheckAndRemove();
                 instantsend.CheckAndRemove();
+                mnodeman.CheckSameAddr();
             }
             if(fMasternodeMode && (nTick % (60 * 5) == 0)) {
                 mnodeman.DoFullVerificationStep(connman);
+                mnpayments.CheckMissingVotes();                
             }
 
             if(nTick % (60 * 5) == 0) {

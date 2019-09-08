@@ -143,6 +143,30 @@ bool CMasternodeMan::DisallowMixing(const COutPoint &outpoint)
     return true;
 }
 
+bool CMasternodeMan::IncreasePoSeBanScore(const COutPoint &outpoint)
+{
+    LOCK(cs);
+    CMasternode* pmn = Find(outpoint);
+    if (!pmn) {
+        return false;
+    }
+    pmn->IncreasePoSeBanScore();
+
+    return true;
+}
+
+bool CMasternodeMan::DecreasePoSeBanScore(const COutPoint &outpoint)
+{
+    LOCK(cs);
+    CMasternode* pmn = Find(outpoint);
+    if (!pmn) {
+        return false;
+    }
+    pmn->DecreasePoSeBanScore();
+
+    return true;
+}
+
 bool CMasternodeMan::PoSeBan(const COutPoint &outpoint)
 {
     LOCK(cs);
@@ -984,6 +1008,7 @@ void CMasternodeMan::PunishNode(const CService& addr, CConnman& connman)
     LogPrint("masternode","CMasternodeMan::%s -- searching bad node-id at addr=%s\n", __func__, addr.ToString());
     if(found){
       LogPrintf("CMasternodeMan::PunishNode -- found Misbehaving node-id=%d at addr=%s\n", found->id, addr.ToString());
+      IncreasePoSeBanScore(outpoint);
       LOCK(cs_main);
       Misbehaving(found->id, 20);
     }
@@ -1289,7 +1314,6 @@ void CMasternodeMan::ProcessVerifyReply(CNode* pnode, CMasternodeVerification& m
         // it is a little misbehaving only, probable only real nodes will send a reply
         Misbehaving(pnode->id, 02);
         // process the reply anyway
-        // return;
     }
 
     {
