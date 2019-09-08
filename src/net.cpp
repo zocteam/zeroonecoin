@@ -80,6 +80,12 @@ static const uint64_t RANDOMIZER_ID_LOCALHOSTNONCE = 0xd93e69e2bbfa5735ULL; // S
 bool fDiscover = true;
 bool fListen = true;
 bool fRelayTxes = true;
+
+// Flags for helping guess stacks online
+bool fOkIPv4 = false;
+bool fOkIPv6 = false;
+bool fOkDual = false;
+
 CCriticalSection cs_mapLocalHost;
 std::map<CNetAddr, LocalServiceInfo> mapLocalHost;
 static bool vfLimited[NET_MAX] = {};
@@ -1973,7 +1979,7 @@ void CConnman::ThreadOpenMasternodeConnections()
             continue;
         }
 
-        OpenMasternodeConnection(CAddress(addr, NODE_NETWORK));
+        bool fOpenConnection = OpenMasternodeConnection(CAddress(addr, NODE_NETWORK));
         // should be in the list now if connection was opened
         ForNode(addr, CConnman::AllNodes, [&](CNode* pnode) {
             if (pnode->fDisconnect) {

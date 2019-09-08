@@ -588,6 +588,11 @@ extern bool fDiscover;
 extern bool fListen;
 extern bool fRelayTxes;
 
+// Flags for helping guess stacks online
+extern bool fOkIPv4;
+extern bool fOkIPv6;
+extern bool fOkDual;
+
 extern limitedmap<uint256, int64_t> mapAlreadyAskedFor;
 
 /** Subversion as sent to the P2P network in `version` messages */

@@ -909,10 +909,12 @@ void CMasternodePayments::CheckMissingVotes()
     debugStr += "  Masternodes which missed a vote:\n";
     for (const auto& item : mMdnv) {
         debugStr += strprintf("    - %s: %d\n", item.first.ToStringShort(), item.second);
-        // MN is not doing its dutty
-        if(item.second > 1) mnodeman.IncreasePoSeBanScore(item.first);
-        int i = item.second-1;
-        mapMasternodesDidNotVote.emplace(item.first, 0).first->second = i;
+        // MN is not doing its dutty        
+        if(item.second >= 1) {
+            mnodeman.IncreasePoSeBanScore(item.first);
+            int i = item.second-1;
+            mapMasternodesDidNotVote.emplace(item.first, 0).first->second = i;
+        }
     }
     // TODO: after debug change into: LogPrint("mnpayments", "%s", debugStr);
     LogPrintf("%s", debugStr);
