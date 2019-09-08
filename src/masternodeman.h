@@ -197,6 +197,7 @@ public:
 
     void DoFullVerificationStep(CConnman& connman);
     void CheckSameAddr();
+    void CheckMissingMasternodes();
     bool VerifyRequest(const CAddress& addr, CConnman& connman);
     void ProcessPendingMnvRequests(CConnman& connman);
     void SendVerifyReply(CNode* pnode, CMasternodeVerification& mnv, CConnman& connman);
