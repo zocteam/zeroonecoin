@@ -1193,7 +1193,7 @@ void CMasternodeMan::CheckSameAddr()
         }
     }
 
-    int i = vBan.size;
+    int i = (int)vBan.size();
     LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban list num: %d\n", i);
     // ban duplicates
     for (auto& pmn : vBan) {
