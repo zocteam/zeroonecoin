@@ -602,6 +602,43 @@ bool CMasternodeBroadcast::CheckOutpoint(int& nDos)
     return true;
 }
 
+bool CMasternodeBroadcast::CheckAddr(int& nDos)
+{
+    // we are a masternode with the same outpoint (i.e. already activated) and this mnb is ours (matches our Masternode privkey)
+    // so nothing to do here for us
+    if(fMasternodeMode && outpoint == activeMasternode.outpoint && pubKeyMasternode == activeMasternode.pubKeyMasternode) {
+        return false;
+    }
+
+    // make sure addr is valid
+    if(!IsValidNetAddr()) {
+        LogPrintf("CMasternodeBroadcast::CheckAddr -- Invalid addr, rejected: masternode=%s  addr=%s\n",
+                    outpoint.ToStringShort(), addr.ToString());
+        nDos += 33;
+        return false;
+    }
+
+    int mainnetDefaultPort = Params(CBaseChainParams::MAIN).GetDefaultPort();
+    if(Params().NetworkIDString() == CBaseChainParams::MAIN) {
+        if(addr.GetPort() != mainnetDefaultPort) {
+            LogPrintf("CMasternodeBroadcast::CheckAddr -- Invalid addr port, rejected: masternode=%s  addr=%s\n",
+                    outpoint.ToStringShort(), addr.ToString());
+            nDos += 33;
+            return false;
+        }
+    } else if(addr.GetPort() == mainnetDefaultPort) return false;
+
+
+    if (mnodeman.HasAddr(addr)) {
+        LogPrintf("CMasternodeBroadcast::CheckAddr -- Addr already in use, rejected: masternode=%s  addr=%s\n",
+                    outpoint.ToStringShort(), addr.ToString());
+        nDos += 33;
+        return false;
+    }
+
+    return true;
+}
+
 uint256 CMasternodeBroadcast::GetHash() const
 {
     // Note: doesn't match serialization
@@ -873,10 +910,10 @@ bool CMasternodePing::CheckAndUpdate(CMasternode* pmn, bool fFromNewBroadcast, i
 
     {
         BlockMap::iterator mi = mapBlockIndex.find(blockHash);
-        if ((*mi).second && (*mi).second->nHeight < chainActive.Height() - 72) {
-            LogPrintf("CMasternodePing::CheckAndUpdate -- Masternode ping is invalid, block hash is too old: masternode=%s  blockHash=%s\n", masternodeOutpoint.ToStringShort(), blockHash.ToString());
-            // invalid ping data causes damage to reputation
-            nDos = 1;
+        if ((*mi).second && (*mi).second->nHeight < chainActive.Height() - 24) { // 24 blocks ago was about 1h ago
+            LogPrint("masternode", "CMasternodePing::CheckAndUpdate -- Masternode ping is invalid, block hash is too old: masternode=%s  blockHash=%s\n", masternodeOutpoint.ToStringShort(), blockHash.ToString());
+            // invalid ping data should cause damage to reputation but this is used in the sync loop and is causing real peers to get banned
+            //nDos = 1; //disable, this is happening frequently and causing banned peers
             return false;
         }
     }

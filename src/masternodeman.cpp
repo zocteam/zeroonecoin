@@ -47,7 +47,6 @@ struct CompareScoreMN
 };
 
 struct CompareByAddr
-
 {
     bool operator()(const CMasternode* t1,
                     const CMasternode* t2) const
@@ -55,6 +54,38 @@ struct CompareByAddr
         return t1->addr < t2->addr;
     }
 };
+
+struct CompareByPoSeBanScore
+{
+    bool operator()(const CMasternode* t1,
+                    const CMasternode* t2) const
+    {
+        return t1->nPoSeBanScore < t2->nPoSeBanScore;
+    }
+};
+
+template < typename T>
+std::pair<bool, int > findInVector(const std::vector<T>  & vecOfElements, const T  & element)
+{
+	std::pair<bool, int > result;
+ 
+	// Find given element in vector
+	auto it = std::find(vecOfElements.begin(), vecOfElements.end(), element);
+ 
+	if (it != vecOfElements.end())
+	{
+		result.second = distance(vecOfElements.begin(), it);
+		result.first = true;
+	}
+	else
+	{
+		result.first = false;
+		result.second = -1;
+	}
+ 
+	return result;
+}
+
 
 CMasternodeMan::CMasternodeMan():
     cs(),
@@ -80,6 +111,7 @@ bool CMasternodeMan::Add(CMasternode &mn)
     LOCK(cs);
 
     if (Has(mn.outpoint)) return false;
+    if (HasAddr(mn.addr)) return false;
 
     LogPrint("masternode", "CMasternodeMan::Add -- Adding new Masternode: addr=%s, %i now\n", mn.addr.ToString(), size() + 1);
     mapMasternodes[mn.outpoint] = mn;
@@ -514,6 +546,17 @@ bool CMasternodeMan::Has(const COutPoint& outpoint)
 {
     LOCK(cs);
     return mapMasternodes.find(outpoint) != mapMasternodes.end();
+}
+
+bool CMasternodeMan::HasAddr(const CService& addr)
+{
+    LOCK(cs);
+    for (const auto& mnpair : mapMasternodes) {
+        if (addr == mnpair.second.addr) {
+            return true;
+        }
+    }
+    return false;
 }
 
 //
@@ -1061,13 +1104,6 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
     int nOffset = MAX_POSE_RANK + nMyRank - 1;
     if(nOffset >= (int)vecMasternodeRanks.size()) return;
 
-    std::vector<const CMasternode*> vSortedByAddr;
-    for (const auto& mnpair : mapMasternodes) {
-        vSortedByAddr.push_back(&mnpair.second);
-    }
-
-    sort(vSortedByAddr.begin(), vSortedByAddr.end(), CompareByAddr());
-
     it = vecMasternodeRanks.begin() + nOffset;
     while(it != vecMasternodeRanks.end()) {
         if(it->second.IsPoSeVerified() || it->second.IsPoSeBanned()) {
@@ -1110,106 +1146,67 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
 }
 
 // This function tries to find masternodes with the same addr,
-// find a verified one and ban all the other. If there are many nodes
-// with the same addr but none of them is verified yet, then none of them are banned.
-// It could take many times to run this before most of the duplicate nodes are banned.
-
+// find the lower ban score one and ban all the others.
 void CMasternodeMan::CheckSameAddr()
 {
     if(!masternodeSync.IsSynced() || mapMasternodes.empty()) return;
 
+    int mncount = 0;
     std::vector<CMasternode*> vBan;
     std::vector<CMasternode*> vSortedByAddr;
+    std::vector<CMasternode*> vSortedByPoSe;
 
     {
         LOCK(cs);
 
-        CMasternode* pprevMasternode = NULL;
-        CMasternode* pverifiedMasternode = NULL;
+        CMasternode* pprevMasternode = NULL;        
+        std::pair<int, CMasternode*> pLowerPoSeBanScoreMasternode = std::make_pair( 0, NULL);
 
         for (auto& mnpair : mapMasternodes) {
             vSortedByAddr.push_back(&mnpair.second);
+            vSortedByPoSe.push_back(&mnpair.second);
         }
 
         sort(vSortedByAddr.begin(), vSortedByAddr.end(), CompareByAddr());
-        int enablecount = 0;
+        sort(vSortedByPoSe.begin(), vSortedByPoSe.end(), CompareByPoSeBanScore());        
+
         for (const auto& pmn : vSortedByAddr) {
-            // check only (pre)enabled masternodes
-            if(!pmn->IsEnabled() && !pmn->IsPreEnabled()) continue;
-            enablecount++;
+            // check all valid masternodes
+            if(pmn->IsOutpointSpent() || pmn->IsUpdateRequired() || pmn->IsPoSeBanned()) continue;
+            mncount++;
             // initial step
             if(!pprevMasternode) {
                 pprevMasternode = pmn;
-                pverifiedMasternode = pmn->IsPoSeVerified() ? pmn : NULL;
+                std::pair<bool, int> result = findInVector<CMasternode*>( vSortedByPoSe, pmn);
+                pLowerPoSeBanScoreMasternode = std::make_pair( result.second, pmn);
                 continue;
             }
             // second+ step
-            CNetAddr ippmm = (CNetAddr)pmn->addr;
-            CNetAddr ippvMn = (CNetAddr)pprevMasternode->addr;
+            CNetAddr ippmm = (CNetAddr)(pmn->addr);
+            CNetAddr ippvMn = (CNetAddr)(pprevMasternode->addr);
+            std::pair<bool, int> result = findInVector<CMasternode*>( vSortedByPoSe, pmn);
+            std::pair<int, CMasternode*> pLPSBSMasternode = std::make_pair( result.second, pmn);
+
             if(ippmm == ippvMn) {
-                if(pverifiedMasternode) {
-                    // another masternode with the same ip is verified, ban this one
+                if(pLPSBSMasternode.first > pLowerPoSeBanScoreMasternode.first) {
+                    // previous masternode with same ip have lower ban score, ban this one
                     vBan.push_back(pmn);
-                } else if(pmn->IsPoSeVerified()) {
-                    // this masternode with the same ip is verified, ban previous one
+                } else {
+                    // this masternode with the same ip have lower ban score, ban previous one
                     vBan.push_back(pprevMasternode);
                     // and keep a reference to be able to ban following masternodes with the same ip
-                    pverifiedMasternode = pmn;
+                    pLowerPoSeBanScoreMasternode = pLPSBSMasternode;
                 }
             } else {
-                pverifiedMasternode = pmn->IsPoSeVerified() ? pmn : NULL;
+                pLowerPoSeBanScoreMasternode = pLPSBSMasternode;
             }
             pprevMasternode = pmn;
-        }
-
-        int i = (int)vBan.size();
-        LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe (pre)enabled ban list num: %d from %d\n", i, enablecount);
-
-        CMasternode* pprevNode = NULL;
-        CMasternode* pverifiedNode = NULL;
-        for (const auto& pmn : vSortedByAddr) {
-            // check only the others not (pre)enabled masternodes
-            if(pmn->IsEnabled() || pmn->IsPreEnabled()) continue;
-            if(pmn->IsPoSeBanned() || pmn->IsOutpointSpent() || pmn->IsUpdateRequired()) {
-                // no need to check address
-                vBan.push_back(pmn);
-                continue;
-            }
-            // initial step
-            if(!pprevNode) {
-                pprevNode = pmn;
-                pverifiedNode = pmn->IsExpired() ? pmn : pverifiedNode;
-                pverifiedNode = pmn->IsNewStartRequired() ? pmn : pverifiedNode;
-                pverifiedNode = pmn->IsSentinelPingExpired() ? pmn : pverifiedNode;
-                pverifiedNode = pmn->IsPoSeVerified() ? pmn : pverifiedNode;
-                continue;
-            }
-            // second+ step
-            CNetAddr ippmmB = (CNetAddr)pmn->addr;
-            CNetAddr ippvMnB = (CNetAddr)pprevNode->addr;
-            if(ippmmB == ippvMnB) {
-                if(pverifiedNode) {
-                    // another masternode with the same ip exists, ban this one
-                    vBan.push_back(pmn);
-                } else if(pmn->IsPoSeVerified()) {
-                    // this masternode with the same ip is verified, ban previous one
-                    vBan.push_back(pprevNode);
-                    // and keep a reference to be able to ban following masternodes with the same ip
-                    pverifiedNode = pmn;
-                }
-            } else {
-                pverifiedNode = pmn->IsExpired() ? pmn : pverifiedNode;
-                pverifiedNode = pmn->IsNewStartRequired() ? pmn : pverifiedNode;
-                pverifiedNode = pmn->IsSentinelPingExpired() ? pmn : pverifiedNode;
-                pverifiedNode = pmn->IsPoSeVerified() ? pmn : pverifiedNode;
-            }
-            pprevNode = pmn;
         }
     }
 
     int i = (int)vBan.size();
     int j = (int)vSortedByAddr.size();
-    LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe total ban list num: %d from %d\n", i, j);
+    LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban list num: %d from %d mnodes of total:%d\n", i, mncount, j);
     // ban duplicates
     for (auto& pmn : vBan) {
         LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban for masternode %s\n", pmn->outpoint.ToStringShort());
@@ -1221,9 +1218,9 @@ void CMasternodeMan::CheckMissingMasternodes()
 {
     if(!masternodeSync.IsSynced() || mapMasternodes.empty()) return;
 
+    int mncount = 0;
     std::vector<CMasternode*> vBan;
     std::vector<CMasternode*> vSortedByAddr;
-    int enablecount = 0;
 
     {
         LOCK(cs);
@@ -1233,9 +1230,9 @@ void CMasternodeMan::CheckMissingMasternodes()
         }
         sort(vSortedByAddr.begin(), vSortedByAddr.end(), CompareByAddr());
         for (const auto& pmn : vSortedByAddr) {
-            // check only (pre)enabled masternodes
-            if(!pmn->IsEnabled() && !pmn->IsPreEnabled()) continue;
-            enablecount++;
+            // check only valid masternodes
+            if(pmn->IsOutpointSpent() || pmn->IsUpdateRequired() || pmn->IsPoSeBanned()) continue;
+            mncount++;
             auto it = mapMissingMNs.find(pmn->addr);
             if (it != mapMissingMNs.end()) {
                 if((it->second == 111 || it->second == 13 || it->second == 113)
@@ -1251,7 +1248,7 @@ void CMasternodeMan::CheckMissingMasternodes()
 
     int i = (int)vBan.size();
     int j = (int)vSortedByAddr.size();
-    LogPrintf("CMasternodeMan::CheckMissingMasternodes -- Increase PoSe Ban Score list num: %d from %d (pre)enabled of total:%d\n", i, enablecount, j);
+    LogPrintf("CMasternodeMan::CheckMissingMasternodes -- Increase PoSe Ban Score list num: %d from %d (valid mn) of total:%d\n", i, mncount, j);
 
     // ban missing service Masternodes
     for (auto& pmn : vBan) {
@@ -1706,25 +1703,29 @@ bool CMasternodeMan::CheckMnbAndUpdateMasternodeList(CNode* pfrom, CMasternodeBr
         }
     }
 
-    if(mnb.CheckOutpoint(nDos)) {
-        Add(mnb);
-        masternodeSync.BumpAssetLastTime("CMasternodeMan::CheckMnbAndUpdateMasternodeList - new");
-        // if it matches our Masternode privkey...
-        if(fMasternodeMode && mnb.pubKeyMasternode == activeMasternode.pubKeyMasternode) {
-            mnb.nPoSeBanScore = -MASTERNODE_POSE_BAN_MAX_SCORE;
-            if(mnb.nProtocolVersion == PROTOCOL_VERSION) {
-                // ... and PROTOCOL_VERSION, then we've been remotely activated ...
-                LogPrintf("CMasternodeMan::CheckMnbAndUpdateMasternodeList -- Got NEW Masternode entry: masternode=%s  sigTime=%lld  addr=%s\n",
-                            mnb.outpoint.ToStringShort(), mnb.sigTime, mnb.addr.ToString());
-                activeMasternode.ManageState(connman);
-            } else {
-                // ... otherwise we need to reactivate our node, do not add it to the list and do not relay
-                // but also do not ban the node we get this message from
-                LogPrintf("CMasternodeMan::CheckMnbAndUpdateMasternodeList -- wrong PROTOCOL_VERSION, re-activate your MN: message nProtocolVersion=%d  PROTOCOL_VERSION=%d\n", mnb.nProtocolVersion, PROTOCOL_VERSION);
-                return false;
+    if(mnb.CheckOutpoint(nDos) &&  mnb.CheckAddr(nDos)) {
+        if(Add(mnb)){
+            masternodeSync.BumpAssetLastTime("CMasternodeMan::CheckMnbAndUpdateMasternodeList - new");
+            // if it matches our Masternode privkey...
+            if(fMasternodeMode && mnb.pubKeyMasternode == activeMasternode.pubKeyMasternode) {
+                mnb.nPoSeBanScore = -MASTERNODE_POSE_BAN_MAX_SCORE;
+                if(mnb.nProtocolVersion == PROTOCOL_VERSION) {
+                    // ... and PROTOCOL_VERSION, then we've been remotely activated ...
+                    LogPrintf("CMasternodeMan::CheckMnbAndUpdateMasternodeList -- Got NEW Masternode entry: masternode=%s  sigTime=%lld  addr=%s\n",
+                              mnb.outpoint.ToStringShort(), mnb.sigTime, mnb.addr.ToString());
+                    activeMasternode.ManageState(connman);
+                } else {
+                    // ... otherwise we need to reactivate our node, do not add it to the list and do not relay
+                    // but also do not ban the node we get this message from
+                    LogPrintf("CMasternodeMan::CheckMnbAndUpdateMasternodeList -- wrong PROTOCOL_VERSION, re-activate your MN: message nProtocolVersion=%d  PROTOCOL_VERSION=%d\n", mnb.nProtocolVersion, PROTOCOL_VERSION);
+                    return false;
+                }
             }
+            mnb.Relay(connman);
+        } else {
+            LogPrintf("CMasternodeMan::CheckMnbAndUpdateMasternodeList -- Rejected Add Masternode entry: %s  addr=%s\n", mnb.outpoint.ToStringShort(), mnb.addr.ToString());
+            return false;
         }
-        mnb.Relay(connman);
     } else {
         LogPrintf("CMasternodeMan::CheckMnbAndUpdateMasternodeList -- Rejected Masternode entry: %s  addr=%s\n", mnb.outpoint.ToStringShort(), mnb.addr.ToString());
         return false;

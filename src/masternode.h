@@ -343,6 +343,7 @@ public:
     bool SimpleCheck(int& nDos);
     bool Update(CMasternode* pmn, int& nDos, CConnman& connman);
     bool CheckOutpoint(int& nDos);
+    bool CheckAddr(int& nDos);
 
     bool Sign(const CKey& keyCollateralAddress);
     bool CheckSignature(int& nDos) const;
