@@ -610,11 +610,14 @@ bool CMasternodeBroadcast::CheckAddr(int& nDos)
         return false;
     }
 
+    // do not ban the node we get this message from
+    nDos = 0;
+
     // make sure addr is valid
     if(!IsValidNetAddr()) {
         LogPrintf("CMasternodeBroadcast::CheckAddr -- Invalid addr, rejected: masternode=%s  addr=%s\n",
                     outpoint.ToStringShort(), addr.ToString());
-        nDos += 33;
+        //nDos += 33;
         return false;
     }
 
@@ -623,7 +626,7 @@ bool CMasternodeBroadcast::CheckAddr(int& nDos)
         if(addr.GetPort() != mainnetDefaultPort) {
             LogPrintf("CMasternodeBroadcast::CheckAddr -- Invalid addr port, rejected: masternode=%s  addr=%s\n",
                     outpoint.ToStringShort(), addr.ToString());
-            nDos += 33;
+            //nDos += 33;
             return false;
         }
     } else if(addr.GetPort() == mainnetDefaultPort) return false;
@@ -632,7 +635,7 @@ bool CMasternodeBroadcast::CheckAddr(int& nDos)
     if (mnodeman.HasAddr(addr)) {
         LogPrintf("CMasternodeBroadcast::CheckAddr -- Addr already in use, rejected: masternode=%s  addr=%s\n",
                     outpoint.ToStringShort(), addr.ToString());
-        nDos += 33;
+        //nDos += 33;
         return false;
     }
 
