@@ -1160,7 +1160,7 @@ void CMasternodeMan::CheckSameAddr()
         LOCK(cs);
 
         CMasternode* pprevMasternode = NULL;        
-        std::pair<int, CMasternode*> pLowerPoSeBanScoreMasternode = std::make_pair( 0, NULL);
+        std::pair<int, CMasternode*> pLowerPoSeBanScoreMasternode = std::make_pair( -1, pprevMasternode);
 
         for (auto& mnpair : mapMasternodes) {
             vSortedByAddr.push_back(&mnpair.second);
