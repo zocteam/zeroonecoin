@@ -1976,7 +1976,7 @@ void CMasternodeMan::WarnMasternodeDaemonUpdates()
     // trigger GUI update
     uiInterface.NotifyAlertChanged(SerializeHash(strWarning), CT_NEW);
     // trigger cmd-line notification
-    AlertNotify(strWarning, CT_NEW);
+    //AlertNotify(strWarning, CT_NEW);
 
     fWarned = true;
 }
