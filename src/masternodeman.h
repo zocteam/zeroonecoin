@@ -138,10 +138,14 @@ public:
     /// Ask (source) node for mnb
     void AskForMN(CNode *pnode, const COutPoint& outpoint, CConnman& connman);
     void AskForMnb(CNode *pnode, const uint256 &hash);
+    void AskForMnv(const CService& addr, const COutPoint& outpoint);
 
     bool IncreasePoSeBanScore(const COutPoint &outpoint);
     bool DecreasePoSeBanScore(const COutPoint &outpoint);
     bool PoSeBan(const COutPoint &outpoint);
+    bool IncreasePoSeBanScore(const CService& addr);
+    bool DecreasePoSeBanScore(const CService& addr);
+    bool PoSeBan(const CService& addr);
     bool AllowMixing(const COutPoint &outpoint);
     bool DisallowMixing(const COutPoint &outpoint);
 

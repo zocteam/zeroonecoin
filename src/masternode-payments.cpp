@@ -900,9 +900,9 @@ void CMasternodePayments::CheckMissingVotes()
     LOCK(cs_mapMasternodePaymentVotes);
 
     std::string debugStr;
-    debugStr += strprintf("CMasternodePayments::CheckMissingVotes -- nBlockHeight=%d, Missing voting MNs:\n", nCachedBlockHeight);
+    int n = (int)mapMasternodesDidNotVote.size();
+    debugStr += strprintf("CMasternodePayments::CheckMissingVotes -- nBlockHeight=%d, total missing votes was:%d\n", nCachedBlockHeight, n);
     if (mapMasternodesDidNotVote.empty()) {
-        debugStr += "  empty list.\n";
         LogPrint("mnpayments", "%s", debugStr);
         return;
     }
@@ -912,15 +912,19 @@ void CMasternodePayments::CheckMissingVotes()
     debugStr += "  Masternodes which missed a vote:\n";
     for (const auto& item : mMdnv) {
         debugStr += strprintf("    - %s: %d\n", item.first.ToStringShort(), item.second);
+        if(item.second <= 0) {
+            // didn't change stats since last call, clean entry
+            mapMasternodesDidNotVote.erase(item.first);
+        }
         // MN is not doing its dutty        
         if(item.second >= 1) {
             mnodeman.IncreasePoSeBanScore(item.first);
             int i = item.second-1;
             mapMasternodesDidNotVote.emplace(item.first, 0).first->second = i;
         }
+
     }
-    // TODO: after debug change into: LogPrint("mnpayments", "%s", debugStr);
-    LogPrintf("%s", debugStr);
+    LogPrint("mnpayments", "%s", debugStr);
 
 }
 
