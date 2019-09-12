@@ -14,7 +14,6 @@
 #include "netfulfilledman.h"
 #include "netmessagemaker.h"
 #include "net.h"
-//#include "validation.cpp"
 #include "validation.h"
 #ifdef ENABLE_WALLET
 #include "privatesend-client.h"
@@ -153,7 +152,6 @@ void CMasternodeMan::AskForMN(CNode* pnode, const COutPoint& outpoint, CConnman&
 
 void CMasternodeMan::AskForMnv(const CService& addr, const COutPoint& outpoint)
 {
-    if(!addr) return;
     if(activeMasternode.outpoint.IsNull()) return;
     if(!masternodeSync.IsSynced()) return;
 
@@ -1591,7 +1589,7 @@ void CMasternodeMan::ProcessVerifyReply(CNode* pnode, CMasternodeVerification& m
         for (const auto& pmn : vpMasternodesToBan) {
             pmn->IncreasePoSeBanScore();
             LogPrint("masternode", "CMasternodeMan::ProcessVerifyReply -- increased PoSe ban score for %s addr %s, new score %d\n",
-                        pmm->outpoint.ToStringShort(), pmm->addr.ToString(), pmn->nPoSeBanScore);
+                        pmn->outpoint.ToStringShort(), pmn->addr.ToString(), pmn->nPoSeBanScore);
         }
         if(!vpMasternodesToBan.empty())
             LogPrintf("CMasternodeMan::ProcessVerifyReply -- PoSe score increased for %d fake masternodes, addr %s\n",
