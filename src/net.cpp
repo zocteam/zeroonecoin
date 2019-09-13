@@ -1985,15 +1985,7 @@ void CConnman::ThreadOpenMasternodeConnections()
         bool fOpenConnection = OpenMasternodeConnection(CAddress(addr, NODE_NETWORK));
         
         // Save a guess this is missing Masternode due to some known connect error!
-        if (!fOpenConnection) mapMissingMNs.emplace(addr,nConnectRetCode);
-
-        //bool fConnected = IsConnected(CAddress(addr, NODE_NETWORK), CConnman::AllNodes);
-        //if (!fOpenConnection && !fConnected){
-        //   if (fOkIPv4 && addr.IsIPv4() && !addr.IsLocal() addr.IsRoutable()){                  
-        //   }
-        //    if (fOkIPv6 && addr.IsIPv6() && !addr.IsLocal() addr.IsRoutable()){
-        //    }
-        //}
+        if (!fOpenConnection && !IsLocal(addr)) mapMissingMNs.emplace(addr,nConnectRetCode);
 
         // should be in the list now if connection was opened
         ForNode(addr, CConnman::AllNodes, [&](CNode* pnode) {
