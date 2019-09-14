@@ -1127,22 +1127,22 @@ void CMasternodeMan::PunishNode(const CService& addr, CConnman& connman)
 }
 
 // check socket connect
-bool CMasternodeMan::MnCheckConnect(const CMasternode& mn)
+bool CMasternodeMan::MnCheckConnect(CMasternode* pmn)
 {
-    bool docheck = fOkDual || (fOkIPv4 && mn.addr.IsIPv4()) || (fOkIPv6 && mn.addr.IsIPv6());
+    bool docheck = fOkDual || (fOkIPv4 && pmn->addr.IsIPv4()) || (fOkIPv6 && pmn->addr.IsIPv6());
     if (!docheck) {
-        LogPrintf("CMasternodeMan::MnCheckConnect -- Cannot check connection to '%s'\n", mn.addr.ToString());
+        LogPrintf("CMasternodeMan::MnCheckConnect -- Cannot check connection to '%s'\n", pmn->addr.ToString());
         return docheck;
     }
 
     // Check socket connectivity
-    LogPrintf("CMasternodeMan::MnCheckConnect -- Check connection to '%s'\n", mn.addr.ToString());
+    LogPrintf("CMasternodeMan::MnCheckConnect -- Check connection to '%s'\n", pmn->addr.ToString());
     SOCKET hSocket;
-    bool fConnected = ConnectSocket(mn.addr, hSocket, nConnectTimeout) && IsSelectableSocket(hSocket);
+    bool fConnected = ConnectSocket(pmn->addr, hSocket, nConnectTimeout) && IsSelectableSocket(hSocket);
     CloseSocket(hSocket);
 
     if (!fConnected) {
-        LogPrintf("CMasternodeMan::MnCheckConnect -- %s: Could not connect to %s\n", mn.outpoint.ToStringShort(), mn.addr.ToString());
+        LogPrintf("CMasternodeMan::MnCheckConnect -- %s: Could not connect to %s\n", pmn->outpoint.ToStringShort(), pmn->addr.ToString());
     }
     return fConnected;
 }

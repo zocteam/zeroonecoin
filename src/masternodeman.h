@@ -90,7 +90,7 @@ private:
 
     void PushDsegInvs(CNode* pnode, const CMasternode& mn);
     void PunishNode(const CService& addr, CConnman& connman);
-    bool MnCheckConnect(const CMasternode& mn);
+    bool MnCheckConnect(CMasternode* pmn);
 
 public:
     // Keep track of all broadcasts I've seen
