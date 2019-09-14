@@ -913,7 +913,7 @@ void CMasternodeMan::ProcessPendingMnbRequests(CConnman& connman)
         int64_t nTimeAdded = itPendingMNB->second.first;
         if (fDone || (GetTime() - nTimeAdded > 15)) {
             if (!fDone) {
-                LogPrintf("CMasternodeMan::%s -- failed to connect to %s\n", __func__, itPendingMNB->first.ToString());
+                LogPrintf("CMasternodeMan::ProcessPendingMnbRequests -- failed to connect to %s\n", itPendingMNB->first.ToString());
                 //Punish not reachable MN , required cs_main
                 //PunishNode(itPendingMNB->first,connman);
             }
@@ -922,7 +922,10 @@ void CMasternodeMan::ProcessPendingMnbRequests(CConnman& connman)
             ++itPendingMNB;
         }
     }
-    LogPrintf("%s -- mapPendingMNB size: %d\n", __func__, mapPendingMNB.size());
+    
+    int sz = mapPendingMNB.size();
+    if (sz>0) LogPrintf("CMasternodeMan::ProcessPendingMnbRequests -- mapPendingMNB size: %d\n", sz);
+    else LogPrint("masternode", "CMasternodeMan::ProcessPendingMnbRequests -- mapPendingMNB size: %d\n", sz);
 }
 
 void CMasternodeMan::ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman)
@@ -1477,7 +1480,11 @@ void CMasternodeMan::ProcessPendingMnvRequests(CConnman& connman)
             ++itPendingMNV;
         }
     }
-    LogPrintf("CMasternodeMan::%s -- mapPendingMNV size: %d\n", __func__, mapPendingMNV.size());
+
+    int sz = mapPendingMNV.size();
+    if (sz>0) LogPrintf("CMasternodeMan::ProcessPendingMnvRequests -- mapPendingMNV size: %d\n", sz);
+    else LogPrint("masternode", "CMasternodeMan::ProcessPendingMnvRequests -- mapPendingMNV size: %d\n", sz);
+    
 }
 
 void CMasternodeMan::SendVerifyReply(CNode* pnode, CMasternodeVerification& mnv, CConnman& connman)
