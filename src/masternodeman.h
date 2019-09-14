@@ -58,6 +58,8 @@ private:
 
     // who we asked for the masternode verification
     std::map<CService, CMasternodeVerification> mWeAskedForVerification;
+    // who we should ask for masternode verification at the last time
+    std::map<COutPoint, int64_t> mapWeShouldAskForVerification;
 
     // these maps are used for masternode recovery from MASTERNODE_NEW_START_REQUIRED state
     std::map<uint256, std::pair< int64_t, std::set<CService> > > mMnbRecoveryRequests;
@@ -88,6 +90,7 @@ private:
 
     void PushDsegInvs(CNode* pnode, const CMasternode& mn);
     void PunishNode(const CService& addr, CConnman& connman);
+    bool MnCheckConnect(const CMasternode& mn);
 
 public:
     // Keep track of all broadcasts I've seen

@@ -893,7 +893,7 @@ void CMasternodePayments::CheckMissingVotes()
 {
     // Do not check until fully synced
     if(!masternodeSync.IsSynced()) {
-        LogPrint("mnpayments", "CMasternodePayments::CheckMissingVotes -- won't check until fully synced\n");
+        LogPrintf("CMasternodePayments::CheckMissingVotes -- won't check until fully synced\n");
         return;
     }
 
@@ -924,7 +924,7 @@ void CMasternodePayments::CheckMissingVotes()
         }
 
     }
-    LogPrint("mnpayments", "%s", debugStr);
+    LogPrintf("%s", debugStr);
 
 }
 

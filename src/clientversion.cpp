@@ -21,8 +21,8 @@ const std::string CLIENT_NAME("ZeroOne Core");
  * Client version number
  */
 #define CLIENT_VERSION_SUFFIX "w32"
-// Date:"190912" = 0x2E9C0
-#define BUILD_SUFFIX 2E9C0
+// Date:"190914" = 0x2E9C2
+#define BUILD_SUFFIX 2E9C2
 
 
 

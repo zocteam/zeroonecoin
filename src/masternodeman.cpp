@@ -1100,6 +1100,10 @@ void CMasternodeMan::PushDsegInvs(CNode* pnode, const CMasternode& mn)
 // Requires cs_main.
 void CMasternodeMan::PunishNode(const CService& addr, CConnman& connman)
 {
+    if(!masternodeSync.IsSynced()) return;
+    // do not auto-punish
+    if(addr == activeMasternode.service) return;
+
     CNode* found = connman.FindNode(addr);
     LogPrint("masternode","CMasternodeMan::%s -- searching bad node-id at addr=%s\n", __func__, addr.ToString());
     if(found){
@@ -1109,9 +1113,28 @@ void CMasternodeMan::PunishNode(const CService& addr, CConnman& connman)
     }
 }
 
+// check socket connect
+bool CMasternodeMan::MnCheckConnect(const CMasternode& mn)
+{
+    bool docheck = fOkDual || (fOkIPv4 && mn.addr.IsIPv4()) || (fOkIPv6 && mn.addr.IsIPv6());
+    if (!docheck) {
+        LogPrintf("CMasternodeMan::MnCheckConnect -- Cannot check connection to '%s'\n", mn.addr.ToString());
+        return docheck;
+    }
 
-// Verification of masternodes via unique direct requests.
+    // Check socket connectivity
+    LogPrintf("CMasternodeMan::MnCheckConnect -- Check connection to '%s'\n", mn.addr.ToString());
+    SOCKET hSocket;
+    bool fConnected = ConnectSocket(mn.addr, hSocket, nConnectTimeout) && IsSelectableSocket(hSocket);
+    CloseSocket(hSocket);
 
+    if (!fConnected) {
+        LogPrintf("CMasternodeMan::MnCheckConnect -- %s: Could not connect to %s\n", mn.outpoint.ToStringShort(), mn.addr.ToString());
+    }
+    return fConnected;
+}
+
+// Verification of masternodes via unique direct requests
 void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
 {
     if(activeMasternode.outpoint.IsNull()) return;
@@ -1169,19 +1192,38 @@ void CMasternodeMan::DoFullVerificationStep(CConnman& connman)
             it += MAX_POSE_CONNECTIONS;
             continue;
         }
-        LogPrint("masternode", "CMasternodeMan::DoFullVerificationStep -- Verifying masternode %s rank %d/%d address %s\n",
-                    it->second.outpoint.ToStringShort(), it->first, nRanksTotal, it->second.addr.ToString());
 
         CAddress addr = CAddress(it->second.addr, NODE_NETWORK);
         if(VerifyRequest(addr, connman)) {
             vAddr.push_back(addr);
+
+            // so avoid double AskForMnv 
+            mapWeShouldAskForVerification.erase(it->second.outpoint);
+
+            LogPrintf("CMasternodeMan::DoFullVerificationStep -- Verifying masternode %s rank %d/%d address %s\n",
+                       it->second.outpoint.ToStringShort(), it->first, nRanksTotal, it->second.addr.ToString());
             nCount++;
             if(nCount >= MAX_POSE_CONNECTIONS) break;
         }
+
         nOffset += MAX_POSE_CONNECTIONS;
         if(nOffset >= (int)vecMasternodeRanks.size()) break;
         it += MAX_POSE_CONNECTIONS;
     }
+
+    // include also the ones we think WeShouldAskForVerification
+    for (const auto& outpt : mapWeShouldAskForVerification) {
+        CMasternode mn4v;
+        if (Get(outpt.first, mn4v)) {
+            CAddress addr = CAddress(mn4v.addr, NODE_NETWORK);
+            vAddr.push_back(addr);
+            int TimePassed = GetTime() - outpt.second;
+            LogPrintf("CMasternodeMan::DoFullVerificationStep -- Verifying masternode %s after %d secs, address %s\n",
+                       mn4v.outpoint.ToStringShort(), TimePassed, mn4v.addr.ToString());
+        }
+        mapWeShouldAskForVerification.erase(outpt.first);
+    }
+
     } // end lock CS
 
     for (const auto& addr : vAddr) {
@@ -1216,8 +1258,21 @@ void CMasternodeMan::CheckSameAddr()
         std::pair<int, CMasternode*> pLowerPoSeBanScoreMasternode = std::make_pair( -1, pprevMasternode);
 
         for (auto& mnpair : mapMasternodes) {
-            vSortedByAddr.push_back(&mnpair.second);
-            vSortedByPoSe.push_back(&mnpair.second);
+            // do not auto-ban myself
+            if(mnpair.second.outpoint == activeMasternode.outpoint) {
+                continue;
+            } else {
+                // someone else is using my address
+                if(mnpair.second.addr == activeMasternode.service) {
+                    LogPrintf("CMasternodeMan::CheckSameAddr -- Ban masternode %s, at my addr %s\n",
+                        mnpair.second.outpoint.ToStringShort(),mnpair.second.addr.ToString());
+                    mnpair.second.PoSeBan();
+                    continue;
+                } else {
+                    vSortedByAddr.push_back(&mnpair.second);
+                    vSortedByPoSe.push_back(&mnpair.second);
+                }
+            }
         }
 
         sort(vSortedByAddr.begin(), vSortedByAddr.end(), CompareByAddr());
@@ -1259,7 +1314,9 @@ void CMasternodeMan::CheckSameAddr()
         }
     }
 
-    LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban list num: %d from %d mnodes of total:%d\n", (int)vBan.size(), mncount, (int)vSortedByAddr.size());
+    int i = (int)vBan.size();
+    int j = (int)vSortedByAddr.size();
+    LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban list num: %d from %d mnodes of total:%d\n", i, mncount, j);
     // ban duplicates
     for (auto& pmn : vBan) {
         LogPrintf("CMasternodeMan::CheckSameAddr -- PoSe ban for masternode %s\n", pmn->outpoint.ToStringShort());
@@ -1268,10 +1325,17 @@ void CMasternodeMan::CheckSameAddr()
 
     // AskForMnv duplicate PoSeBanScore winners to Verify themselfs
     for (auto& pmn : mapAskForMnv) {
-        LogPrintf("CMasternodeMan::CheckSameAddr -- AskForMnv for masternode %s, addr %s\n", pmn.second->outpoint.ToStringShort(),pmn.second->addr.ToString());
-        AskForMnv(pmn.second->addr, pmn.second->outpoint);
+        if (MnCheckConnect(pmn.second)) {
+            // ask these MNs to verify when possible
+            LogPrintf("CMasternodeMan::CheckSameAddr -- should be asked Mnv masternode %s, addr %s\n", pmn.second->outpoint.ToStringShort(), pmn.second->addr.ToString());
+            mapWeShouldAskForVerification.emplace(pmn.second->outpoint, GetTime());
+            //AskForMnv(pmn.second->addr, pmn.second->outpoint);
+        } else {
+            // could not check if MN is a true MN
+            pmn.second->IncreasePoSeBanScore();
+        }
     }
-    
+
 }
 
 void CMasternodeMan::CheckMissingMasternodes()
@@ -1286,7 +1350,18 @@ void CMasternodeMan::CheckMissingMasternodes()
         LOCK(cs);
 
         for (auto& mnpair : mapMasternodes) {
-            vSortedByAddr.push_back(&mnpair.second);
+            // do not auto-ban myself
+            if(mnpair.second.outpoint == activeMasternode.outpoint) {
+                continue;
+            } else {
+                // someone else is using my address
+                if(mnpair.second.addr == activeMasternode.service) {
+                    LogPrintf("CMasternodeMan::CheckMissingMasternodes -- Ban masternode %s, at my addr %s\n",
+                        mnpair.second.outpoint.ToStringShort(),mnpair.second.addr.ToString());
+                    mnpair.second.PoSeBan();
+                    continue;
+                } else vSortedByAddr.push_back(&mnpair.second);
+            }
         }
         sort(vSortedByAddr.begin(), vSortedByAddr.end(), CompareByAddr());
         for (const auto& pmn : vSortedByAddr) {
