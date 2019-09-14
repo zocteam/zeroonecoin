@@ -1123,7 +1123,7 @@ void CMasternodeMan::PunishNode(const CService& addr, int howmuch, CConnman& con
     if(fOkDual || (fOkIPv4 && addr.IsIPv4()) || (fOkIPv6 && addr.IsIPv6())) 
     {
         // Requires cs. Punish not reachable MN.
-        IncreasePoSeBanScore(itPendingMNV->first);
+        IncreasePoSeBanScore(addr);
 
         LogPrint("masternode","CMasternodeMan::%s -- searching bad node-id at addr=%s\n", __func__, addr.ToString());
         CNode* found = connman.FindNode(addr);
