@@ -89,7 +89,7 @@ private:
     void SyncAll(CNode* pnode, CConnman& connman);
 
     void PushDsegInvs(CNode* pnode, const CMasternode& mn);
-    void PunishNode(const CService& addr, CConnman& connman);
+    void PunishNode(const CService& addr, int howmuch, CConnman& connman);
     bool MnCheckConnect(CMasternode* pmn);
 
 public:

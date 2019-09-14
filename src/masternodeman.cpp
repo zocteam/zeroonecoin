@@ -913,9 +913,10 @@ void CMasternodeMan::ProcessPendingMnbRequests(CConnman& connman)
         int64_t nTimeAdded = itPendingMNB->second.first;
         if (fDone || (GetTime() - nTimeAdded > 15)) {
             if (!fDone) {
-                LogPrintf("CMasternodeMan::ProcessPendingMnbRequests -- failed to connect to %s\n", itPendingMNB->first.ToString());
-                //Punish not reachable MN , required cs_main
-                //PunishNode(itPendingMNB->first,connman);
+                // failed to connect to address
+                LogPrintf("CMasternodeMan::ProcessPendingMnbRequests -- Punish not reachable addr %s\n", itPendingMNB->first.ToString());
+                //Punish not reachable MN , requires cs, requires cs_main
+                PunishNode(itPendingMNB->first, 20, connman);
             }
             mapPendingMNB.erase(itPendingMNB++);
         } else {
@@ -1114,18 +1115,23 @@ void CMasternodeMan::PushDsegInvs(CNode* pnode, const CMasternode& mn)
 }
 
 // Requires cs_main.
-void CMasternodeMan::PunishNode(const CService& addr, CConnman& connman)
+void CMasternodeMan::PunishNode(const CService& addr, int howmuch, CConnman& connman)
 {
     if(!masternodeSync.IsSynced()) return;
     // do not auto-punish
     if(addr == activeMasternode.service) return;
+    if(fOkDual || (fOkIPv4 && addr.IsIPv4()) || (fOkIPv6 && addr.IsIPv6())) 
+    {
+        // Requires cs. Punish not reachable MN.
+        IncreasePoSeBanScore(itPendingMNV->first);
 
-    CNode* found = connman.FindNode(addr);
-    LogPrint("masternode","CMasternodeMan::%s -- searching bad node-id at addr=%s\n", __func__, addr.ToString());
-    if(found){
-      LogPrintf("CMasternodeMan::PunishNode -- found Misbehaving node-id=%d at addr=%s\n", found->id, addr.ToString());
-      LOCK(cs_main);
-      Misbehaving(found->id, 20);
+        LogPrint("masternode","CMasternodeMan::%s -- searching bad node-id at addr=%s\n", __func__, addr.ToString());
+        CNode* found = connman.FindNode(addr);
+        if(found){
+          LogPrint("masternode","CMasternodeMan::PunishNode -- found Misbehaving node-id=%d at addr=%s\n", found->id, addr.ToString());
+          LOCK(cs_main);
+          Misbehaving(found->id, howmuch);
+        }
     }
 }
 
@@ -1444,11 +1450,9 @@ void CMasternodeMan::ProcessPendingMnvRequests(CConnman& connman)
         bool fOver15sPassed = nTimePassed > 15;
         if (fDoneSending || fOver15sPassed) {
             if (!fDoneSending) {
-                LogPrintf("CMasternodeMan::%s -- failed to connect to %s, %i sec\n", __func__, itPendingMNV->first.ToString(),(int)nTimePassed);
-                // Requires cs. Punish not reachable MN.
-                IncreasePoSeBanScore(itPendingMNV->first);
-                // Requires cs_main. Punish not reachable Node-peer
-                PunishNode(itPendingMNV->first,connman);
+                LogPrintf("CMasternodeMan::%s -- failed to connect to %s, %i sec\n", __func__, itPendingMNV->first.ToString(),(int)nTimePassed);                
+                // Requires cs, cs_main. Punish not reachable Node-peer
+                PunishNode(itPendingMNV->first, 20, connman);
                 // give up mnv request
                 mapPendingMNV.erase(itPendingMNV++);
             } else { // fDoneSending
@@ -1464,10 +1468,10 @@ void CMasternodeMan::ProcessPendingMnvRequests(CConnman& connman)
                 } else { // MNV was ignored or failed
                     LogPrintf("CMasternodeMan::%s -- still pending from %s, %i sec\n", __func__, itPendingMNV->first.ToString(),(int)nTimePassed);
                     if (fOver15sPassed) {
-                        // Requires cs. Punish not replying or failing MN.
-                        IncreasePoSeBanScore(itPendingMNV->first);
-                        // Requires cs_main. Punish not replying or failing Node-peer
-                        PunishNode(itPendingMNV->first,connman);
+                        // failed to connect to address
+                        LogPrintf("CMasternodeMan::ProcessPendingMnvRequests -- Punish not replying addr %s\n", itPendingMNV->first.ToString());
+                        // Requires cs, cs_main. Punish not replying or failing to send Node-peer
+                        PunishNode(itPendingMNV->first, 20, connman);
                         // give up mnv request
                         mapPendingMNV.erase(itPendingMNV++);
                     }
