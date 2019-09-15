@@ -912,7 +912,8 @@ void CMasternodeMan::ProcessPendingMnbRequests(CConnman& connman)
 
         int64_t nTimeAdded = itPendingMNB->second.first;
         if (fDone || (GetTime() - nTimeAdded > 15)) {
-            if (!fDone) {
+            if (!fDone && (fOkDual || (fOkIPv4 && itPendingMNB->first.IsIPv4()) || (fOkIPv6 && itPendingMNB->first.IsIPv6())) )
+            {
                 // failed to connect to address
                 LogPrintf("CMasternodeMan::ProcessPendingMnbRequests -- Punish not reachable addr %s\n", itPendingMNB->first.ToString());
                 //Punish not reachable MN , requires cs, requires cs_main
