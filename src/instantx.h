@@ -36,7 +36,7 @@ static const int MAX_INSTANTSEND_DEPTH              = 60;
 /// Default number of "pseudo-confirmations" for an InstantSend tx
 static const int DEFAULT_INSTANTSEND_DEPTH          = 5;
 
-static const int MIN_INSTANTSEND_PROTO_VERSION      = 70210;
+static const int MIN_INSTANTSEND_PROTO_VERSION      = 70211;
 
 /// For how long we are going to accept votes/locks
 /// after we saw the first one for a specific transaction
