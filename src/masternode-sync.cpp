@@ -136,9 +136,9 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
     static int nTick = 0;
     if(nTick++ % MASTERNODE_SYNC_TICK_SECONDS != 0) return;
 
-    // reset the sync process if the last call to this function was more than 60 minutes ago (client was in sleep mode)
+    // reset the sync process if the last call to this function was more than 10 minutes ago (client was in sleep mode)
     static int64_t nTimeLastProcess = GetTime();
-    if(GetTime() - nTimeLastProcess > 60*60) {
+    if(GetTime() - nTimeLastProcess > 10*60) {
         LogPrintf("CMasternodeSync::ProcessTick -- WARNING: no actions for too long, restarting sync...\n");
         Reset();
         SwitchToNextAsset(connman);
@@ -166,7 +166,7 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
     }
 
     // Calculate "progress" for LOG reporting / GUI notification
-    double nSyncProgress = double(nRequestedMasternodeAttempt + (nRequestedMasternodeAssets - 1) * 8) / (8*4);
+    double nSyncProgress = (double(nRequestedMasternodeAttempt)/(8*6))+(double((nRequestedMasternodeAssets-1)*8)/(8*4));
     LogPrintf("CMasternodeSync::ProcessTick -- nTick %d nRequestedMasternodeAssets %d nRequestedMasternodeAttempt %d nSyncProgress %f\n", nTick, nRequestedMasternodeAssets, nRequestedMasternodeAttempt, nSyncProgress);
     uiInterface.NotifyAdditionalDataSyncProgressChanged(nSyncProgress);
 
@@ -191,11 +191,7 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                 mnodeman.DsegUpdate(pnode, connman);
             } else if(nRequestedMasternodeAttempt < 6) {
                 //sync payment votes
-                if(pnode->nVersion == 70208) {
-                    connman.PushMessage(pnode, msgMaker.Make(NetMsgType::MASTERNODEPAYMENTSYNC, mnpayments.GetStorageLimit())); //sync payment votes
-                } else {
-                    connman.PushMessage(pnode, msgMaker.Make(NetMsgType::MASTERNODEPAYMENTSYNC)); //sync payment votes
-                }
+                connman.PushMessage(pnode, msgMaker.Make(NetMsgType::MASTERNODEPAYMENTSYNC)); //sync payment votes
                 SendGovernanceSyncRequest(pnode, connman);
             } else {
                 nRequestedMasternodeAssets = MASTERNODE_SYNC_FINISHED;
@@ -206,7 +202,9 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
         }
 
         // NORMAL NETWORK MODE - TESTNET/MAINNET
-        {
+        // search for relevant nodes only
+        if (pnode->nVersion >= mnpayments.GetMinMasternodePaymentsProto()) {
+
             if(netfulfilledman.HasFulfilledRequest(pnode->addr, "full-sync")) {
                 // We already fully synced from this node recently,
                 // disconnect to free this connection slot for another peer.
@@ -260,8 +258,10 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                     return;
                 }
 
-                // request from three peers max
-                if (nRequestedMasternodeAttempt > 2) {
+                // request up to six peers max (in 30seconds timeout)
+                if (nRequestedMasternodeAttempt > 5) {
+                    // so all six requests done, no need to wait timeout to move
+                    SwitchToNextAsset(connman);
                     connman.ReleaseNodeVector(vNodesCopy);
                     return;
                 }
@@ -270,7 +270,8 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                 if(netfulfilledman.HasFulfilledRequest(pnode->addr, "masternode-list-sync")) continue;
                 netfulfilledman.AddFulfilledRequest(pnode->addr, "masternode-list-sync");
 
-                if (pnode->nVersion < mnpayments.GetMinMasternodePaymentsProto()) continue;
+                // TODO : cleanup after testing sync is better
+                // if (pnode->nVersion < mnpayments.GetMinMasternodePaymentsProto()) continue;
                 nRequestedMasternodeAttempt++;
 
                 mnodeman.DsegUpdate(pnode, connman);
@@ -310,8 +311,10 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                     return;
                 }
 
-                // request from three peers max
-                if (nRequestedMasternodeAttempt > 2) {
+                // request up to six peers max (in 30 seconds timeout)
+                if (nRequestedMasternodeAttempt > 5) {
+                    // so all six requests done, no need to wait timeout to move
+                    SwitchToNextAsset(connman);
                     connman.ReleaseNodeVector(vNodesCopy);
                     return;
                 }
@@ -320,16 +323,13 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                 if(netfulfilledman.HasFulfilledRequest(pnode->addr, "masternode-payment-sync")) continue;
                 netfulfilledman.AddFulfilledRequest(pnode->addr, "masternode-payment-sync");
 
-                if(pnode->nVersion < mnpayments.GetMinMasternodePaymentsProto()) continue;
+                // TODO : cleanup after testing sync is better
+                // if(pnode->nVersion < mnpayments.GetMinMasternodePaymentsProto()) continue;
                 nRequestedMasternodeAttempt++;
 
                 // ask node for all payment votes it has (new nodes will only return votes for future payments)
                 //sync payment votes
-                if(pnode->nVersion == 70208) {
-                    connman.PushMessage(pnode, msgMaker.Make(NetMsgType::MASTERNODEPAYMENTSYNC, mnpayments.GetStorageLimit()));
-                } else {
-                    connman.PushMessage(pnode, msgMaker.Make(NetMsgType::MASTERNODEPAYMENTSYNC));
-                }
+                connman.PushMessage(pnode, msgMaker.Make(NetMsgType::MASTERNODEPAYMENTSYNC));
                 // ask node for missing pieces only (old nodes will not be asked)
                 mnpayments.RequestLowDataPaymentBlocks(pnode, connman);
 

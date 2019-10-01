@@ -23,7 +23,7 @@ std::map<int, int64_t> mapSporkDefaults = {
     {SPORK_4_MNSIG_REQ,                      6},             // ON - MNPAYMENTS_SIGNATURES_REQUIRED (tunable)
     {SPORK_5_INSTANTSEND_MAX_VALUE,          100001},        // ON - InstaSend up to 100000 ZOC
     {SPORK_6_NEW_SIGS,                       4070908800ULL}, // OFF
-    {SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK,    4070908800ULL}, // OFF
+    {SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK,    1567277734ULL}, // ON - GMT: Saturday, 31 Aug 2019 18:55:34
     {SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT, 0},             // ON
     {SPORK_9_SUPERBLOCKS_ENABLED,            4070908800ULL}, // OFF
     {SPORK_10_MASTERNODE_PAY_UPDATED_NODES,  1563623999ULL}, // ON - GMT: Saturday, 20 July 2019 11:59:59

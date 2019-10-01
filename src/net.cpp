@@ -80,6 +80,15 @@ static const uint64_t RANDOMIZER_ID_LOCALHOSTNONCE = 0xd93e69e2bbfa5735ULL; // S
 bool fDiscover = true;
 bool fListen = true;
 bool fRelayTxes = true;
+
+// Flags for helping guess stacks online
+bool fOkIPv4 = false;
+bool fOkIPv6 = false;
+bool fOkDual = false;
+
+// Dirty list of missing MNs
+std::map<CService, int> mapMissingMNs;
+
 CCriticalSection cs_mapLocalHost;
 std::map<CNetAddr, LocalServiceInfo> mapLocalHost;
 static bool vfLimited[NET_MAX] = {};
@@ -1973,13 +1982,23 @@ void CConnman::ThreadOpenMasternodeConnections()
             continue;
         }
 
-        OpenMasternodeConnection(CAddress(addr, NODE_NETWORK));
+        bool fOpenConnection = OpenMasternodeConnection(CAddress(addr, NODE_NETWORK));
+        
+        // Save a guess this is missing Masternode due to some known connect error!
+        if (!fOpenConnection && !IsLocal(addr)) mapMissingMNs.emplace(addr,nConnectRetCode);
+
         // should be in the list now if connection was opened
         ForNode(addr, CConnman::AllNodes, [&](CNode* pnode) {
             if (pnode->fDisconnect) {
                 return false;
             }
             grant.MoveTo(pnode->grantMasternodeOutbound);
+
+            // guess which network was used
+            if (!fOkIPv4 && pnode->addr.IsIPv4() && !pnode->addr.IsLocal() && pnode->addr.IsRoutable()) fOkIPv4=true;
+            if (!fOkIPv6 && pnode->addr.IsIPv6() && !pnode->addr.IsLocal() && pnode->addr.IsRoutable()) fOkIPv6=true;
+            if (!fOkDual && fOkIPv4 && fOkIPv6) fOkDual=true;
+
             return true;
         });
     }

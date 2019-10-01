@@ -1,4 +1,6 @@
 // Copyright (c) 2012-2014 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,9 +20,9 @@ const std::string CLIENT_NAME("ZeroOne Core");
 /**
  * Client version number
  */
-#define CLIENT_VERSION_SUFFIX "w27"
-// Date:"190702" = 0x2E8EE
-#define BUILD_SUFFIX 2E8EE
+#define CLIENT_VERSION_SUFFIX "w32"
+// Date:"190914" = 0x2E9C2
+#define BUILD_SUFFIX 2E9C2
 
 
 
