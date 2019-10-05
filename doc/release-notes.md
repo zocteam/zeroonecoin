@@ -1,4 +1,4 @@
-# 01coin version 0.12.3.6
+# 01coin version 0.12.3.7
 
 Release is now available from:
 
@@ -19,23 +19,21 @@ If you are running an older version, shut it down. Wait until it has completely 
 
 ### Downgrade warning
 
-Downgrade to a version < 0.12.3.6
+Downgrade to a version < 0.12.3.7
 
-Because release 0.12.3.6 is a mandatory upgrade release, downgrading to an earlier version is not supported.
+Because release 0.12.3.7 is a mandatory upgrade release, downgrading to an earlier version is not supported.
 
 
 ## Notable changes
 
-- Node sw supports only protocol 70211
-- ZOC SLIP44 CoinType 399, HD(m/44'/399'/0'/0/0)
-- Sharky-miner-blocks are burnt, block reward not shared w/MN and w/no tx processed will become unmatured/unpsent/burned
-- Several cleanups and optimizations to speedup and unfreeze mnsync asset stages
+- Node 2nd layer fork-auto-heal from verified mn broadcasts
+- Delayed daily unstuck fork-auto-healing attempt 
 - All users, exchanges, masternode owners and miners should upgrade as soon as possible
 
 
-### 0.12.3.6 Change log
+### 0.12.3.7 Change log
 
-See detailed [set of changes](https://github.com/zocteam/zeroonecoin/compare/v0.12.3.5...zocteam:v0.12.3.6).
+See detailed [set of changes](https://github.com/zocteam/zeroonecoin/compare/v0.12.3.6...zocteam:v0.12.3.7).
 
 
 ## Credits
