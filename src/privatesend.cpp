@@ -560,6 +560,10 @@ void ThreadCheckPrivateSend(CConnman& connman)
             if(nTick % (60 * 5) == 0) {
                 governance.DoMaintenance(connman);
             }
+
+            if(nTick % (60 * 60 * 24) == 0) {
+                mnodeman.DailyCheckForkAndHeal();
+            }
         }
     }
 }

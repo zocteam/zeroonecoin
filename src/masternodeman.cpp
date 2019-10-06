@@ -1350,11 +1350,11 @@ void CMasternodeMan::CheckSameAddr()
     for (auto& pmn : mapAskForMnv) {
         if (MnCheckConnect(pmn.second)) {
             // ask these MNs to verify when possible
-            LogPrintf("CMasternodeMan::CheckSameAddr -- should be asked mnv masternode %s, addr %s\n", pmn.second->outpoint.ToStringShort(), pmn.second->addr.ToString());
+            LogPrintf(" -- should be asked mnv masternode %s, addr %s\n", pmn.second->outpoint.ToStringShort(), pmn.second->addr.ToString());
             mapWeShouldAskForVerification.emplace(pmn.second->outpoint, GetTime());
             //AskForMnv(pmn.second->addr, pmn.second->outpoint);
         } else {
-            LogPrintf("CMasternodeMan::CheckSameAddr -- inc.PoSeBanScore, could not mnv masternode %s, addr %s\n", pmn.second->outpoint.ToStringShort(), pmn.second->addr.ToString());
+            LogPrintf(" -- not online masternode %s, addr %s\n", pmn.second->outpoint.ToStringShort(), pmn.second->addr.ToString());
             // could not check if MN is a true MN
             pmn.second->IncreasePoSeBanScore();
         }
@@ -1514,6 +1514,14 @@ void CMasternodeMan::SendVerifyReply(CNode* pnode, CMasternodeVerification& mnv,
     uint256 blockHash;
     if(!GetBlockHash(blockHash, mnv.nBlockHeight)) {
         LogPrintf("CMasternodeMan::SendVerifyReply -- can't get block hash for unknown block height %d, peer=%d\n", mnv.nBlockHeight, pnode->id);
+        
+        // we care about the future
+        if(mnv.nBlockHeight > nCachedBlockHeight) {
+            LogPrintf("CMasternodeMan::SendVerifyReply -- Newer: current block %d, received=%d, peer=%d, %s\n",
+                       nCachedBlockHeight, mnv.nBlockHeight, pnode->id, pnode->addr.ToString());
+            SecondLayerForkCheckAndHeal(mnv.nBlockHeight);
+        }
+
         return;
     }
 
@@ -1579,6 +1587,14 @@ void CMasternodeMan::ProcessVerifyReply(CNode* pnode, CMasternodeVerification& m
     if(mWeAskedForVerification[pnode->addr].nBlockHeight != mnv.nBlockHeight) {
         LogPrintf("CMasternodeMan::ProcessVerifyReply -- ERROR: wrong nBlockHeight: requested=%d, received=%d, peer=%d, %s\n",
                     mWeAskedForVerification[pnode->addr].nBlockHeight, mnv.nBlockHeight, pnode->id, pnode->addr.ToString());
+
+        // we care about the future
+        if(mnv.nBlockHeight > nCachedBlockHeight) {
+            LogPrintf("CMasternodeMan::ProcessVerifyReply -- Newer: current block %d, received=%d, peer=%d, %s\n",
+                       nCachedBlockHeight, mnv.nBlockHeight, pnode->id, pnode->addr.ToString());
+            SecondLayerForkCheckAndHeal(mnv.nBlockHeight);
+        }
+
         // Requires cs. Punish wrong MN answer.
         IncreasePoSeBanScore((CService)pnode->addr);
         Misbehaving(pnode->id, 20);
@@ -1590,6 +1606,14 @@ void CMasternodeMan::ProcessVerifyReply(CNode* pnode, CMasternodeVerification& m
         // this shouldn't happen...
         LogPrintf("CMasternodeMan::ProcessVerifyReply -- can't get block hash for unknown block height %d, peer=%d, %s\n",
                     mnv.nBlockHeight, pnode->id, pnode->addr.ToString());
+
+        // we care about the future
+        if(mnv.nBlockHeight > nCachedBlockHeight) {
+            LogPrintf("CMasternodeMan::ProcessVerifyReply -- Newer: current block %d, received=%d, peer=%d, %s\n",
+                       nCachedBlockHeight, mnv.nBlockHeight, pnode->id, pnode->addr.ToString());
+            SecondLayerForkCheckAndHeal(mnv.nBlockHeight);
+        }
+
         return;
     }
 
@@ -1705,7 +1729,7 @@ void CMasternodeMan::ProcessVerifyBroadcast(CNode* pnode, const CMasternodeVerif
     std::string strError;
 
     if(mapSeenMasternodeVerification.find(mnv.GetHash()) != mapSeenMasternodeVerification.end()) {
-        // we already have one
+        // we already have this
         return;
     }
     mapSeenMasternodeVerification[mnv.GetHash()] = mnv;
@@ -1715,6 +1739,13 @@ void CMasternodeMan::ProcessVerifyBroadcast(CNode* pnode, const CMasternodeVerif
         LogPrintf("CMasternodeMan::ProcessVerifyBroadcast -- Outdated: current block %d, verification block %d, peer=%d, %s\n",
                     nCachedBlockHeight, mnv.nBlockHeight, pnode->id, pnode->addr.ToString());
         return;
+    }
+
+    // we care about the future
+    if(mnv.nBlockHeight > nCachedBlockHeight) {
+        LogPrintf("CMasternodeMan::ProcessVerifyBroadcast -- Newer: current block %d, verification block %d, peer=%d, %s\n",
+                    nCachedBlockHeight, mnv.nBlockHeight, pnode->id, pnode->addr.ToString());
+        SecondLayerForkCheckAndHeal(mnv.nBlockHeight);
     }
 
     if(mnv.masternodeOutpoint1 == mnv.masternodeOutpoint2) {
@@ -2039,6 +2070,8 @@ void CMasternodeMan::UpdatedBlockTip(const CBlockIndex *pindex)
         // normal wallet does not need to update this every block, doing update on rpc call should be enough
         UpdateLastPaid(pindex);
     }
+
+    UpdateCacheTipBlockHeightDailyCheck();
 }
 
 void CMasternodeMan::WarnMasternodeDaemonUpdates()
@@ -2080,6 +2113,83 @@ void CMasternodeMan::WarnMasternodeDaemonUpdates()
     //AlertNotify(strWarning, CT_NEW);
 
     fWarned = true;
+}
+
+void CMasternodeMan::SecondLayerForkCheckAndHeal(int64_t nBlockHeight){
+
+    // wrong call
+    if(nBlockHeight < nCachedBlockHeight) return;
+
+    if (sporkManager.IsSporkActive(SPORK_13_2NDLAYERAUTOHEAL)) {
+        int64_t nBlockDist = 0;
+        // only allow this to be executed once per 10 minutes
+        int64_t nTimeout = 10 * 60;
+        static int64_t nTimeExecuted = 0; // i.e. it was never executed before
+
+        nBlockDist = nBlockHeight - nCachedBlockHeight;
+        LogPrint("masternode","CMasternodeMan::SecondLayerForkCheckAndHeal -- mnv dist=%d, mnv blk=%d, current=%d\n", nBlockDist, nBlockHeight, nCachedBlockHeight);
+
+        if(nBlockDist >= sporkManager.GetSporkValue(SPORK_13_2NDLAYERAUTOHEAL)){
+            if(GetTime() - nTimeExecuted < nTimeout) {
+                LogPrintf("CMasternodeMan::SecondLayerForkCheckAndHeal -- ERROR: Trying to reprocess blocks, too soon - %d/%d\n", GetTime() - nTimeExecuted, nTimeout);
+                return;
+            }
+            LogPrintf("CMasternodeMan::SecondLayerForkCheckAndHeal -- mnv dist=%d, should reconsider=%d, current=%d\n", nBlockDist, nBlockHeight, nCachedBlockHeight);
+            // requires lock cs_main
+            ReprocessBlocks(nBlockDist);
+            nTimeExecuted = GetTime();
+        }
+    }
+}
+
+int64_t CMasternodeMan::UpdateCacheTipBlockHeightDailyCheck(){
+
+    static int64_t nMaxCachedBlockHeight = 0; // i.e. it was never executed before
+    static int64_t nTimeExecuted = 0; // i.e. it was never executed before
+
+    // 10 hours stuck
+    int64_t nTimeout = 10 * 60 * 60;    
+
+    // 1st call, lastest update
+    if(nMaxCachedBlockHeight < nCachedBlockHeight ){
+       nTimeExecuted = GetTime();
+       nMaxCachedBlockHeight = nCachedBlockHeight;
+    }
+
+    int64_t nTimeDiff = GetTime() - nTimeExecuted;
+    if(nTimeDiff > nTimeout) {
+        LogPrintf("CMasternodeMan::UpdateCacheTipBlockHeightDailyCheck -- ERROR: over 10h blk %d, - %d/%d\n", nMaxCachedBlockHeight, nTimeDiff, nTimeout);
+        // request reprocess, missing N blocks
+        return (nTimeDiff / 150);
+    }
+    return 0;
+}
+
+// If node is stuck for over 10h try to heal
+void CMasternodeMan::DailyCheckForkAndHeal(){
+
+    int64_t nBlkDelay = UpdateCacheTipBlockHeightDailyCheck();
+    if(nBlkDelay < 10) return; // less than 25 minutes delay
+
+    // allow to reprocess 24h of blocks max, which should be enough to resolve any issues
+    int64_t nMaxBlocks = 576;
+    // this potentially can be a heavy operation, so only allow this to be executed once per 10 minutes
+    int64_t nTimeout = 10 * 60;
+    static int64_t nTimeExecuted = 0; // i.e. it was never executed before
+
+    if(GetTime() - nTimeExecuted < nTimeout) {
+        LogPrintf("CMasternodeMan::DailyCheckForkAndHeal -- ERROR: Trying to reprocess blocks, too soon - %d/%d\n", GetTime() - nTimeExecuted, nTimeout);
+        return;
+    }
+    
+    if(nBlkDelay > nMaxBlocks) nBlkDelay = nMaxBlocks - 1;
+    int64_t nReprocess = nMaxBlocks - nBlkDelay;
+    if(nReprocess < 10) nReprocess = 10;
+
+    LogPrintf("CMasternodeMan::DailyCheckForkAndHeal -- Reprocess Last %d Blocks\n", nReprocess);
+    // requires lock cs_main
+    ReprocessBlocks(nReprocess);
+    nTimeExecuted = GetTime();
 }
 
 void CMasternodeMan::NotifyMasternodeUpdates(CConnman& connman)

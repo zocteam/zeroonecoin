@@ -250,6 +250,13 @@ public:
     void UpdatedBlockTip(const CBlockIndex *pindex);
 
     void WarnMasternodeDaemonUpdates();
+    
+    // If node seems to be lost for over 10 blocks try to heal
+    void SecondLayerForkCheckAndHeal(int64_t nBlockHeight);
+    // cache last cache tip, returns about how many blks delay
+    int64_t UpdateCacheTipBlockHeightDailyCheck();
+    // If node seems to be stuck for over 10 hours try to heal
+    void DailyCheckForkAndHeal();
 
     /**
      * Called to notify CGovernanceManager that the masternode index has been updated.

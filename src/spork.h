@@ -29,7 +29,7 @@ static const int SPORK_9_SUPERBLOCKS_ENABLED                            = 10008;
 static const int SPORK_10_MASTERNODE_PAY_UPDATED_NODES                  = 10009;
 static const int SPORK_11_MNSIG_TOTAL                                   = 10010;
 static const int SPORK_12_RECONSIDER_BLOCKS                             = 10011;
-static const int SPORK_13_TESTMNGB                                      = 10012;
+static const int SPORK_13_2NDLAYERAUTOHEAL                              = 10012;
 static const int SPORK_14_REQUIRE_SENTINEL_FLAG                         = 10013;
 
 static const int SPORK_START                                            = SPORK_2_INSTANTSEND_ENABLED;
