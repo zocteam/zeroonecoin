@@ -1475,6 +1475,9 @@ void CMasternodeMan::ProcessPendingMnvRequests(CConnman& connman)
                         PunishNode(itPendingMNV->first, 20, connman);
                         // give up mnv request
                         mapPendingMNV.erase(itPendingMNV++);
+                    } else {
+                        // process next in PendingMNV list
+                        ++itPendingMNV;
                     }
                     // Retry: re-ProcessPendingMnvRequests (re-send MNV)
                 }
