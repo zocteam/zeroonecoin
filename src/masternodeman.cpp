@@ -1443,6 +1443,8 @@ void CMasternodeMan::ProcessPendingMnvRequests(CConnman& connman)
             LogPrintf("CMasternodeMan::%s -- verifying node using nonce %d addr=%s\n", __func__, itPendingMNV->second.second.nonce, pnode->addr.ToString());
             CNetMsgMaker msgMaker(pnode->GetSendVersion()); // TODO this gives a warning about version not being set (we should wait for VERSION exchange)
             connman.PushMessage(pnode, msgMaker.Make(NetMsgType::MNVERIFY, itPendingMNV->second.second));
+            // update to the time it was send it
+            itPendingMNV->second.first = GetTime();
             return true;
         });
 
