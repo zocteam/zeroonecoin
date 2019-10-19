@@ -121,10 +121,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nThreshold = 3226; // 80% of 4032
 
         // The best chain should have at least this much work (getblockchaininfo)
-        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000002751a89f503b6e"); // 321143
+        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000000278109cc4d4f00"); // 327856
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x000000003cd8528639e51ed1541de721d8dd32c5c53a8c2ecdd5bebfaa059940"); // 321143
+        consensus.defaultAssumeValid = uint256S("0x000000002fdb5872e1c42d949dab224cb1d41a79520a1c605f737236a2e55ecf"); // 327856
 
 
         /**
@@ -193,13 +193,14 @@ public:
             ( 303202, uint256S("0x0000000095e87ff2246bc208bab6beaf4884dc18ef02bce5d672fd5cc91898fc"))
             ( 309607, uint256S("0x0000000095eb0ecc0fd54f5714d2c0bf089fdc9386ce79911219e4141dbca6d8"))
             ( 321143, uint256S("0x000000003cd8528639e51ed1541de721d8dd32c5c53a8c2ecdd5bebfaa059940"))
+            ( 327856, uint256S("0x000000002fdb5872e1c42d949dab224cb1d41a79520a1c605f737236a2e55ecf"))
         };
 
         chainTxData = ChainTxData{
-            1570376310,// * UNIX timestamp of last known number of transactions
-            121864,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
+            1571439186,// * UNIX timestamp of last known number of transactions
+            123333,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
                        //   (the tx=... number in the SetBestChain debug.log lines)
-            0.002      // * estimated number of transactions per second after that timestamp (121864/(1570376310-1517407200)=0.002)
+            0.002      // * estimated number of transactions per second after that timestamp (123333/(1571439186-1517407200)=0.002)
         };
     }
 };
