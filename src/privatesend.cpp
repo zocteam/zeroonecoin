@@ -269,9 +269,7 @@ bool CPrivateSend::IsCollateralValid(const CTransaction& txCollateral)
 
     for (const auto& txout : txCollateral.vout) {
         nValueOut += txout.nValue;
-
-        bool fAllowData = mnpayments.GetMinMasternodePaymentsProto() > 70208;
-        if(!txout.scriptPubKey.IsPayToPublicKeyHash() && !(fAllowData && txout.scriptPubKey.IsUnspendable())) {
+        if(!txout.scriptPubKey.IsPayToPublicKeyHash() && !(txout.scriptPubKey.IsUnspendable())) {
             LogPrintf ("CPrivateSend::IsCollateralValid -- Invalid Script, txCollateral=%s", txCollateral.ToString());
             return false;
         }
@@ -308,13 +306,8 @@ bool CPrivateSend::IsCollateralValid(const CTransaction& txCollateral)
 
 bool CPrivateSend::IsCollateralAmount(CAmount nInputAmount)
 {
-    if (mnpayments.GetMinMasternodePaymentsProto() > 70208) {
-        // collateral input can be anything between 1x and "max" (including both)
-        return (nInputAmount >= GetCollateralAmount() && nInputAmount <= GetMaxCollateralAmount());
-    } else { // <= 70208
-        // collateral input can be anything between 2x and "max" (including both)
-        return (nInputAmount >= GetCollateralAmount() * 2 && nInputAmount <= GetMaxCollateralAmount());
-    }
+    // collateral input can be anything between 1x and "max" (including both)
+    return (nInputAmount >= GetCollateralAmount() && nInputAmount <= GetMaxCollateralAmount());
 }
 
 /*  Create a nice string to show the denominations
@@ -554,14 +547,22 @@ void ThreadCheckPrivateSend(CConnman& connman)
                 mnodeman.CheckAndRemove(connman);
                 mnodeman.WarnMasternodeDaemonUpdates();
                 mnpayments.CheckAndRemove();
-                instantsend.CheckAndRemove();
+                instantsend.CheckAndRemove();    
             }
+            
             if(fMasternodeMode && (nTick % (60 * 5) == 0)) {
+                mnodeman.CheckSameAddr();
                 mnodeman.DoFullVerificationStep(connman);
+                mnpayments.CheckMissingVotes();
+                mnodeman.CheckMissingMasternodes();
             }
 
             if(nTick % (60 * 5) == 0) {
                 governance.DoMaintenance(connman);
+            }
+
+            if(nTick % (60 * 60 * 24) == 0) {
+                mnodeman.DailyCheckForkAndHeal();
             }
         }
     }

@@ -230,11 +230,17 @@ bool CMasternodePayments::UpdateLastVote(const CMasternodePaymentVote& vote)
 {
     LOCK(cs_mapMasternodePaymentVotes);
 
-    const auto it = mapMasternodesLastVote.find(vote.masternodeOutpoint);
-    if (it != mapMasternodesLastVote.end()) {
-        if (it->second == vote.nBlockHeight)
+    const auto it1 = mapMasternodesDidNotVote.find(vote.masternodeOutpoint);
+    if (it1 != mapMasternodesDidNotVote.end()) {
+        mapMasternodesDidNotVote.erase(vote.masternodeOutpoint);
+        mnodeman.DecreasePoSeBanScore(vote.masternodeOutpoint);
+    }
+
+    const auto it2 = mapMasternodesLastVote.find(vote.masternodeOutpoint);
+    if (it2 != mapMasternodesLastVote.end()) {
+        if (it2->second == vote.nBlockHeight)
             return false;
-        it->second = vote.nBlockHeight;
+        it2->second = vote.nBlockHeight;
         return true;
     }
 
@@ -299,8 +305,6 @@ void CMasternodePayments::ProcessMessage(CNode* pfrom, const std::string& strCom
 
         if(pfrom->nVersion < GetMinMasternodePaymentsProto()) {
             LogPrint("mnpayments", "MASTERNODEPAYMENTSYNC -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
-            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", GetMinMasternodePaymentsProto())));
             return;
         }
 
@@ -308,12 +312,6 @@ void CMasternodePayments::ProcessMessage(CNode* pfrom, const std::string& strCom
         // We could start processing this after masternode list is synced
         // but this is a heavy one so it's better to finish sync first.
         if (!masternodeSync.IsSynced()) return;
-
-        // DEPRECATED, should be removed on next protocol bump
-        if(pfrom->nVersion == 70208) {
-            int nCountNeeded;
-            vRecv >> nCountNeeded;
-        }
 
         if(netfulfilledman.HasFulfilledRequest(pfrom->addr, NetMsgType::MASTERNODEPAYMENTSYNC)) {
             LOCK(cs_main);
@@ -334,8 +332,6 @@ void CMasternodePayments::ProcessMessage(CNode* pfrom, const std::string& strCom
 
         if(pfrom->nVersion < GetMinMasternodePaymentsProto()) {
             LogPrint("mnpayments", "MASTERNODEPAYMENTVOTE -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
-            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", GetMinMasternodePaymentsProto())));
             return;
         }
 
@@ -573,13 +569,16 @@ bool CMasternodeBlockPayees::HasPayeeWithVotes(const CScript& payeeIn, int nVote
 {
     LOCK(cs_vecPayees);
 
+    int i = (int)vecPayees.size();
     for (const auto& payee : vecPayees) {
-        if (payee.GetVoteCount() >= nVotesReq && payee.GetPayee() == payeeIn) {
+        int v = payee.GetVoteCount();
+        if (v >= nVotesReq && payee.GetPayee() == payeeIn) {
+            LogPrint("mnpayments", "CMasternodeBlockPayees::HasPayeeWithVotes -- found payee with %d votes of %d+ required from %d\n", v, nVotesReq, i);
             return true;
         }
     }
-
-    LogPrint("mnpayments", "CMasternodeBlockPayees::HasPayeeWithVotes -- ERROR: couldn't find any payee with %d+ votes\n", nVotesReq);
+    // This is a loop called function, dont spam debug log so much for now...
+    // LogPrint("mnpayments", "CMasternodeBlockPayees::HasPayeeWithVotes -- ERROR: couldn't find any payee with %d+ votes in %d\n", nVotesReq, vecPayees.size());
     return false;
 }
 
@@ -890,6 +889,45 @@ void CMasternodePayments::CheckBlockVotes(int nBlockHeight)
     LogPrint("mnpayments", "%s", debugStr);
 }
 
+void CMasternodePayments::CheckMissingVotes()
+{
+    // Do not check until fully synced
+    if(!masternodeSync.IsSynced()) {
+        LogPrintf("CMasternodePayments::CheckMissingVotes -- won't check until fully synced\n");
+        return;
+    }
+
+    LOCK(cs_mapMasternodePaymentVotes);
+
+    std::string debugStr;
+    int n = (int)mapMasternodesDidNotVote.size();
+    debugStr += strprintf("CMasternodePayments::CheckMissingVotes -- nBlockHeight=%d, total missing votes was:%d\n", nCachedBlockHeight, n);
+    if (mapMasternodesDidNotVote.empty()) {
+        LogPrint("mnpayments", "%s", debugStr);
+        return;
+    }
+
+    std::map<COutPoint, int> mMdnv;
+    mMdnv = mapMasternodesDidNotVote;
+    debugStr += "  Masternodes which missed a vote:\n";
+    for (const auto& item : mMdnv) {
+        debugStr += strprintf("    - %s: %d\n", item.first.ToStringShort(), item.second);
+        if(item.second <= 0) {
+            // didn't change stats since last call, clean entry
+            mapMasternodesDidNotVote.erase(item.first);
+        }
+        // MN is not doing its dutty        
+        if(item.second >= 1) {
+            mnodeman.IncreasePoSeBanScore(item.first);
+            int i = item.second-1;
+            mapMasternodesDidNotVote.emplace(item.first, 0).first->second = i;
+        }
+
+    }
+    LogPrintf("%s", debugStr);
+
+}
+
 void CMasternodePaymentVote::Relay(CConnman& connman) const
 {
     // Do not relay until fully synced
@@ -924,7 +962,7 @@ bool CMasternodePaymentVote::CheckSignature(const CPubKey& pubKeyMasternode, int
                 if(masternodeSync.IsMasternodeListSynced() && nBlockHeight > nValidationHeight) {
                     nDos = 20;
                 }
-                return error("CMasternodePaymentVote::CheckSignature -- Got bad Masternode payment signature, masternode=%s, error: %s",
+                return error("CMasternodePaymentVote::CheckSignature -- Got bad Masternode payment signature, masternode=%s, spk6, error: %s",
                             masternodeOutpoint.ToStringShort(), strError);
             }
         }
@@ -940,8 +978,10 @@ bool CMasternodePaymentVote::CheckSignature(const CPubKey& pubKeyMasternode, int
             if(masternodeSync.IsMasternodeListSynced() && nBlockHeight > nValidationHeight) {
                 nDos = 20;
             }
-            return error("CMasternodePaymentVote::CheckSignature -- Got bad Masternode payment signature, masternode=%s, error: %s",
+            // error message is spamming debug.log , make log only during debug
+            LogPrint("mnpayments", "ERROR: CMasternodePaymentVote::CheckSignature -- Got bad Masternode payment signature, masternode=%s, error: %s",
                         masternodeOutpoint.ToStringShort(), strError);
+            return false;
         }
     }
 

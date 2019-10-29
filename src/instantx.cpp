@@ -1,5 +1,5 @@
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -61,8 +61,6 @@ void CInstantSend::ProcessMessage(CNode* pfrom, const std::string& strCommand, C
     {
         if(pfrom->nVersion < MIN_INSTANTSEND_PROTO_VERSION) {
             LogPrint("instantsend", "TXLOCKVOTE -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
-            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", MIN_INSTANTSEND_PROTO_VERSION)));
             return;
         }
 

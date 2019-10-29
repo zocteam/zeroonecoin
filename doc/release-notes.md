@@ -1,4 +1,4 @@
-# 01coin version 0.12.3.4
+# 01coin version 0.12.3.7
 
 Release is now available from:
 
@@ -19,19 +19,21 @@ If you are running an older version, shut it down. Wait until it has completely 
 
 ### Downgrade warning
 
-Downgrade to a version < 0.12.3.4
+Downgrade to a version < 0.12.3.7
 
-Because release 0.12.3.4 is a mandatory upgrade release, downgrading to an earlier version is not supported.
+Because release 0.12.3.7 is a mandatory upgrade release, downgrading to an earlier version is not supported.
 
 
 ## Notable changes
 
-- Enforces Spork 8 as of block 159551 (approx. Nov. 24)
-- All masternode owners and miners should upgrade as soon as possible
+- Node 2nd layer fork-auto-heal from verified mn broadcasts
+- Delayed daily unstuck fork-auto-healing attempt 
+- All users, exchanges, masternode owners and miners should upgrade as soon as possible
 
-### 0.12.3.4 Change log
 
-See detailed [set of changes](https://github.com/zocteam/zeroonecoin/compare/v0.12.3.3...zocteam:v0.12.3.4).
+### 0.12.3.7 Change log
+
+See detailed [set of changes](https://github.com/zocteam/zeroonecoin/compare/v0.12.3.6...zocteam:v0.12.3.7).
 
 
 ## Credits

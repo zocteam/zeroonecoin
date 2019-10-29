@@ -33,8 +33,6 @@ void CPrivateSendClient::ProcessMessage(CNode* pfrom, const std::string& strComm
 
         if(pfrom->nVersion < MIN_PRIVATESEND_PEER_PROTO_VERSION) {
             LogPrint("privatesend", "DSQUEUE -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
-            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", MIN_PRIVATESEND_PEER_PROTO_VERSION)));
             return;
         }
 
@@ -106,8 +104,6 @@ void CPrivateSendClient::ProcessMessage(CNode* pfrom, const std::string& strComm
 
         if(pfrom->nVersion < MIN_PRIVATESEND_PEER_PROTO_VERSION) {
             LogPrint("privatesend", "DSSTATUSUPDATE -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
-            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", MIN_PRIVATESEND_PEER_PROTO_VERSION)));
             return;
         }
 
@@ -150,8 +146,6 @@ void CPrivateSendClient::ProcessMessage(CNode* pfrom, const std::string& strComm
 
         if(pfrom->nVersion < MIN_PRIVATESEND_PEER_PROTO_VERSION) {
             LogPrint("privatesend", "DSFINALTX -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
-            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", MIN_PRIVATESEND_PEER_PROTO_VERSION)));
             return;
         }
 
@@ -179,8 +173,6 @@ void CPrivateSendClient::ProcessMessage(CNode* pfrom, const std::string& strComm
 
         if(pfrom->nVersion < MIN_PRIVATESEND_PEER_PROTO_VERSION) {
             LogPrint("privatesend", "DSCOMPLETE -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
-            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", MIN_PRIVATESEND_PEER_PROTO_VERSION)));
             return;
         }
 
@@ -881,7 +873,7 @@ bool CPrivateSendClient::JoinExistingQueue(CAmount nBalanceNeedsAnonymized, CCon
         CAmount nMaxAmount = nBalanceNeedsAnonymized;
         // nInputCount is not covered by legacy signature, require SPORK_6_NEW_SIGS to activate to use new algo
         // (to make sure nInputCount wasn't modified by some intermediary node)
-        bool fNewAlgo = infoMn.nProtocolVersion > 70208 && sporkManager.IsSporkActive(SPORK_6_NEW_SIGS);
+        bool fNewAlgo = sporkManager.IsSporkActive(SPORK_6_NEW_SIGS);
 
         if (fNewAlgo && dsq.nInputCount != 0) {
             nMinAmount = nMaxAmount = dsq.nInputCount * vecStandardDenoms[vecBits.front()];
@@ -993,7 +985,7 @@ bool CPrivateSendClient::StartNewQueue(CAmount nValueMin, CAmount nBalanceNeedsA
 
         // nInputCount is not covered by legacy signature, require SPORK_6_NEW_SIGS to activate to use new algo
         // (to make sure nInputCount wasn't modified by some intermediary node)
-        bool fNewAlgo = infoMn.nProtocolVersion > 70208 && sporkManager.IsSporkActive(SPORK_6_NEW_SIGS);
+        bool fNewAlgo = sporkManager.IsSporkActive(SPORK_6_NEW_SIGS);
         nSessionInputCount = fNewAlgo
                 ? std::min(vecTxDSInTmp.size(), size_t(5 + GetRand(PRIVATESEND_ENTRY_MAX_SIZE - 5 + 1)))
                 : 0;

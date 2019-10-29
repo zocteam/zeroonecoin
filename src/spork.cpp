@@ -23,13 +23,13 @@ std::map<int, int64_t> mapSporkDefaults = {
     {SPORK_4_MNSIG_REQ,                      6},             // ON - MNPAYMENTS_SIGNATURES_REQUIRED (tunable)
     {SPORK_5_INSTANTSEND_MAX_VALUE,          100001},        // ON - InstaSend up to 100000 ZOC
     {SPORK_6_NEW_SIGS,                       4070908800ULL}, // OFF
-    {SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK,    4070908800ULL}, // OFF
+    {SPORK_7_UNMATURE_SINGLECB_ZEROTXBLK,    1567277734ULL}, // ON - GMT: Saturday, 31 Aug 2019 18:55:34
     {SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT, 0},             // ON
     {SPORK_9_SUPERBLOCKS_ENABLED,            4070908800ULL}, // OFF
     {SPORK_10_MASTERNODE_PAY_UPDATED_NODES,  1563623999ULL}, // ON - GMT: Saturday, 20 July 2019 11:59:59
     {SPORK_11_MNSIG_TOTAL,                   10},            // ON - MNPAYMENTS_SIGNATURES_TOTAL (tunable)
     {SPORK_12_RECONSIDER_BLOCKS,             0},             // 0 BLOCKS
-    {SPORK_13_TESTMNGB,                      4070908800ULL}, // OFF
+    {SPORK_13_2NDLAYERAUTOHEAL,              10},            // 10 BLOCKS
     {SPORK_14_REQUIRE_SENTINEL_FLAG,         1563623999ULL}, // ON - GMT: Saturday, 20 July 2019 11:59:59
 };
 
@@ -177,7 +177,7 @@ int CSporkManager::GetSporkIDByName(const std::string& strName)
     if (strName == "SPORK_10_MASTERNODE_PAY_UPDATED_NODES")     return SPORK_10_MASTERNODE_PAY_UPDATED_NODES;
     if (strName == "SPORK_11_MNSIG_TOTAL")                      return SPORK_11_MNSIG_TOTAL;
     if (strName == "SPORK_12_RECONSIDER_BLOCKS")                return SPORK_12_RECONSIDER_BLOCKS;
-    if (strName == "SPORK_13_TESTMNGB")                         return SPORK_13_TESTMNGB;
+    if (strName == "SPORK_13_2NDLAYERAUTOHEAL")                 return SPORK_13_2NDLAYERAUTOHEAL;
     if (strName == "SPORK_14_REQUIRE_SENTINEL_FLAG")            return SPORK_14_REQUIRE_SENTINEL_FLAG;
 
     LogPrint("spork", "CSporkManager::GetSporkIDByName -- Unknown Spork name '%s'\n", strName);
@@ -198,7 +198,7 @@ std::string CSporkManager::GetSporkNameByID(int nSporkID)
         case SPORK_10_MASTERNODE_PAY_UPDATED_NODES:     return "SPORK_10_MASTERNODE_PAY_UPDATED_NODES";
         case SPORK_11_MNSIG_TOTAL:                      return "SPORK_11_MNSIG_TOTAL";
         case SPORK_12_RECONSIDER_BLOCKS:                return "SPORK_12_RECONSIDER_BLOCKS";
-        case SPORK_13_TESTMNGB:                         return "SPORK_13_TESTMNGB";
+        case SPORK_13_2NDLAYERAUTOHEAL:                 return "SPORK_13_2NDLAYERAUTOHEAL";
         case SPORK_14_REQUIRE_SENTINEL_FLAG:            return "SPORK_14_REQUIRE_SENTINEL_FLAG";
         default:
             LogPrint("spork", "CSporkManager::GetSporkNameByID -- Unknown Spork ID %d\n", nSporkID);

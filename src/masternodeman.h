@@ -29,7 +29,7 @@ private:
 
     static const int LAST_PAID_SCAN_BLOCKS;
 
-    static const int MIN_POSE_PROTO_VERSION     = 70210;
+    static const int MIN_POSE_PROTO_VERSION     = 70211;
     static const int MAX_POSE_CONNECTIONS       = 10;
     static const int MAX_POSE_RANK              = 10;
     static const int MAX_POSE_BLOCKS            = 10;
@@ -58,6 +58,8 @@ private:
 
     // who we asked for the masternode verification
     std::map<CService, CMasternodeVerification> mWeAskedForVerification;
+    // who we should ask for masternode verification at the last time
+    std::map<COutPoint, int64_t> mapWeShouldAskForVerification;
 
     // these maps are used for masternode recovery from MASTERNODE_NEW_START_REQUIRED state
     std::map<uint256, std::pair< int64_t, std::set<CService> > > mMnbRecoveryRequests;
@@ -87,7 +89,8 @@ private:
     void SyncAll(CNode* pnode, CConnman& connman);
 
     void PushDsegInvs(CNode* pnode, const CMasternode& mn);
-    void PunishNode(const CService& addr, CConnman& connman);
+    void PunishNode(const CService& addr, int howmuch, CConnman& connman);
+    bool MnCheckConnect(CMasternode* pmn);
 
 public:
     // Keep track of all broadcasts I've seen
@@ -138,8 +141,14 @@ public:
     /// Ask (source) node for mnb
     void AskForMN(CNode *pnode, const COutPoint& outpoint, CConnman& connman);
     void AskForMnb(CNode *pnode, const uint256 &hash);
+    void AskForMnv(const CService& addr, const COutPoint& outpoint);
 
+    bool IncreasePoSeBanScore(const COutPoint &outpoint);
+    bool DecreasePoSeBanScore(const COutPoint &outpoint);
     bool PoSeBan(const COutPoint &outpoint);
+    bool IncreasePoSeBanScore(const CService& addr);
+    bool DecreasePoSeBanScore(const CService& addr);
+    bool PoSeBan(const CService& addr);
     bool AllowMixing(const COutPoint &outpoint);
     bool DisallowMixing(const COutPoint &outpoint);
 
@@ -169,6 +178,7 @@ public:
     /// Versions of Find that are safe to use from outside the class
     bool Get(const COutPoint& outpoint, CMasternode& masternodeRet);
     bool Has(const COutPoint& outpoint);
+    bool HasAddr(const CService& addr);
 
     bool GetMasternodeInfo(const COutPoint& outpoint, masternode_info_t& mnInfoRet);
     bool GetMasternodeInfo(const CPubKey& pubKeyMasternode, masternode_info_t& mnInfoRet);
@@ -195,6 +205,7 @@ public:
 
     void DoFullVerificationStep(CConnman& connman);
     void CheckSameAddr();
+    void CheckMissingMasternodes();
     bool VerifyRequest(const CAddress& addr, CConnman& connman);
     void ProcessPendingMnvRequests(CConnman& connman);
     void SendVerifyReply(CNode* pnode, CMasternodeVerification& mnv, CConnman& connman);
@@ -239,6 +250,13 @@ public:
     void UpdatedBlockTip(const CBlockIndex *pindex);
 
     void WarnMasternodeDaemonUpdates();
+    
+    // If node seems to be lost for over 10 blocks try to heal
+    void SecondLayerForkCheckAndHeal(int64_t nBlockHeight);
+    // cache last cache tip, returns about how many blks delay
+    int64_t UpdateCacheTipBlockHeightDailyCheck();
+    // If node seems to be stuck for over 10 hours try to heal
+    void DailyCheckForkAndHeal();
 
     /**
      * Called to notify CGovernanceManager that the masternode index has been updated.

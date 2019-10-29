@@ -1,5 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -34,6 +36,7 @@ static proxyType proxyInfo[NET_MAX];
 static proxyType nameProxy;
 static CCriticalSection cs_proxyInfos;
 int nConnectTimeout = DEFAULT_CONNECT_TIMEOUT;
+int nConnectRetCode = 0;
 bool fNameLookup = DEFAULT_NAME_LOOKUP;
 
 // Need ample time for negotiation for very slow proxies such as Tor (milliseconds)
@@ -465,7 +468,8 @@ bool static ConnectSocketDirectly(const CService &addrConnect, SOCKET& hSocketRe
             }
             if (nRet != 0)
             {
-                LogPrintf("connect() to %s failed after select(): %s\n", addrConnect.ToString(), NetworkErrorString(nRet));
+                nConnectRetCode = nRet; // eg. "Connection refused (111)"
+                LogPrintf("connect() to %s failed after select(): %s\n", addrConnect.ToString(), NetworkErrorString(nRet));                
                 CloseSocket(hSocket);
                 return false;
             }
@@ -476,7 +480,8 @@ bool static ConnectSocketDirectly(const CService &addrConnect, SOCKET& hSocketRe
         else
 #endif
         {
-            LogPrintf("connect() to %s failed: %s\n", addrConnect.ToString(), NetworkErrorString(WSAGetLastError()));
+            nConnectRetCode = WSAGetLastError(); // eg. "Network is unreachable (101)"
+            LogPrintf("connect() to %s failed: %s\n", addrConnect.ToString(), NetworkErrorString(nConnectRetCode));
             CloseSocket(hSocket);
             return false;
         }
