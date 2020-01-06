@@ -223,8 +223,8 @@ public:
         consensus.nBudgetPaymentsCycleBlocks = 50;
         consensus.nBudgetPaymentsWindowBlocks = 10;
         consensus.nBudgetProposalEstablishingTime = 60*20;
-        consensus.nSuperblockStartBlock = 48121; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPaymentsStartBlock
-        consensus.nSuperblockStartHash = uint256S("0");
+        consensus.nSuperblockStartBlock = 4200; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
+        consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
         consensus.nSuperblockCycle = 24; // Superblocks can be issued hourly on testnet
         consensus.nGovernanceMinQuorum = 1;
         consensus.nGovernanceFilterElements = 500;
@@ -249,28 +249,28 @@ public:
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1502280000; // Aug 9th, 2017
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1533816000; // Aug 9th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1544655600; // Dec 13th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1576191600; // Dec 13th, 2019
 
         // Deployment of DIP0001
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].bit = 1;
-        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nStartTime = 1505692800; // Sep 18th, 2017
-        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nTimeout = 1537228800; // Sep 18th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nStartTime = 1544655600; // Dec 13th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nTimeout = 1576191600; // Dec 13th, 2019
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nWindowSize = 100;
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThreshold = 50; // 50% of 100
 
         // Deployment of BIP147
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].bit = 2;
-        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nStartTime = 1517792400; // Feb 5th, 2018
-        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nTimeout = 1549328400; // Feb 5th, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nStartTime = 1544655600; // Dec 13th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nTimeout = 1576191600; // Dec 13th, 2019
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nWindowSize = 100;
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nThreshold = 50; // 50% of 100
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000005328bc5753"); // 58802
+        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000000000003cd72a542"); // 4000
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x000000730644fcea8b9943c2b28e741da29fddb09886969f3a93b60ac4529359"); // 58802
+        consensus.defaultAssumeValid = uint256S("0x00000ce22113f3eb8636e225d6a1691e132fdd587aed993e1bc9b07a0235eea4"); // 4000
 
         pchMessageStart[0] = 0xd1;
         pchMessageStart[1] = 0x2b;
@@ -321,18 +321,16 @@ public:
 
         checkpointData = (CCheckpointData) {
             boost::assign::map_list_of
-            ( 10101, uint256S("0x000001e73cada5795a61a93a3ecb8670bb472ef2436bb9af4742f2afde7539af"))
-            ( 20202, uint256S("0x00000b2ec737f6bdca4b61b2d7eca2258cf492dbd57d9efc96ab487542283ff2"))
-            ( 30303, uint256S("0x00000c7c0529792aed25d679445000231c32c1440c2f5d135573790f30e93ee8"))
-            ( 40404, uint256S("0x00000c8afa54dd0191f1622b6c0cf09bc7dcfe59d06ad1f14970038eb94a18bc"))
-            ( 50505, uint256S("0x000002b5145f677980f59dd2ea2ab18e3d9470a72c20c058b3e7b5a96e717407"))
+            (    261, uint256S("0x00000c26026d0815a7e2ce4fa270775f61403c040647ff2c3091f99e894a4618"))
+            (   1999, uint256S("0x00000052e538d27fa53693efe6fb6892a0c1d26c0235f599171c48a3cce553b1"))
+            (   2999, uint256S("0x0000024bc3f4f4cb30d29827c13d921ad77d2c6072e586c7f60d83c2722cdcc5"))
         };
 
         chainTxData = ChainTxData{
-            1567534245,// * UNIX timestamp of last known number of transactions
-            49418,     // * total number of transactions between genesis and that timestamp (transactions from gettxoutsetinfo)
-                       //   (the tx=... number in the SetBestChain debug.log lines)
-            0.001      // * estimated number of transactions per second after that timestamp (49418/(1567534245-1517407200)=0.001)
+            1544707462, // * UNIX timestamp of last known number of transactions
+            4100,       // * total number of transactions between genesis and that timestamp
+                        //   (the tx=... number in the SetBestChain debug.log lines)
+            0.01        // * estimated number of transactions per second after that timestamp
         };
 
     }

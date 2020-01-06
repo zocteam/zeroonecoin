@@ -27,7 +27,7 @@ Because release 0.12.3.7 is a mandatory upgrade release, downgrading to an earli
 ## Notable changes
 
 - Node 2nd layer fork-auto-heal from verified mn broadcasts
-- Delayed daily unstuck fork-auto-healing attempt 
+- Delayed daily unstuck fork-auto-healing attempt
 - All users, exchanges, masternode owners and miners should upgrade as soon as possible
 
 
