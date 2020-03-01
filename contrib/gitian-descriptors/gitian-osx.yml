@@ -1,6 +1,6 @@
 ---
 name: "zeroone-osx-0.13"
-enable_cache: true
+enable_cache: false
 suites:
 - "bionic"
 architectures:
