@@ -9,6 +9,9 @@
 #include "key.h"
 #include "validation.h"
 #include "spork.h"
+#include "bls/bls.h"
+
+#include "evo/deterministicmns.h"
 
 class CMasternode;
 class CMasternodeBroadcast;
@@ -22,6 +25,7 @@ static const int MASTERNODE_EXPIRATION_SECONDS          = 120 * 60;
 static const int MASTERNODE_NEW_START_REQUIRED_SECONDS  = 180 * 60;
 
 static const int MASTERNODE_POSE_BAN_MAX_SCORE          = 5;
+static const int MASTERNODE_MAX_MIXING_TXES             = 5;
 
 //
 // The Masternode Ping Class : Contains a different serialize method for sending pings from masternodes throughout the network
@@ -68,11 +72,14 @@ public:
 
     bool IsExpired() const { return GetAdjustedTime() - sigTime > MASTERNODE_NEW_START_REQUIRED_SECONDS; }
 
-    bool Sign(const CKey& keyMasternode, const CPubKey& pubKeyMasternode);
-    bool CheckSignature(const CPubKey& pubKeyMasternode, int &nDos) const;
+    bool Sign(const CKey& keyMasternode, const CKeyID& keyIDOperator);
+    bool CheckSignature(CKeyID& keyIDOperator, int &nDos) const;
     bool SimpleCheck(int& nDos);
     bool CheckAndUpdate(CMasternode* pmn, bool fFromNewBroadcast, int& nDos, CConnman& connman);
     void Relay(CConnman& connman);
+
+    std::string GetSentinelString() const;
+    std::string GetDaemonString() const;
 
     explicit operator bool() const;
 };
@@ -100,12 +107,21 @@ struct masternode_info_t
     masternode_info_t(int activeState, int protoVer, int64_t sTime) :
         nActiveState{activeState}, nProtocolVersion{protoVer}, sigTime{sTime} {}
 
+    // only called when the network is in legacy MN list mode
     masternode_info_t(int activeState, int protoVer, int64_t sTime,
                       COutPoint const& outpnt, CService const& addr,
                       CPubKey const& pkCollAddr, CPubKey const& pkMN) :
         nActiveState{activeState}, nProtocolVersion{protoVer}, sigTime{sTime},
         outpoint{outpnt}, addr{addr},
-        pubKeyCollateralAddress{pkCollAddr}, pubKeyMasternode{pkMN} {}
+        pubKeyCollateralAddress{pkCollAddr}, pubKeyMasternode{pkMN}, keyIDCollateralAddress{pkCollAddr.GetID()}, keyIDOwner{pkMN.GetID()}, legacyKeyIDOperator{pkMN.GetID()}, keyIDVoting{pkMN.GetID()} {}
+
+    // only called when the network is in deterministic MN list mode
+    masternode_info_t(int activeState, int protoVer, int64_t sTime,
+                      COutPoint const& outpnt, CService const& addr,
+                      CKeyID const& pkCollAddr, CKeyID const& pkOwner, CBLSPublicKey const& pkOperator, CKeyID const& pkVoting) :
+        nActiveState{activeState}, nProtocolVersion{protoVer}, sigTime{sTime},
+        outpoint{outpnt}, addr{addr},
+        pubKeyCollateralAddress{}, pubKeyMasternode{}, keyIDCollateralAddress{pkCollAddr}, keyIDOwner{pkOwner}, blsPubKeyOperator{pkOperator}, keyIDVoting{pkVoting} {}
 
     int nActiveState = 0;
     int nProtocolVersion = 0;
@@ -113,8 +129,13 @@ struct masternode_info_t
 
     COutPoint outpoint{};
     CService addr{};
-    CPubKey pubKeyCollateralAddress{};
-    CPubKey pubKeyMasternode{};
+    CPubKey pubKeyCollateralAddress{}; // this will be invalid/unset when the network switches to deterministic MNs (luckely it's only important for the broadcast hash)
+    CPubKey pubKeyMasternode{}; // this will be invalid/unset when the network switches to deterministic MNs (luckely it's only important for the broadcast hash)
+    CKeyID keyIDCollateralAddress{}; // this is only used in compatibility code and won't be used when spork15 gets activated
+    CKeyID keyIDOwner{};
+    CKeyID legacyKeyIDOperator{};
+    CBLSPublicKey blsPubKeyOperator;
+    CKeyID keyIDVoting{};
 
     int64_t nLastDsq = 0; //the dsq count from the last dsq broadcast of this node
     int64_t nTimeLastChecked = 0;
@@ -149,7 +170,7 @@ public:
         COLLATERAL_OK,
         COLLATERAL_UTXO_NOT_FOUND,
         COLLATERAL_INVALID_AMOUNT,
-        COLLATERAL_INVALID_PUBKEY
+        COLLATERAL_INVALID_PUBKEY,
     };
 
 
@@ -160,7 +181,7 @@ public:
     int nBlockLastPaid{};
     int nPoSeBanScore{};
     int nPoSeBanHeight{};
-    bool fAllowMixingTx{};
+    int nMixingTxCount{};
     bool fUnitTest = false;
 
     // KEEP TRACK OF GOVERNANCE ITEMS EACH MASTERNODE HAS VOTE UPON FOR RECALCULATION
@@ -170,6 +191,7 @@ public:
     CMasternode(const CMasternode& other);
     CMasternode(const CMasternodeBroadcast& mnb);
     CMasternode(CService addrNew, COutPoint outpointNew, CPubKey pubKeyCollateralAddressNew, CPubKey pubKeyMasternodeNew, int nProtocolVersionIn);
+    CMasternode(const uint256 &proTxHash, const CDeterministicMNCPtr& dmn);
 
     ADD_SERIALIZE_METHODS;
 
@@ -180,6 +202,11 @@ public:
         READWRITE(addr);
         READWRITE(pubKeyCollateralAddress);
         READWRITE(pubKeyMasternode);
+        READWRITE(keyIDCollateralAddress);
+        READWRITE(keyIDOwner);
+        READWRITE(legacyKeyIDOperator);
+        READWRITE(blsPubKeyOperator);
+        READWRITE(keyIDVoting);
         READWRITE(lastPing);
         READWRITE(vchSig);
         READWRITE(sigTime);
@@ -192,7 +219,7 @@ public:
         READWRITE(nProtocolVersion);
         READWRITE(nPoSeBanScore);
         READWRITE(nPoSeBanHeight);
-        READWRITE(fAllowMixingTx);
+        READWRITE(nMixingTxCount);
         READWRITE(fUnitTest);
         READWRITE(mapGovernanceObjectsVotedOn);
     }
@@ -202,8 +229,8 @@ public:
 
     bool UpdateFromNewBroadcast(CMasternodeBroadcast& mnb, CConnman& connman);
 
-    static CollateralStatus CheckCollateral(const COutPoint& outpoint, const CPubKey& pubkey);
-    static CollateralStatus CheckCollateral(const COutPoint& outpoint, const CPubKey& pubkey, int& nHeightRet);
+    static CollateralStatus CheckCollateral(const COutPoint& outpoint, const CKeyID& keyID);
+    static CollateralStatus CheckCollateral(const COutPoint& outpoint, const CKeyID& keyID, int& nHeightRet);
     void Check(bool fForce = false);
 
     bool IsBroadcastedWithin(int nSeconds) { return GetAdjustedTime() - sigTime < nSeconds; }
@@ -250,6 +277,11 @@ public:
         return false;
     }
 
+    bool IsValidForMixingTxes() const
+    {
+        return nMixingTxCount <= MASTERNODE_MAX_MIXING_TXES;
+    }
+
     bool IsValidNetAddr();
     static bool IsValidNetAddr(CService addrIn);
 
@@ -283,7 +315,7 @@ public:
         nBlockLastPaid = from.nBlockLastPaid;
         nPoSeBanScore = from.nPoSeBanScore;
         nPoSeBanHeight = from.nPoSeBanHeight;
-        fAllowMixingTx = from.fAllowMixingTx;
+        nMixingTxCount = from.nMixingTxCount;
         fUnitTest = from.fUnitTest;
         mapGovernanceObjectsVotedOn = from.mapGovernanceObjectsVotedOn;
         return *this;
@@ -330,6 +362,13 @@ public:
         READWRITE(nProtocolVersion);
         if (!(s.GetType() & SER_GETHASH)) {
             READWRITE(lastPing);
+        }
+
+        if (ser_action.ForRead()) {
+            keyIDCollateralAddress = pubKeyCollateralAddress.GetID();
+            keyIDOwner = pubKeyMasternode.GetID();
+            legacyKeyIDOperator = pubKeyMasternode.GetID();
+            keyIDVoting = pubKeyMasternode.GetID();
         }
     }
 
