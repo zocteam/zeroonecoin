@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 The Dash Core developers
+// Copyright (c) 2014-2018 The Dash Core developers
 // Copyright (c) 2017-2018 The ZeroOne Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -26,7 +26,7 @@ enum governance_exception_type_enum_t {
 
 inline std::ostream& operator<<(std::ostream& os, governance_exception_type_enum_t eType)
 {
-    switch(eType) {
+    switch (eType) {
     case GOVERNANCE_EXCEPTION_NONE:
         os << "GOVERNANCE_EXCEPTION_NONE";
         break;
@@ -64,11 +64,11 @@ private:
 
 public:
     CGovernanceException(const std::string& strMessageIn = "",
-                         governance_exception_type_enum_t eTypeIn = GOVERNANCE_EXCEPTION_NONE,
-                         int nNodePenaltyIn = 0)
-        : strMessage(),
-          eType(eTypeIn),
-          nNodePenalty(nNodePenaltyIn)
+        governance_exception_type_enum_t eTypeIn = GOVERNANCE_EXCEPTION_NONE,
+        int nNodePenaltyIn = 0) :
+        strMessage(),
+        eType(eTypeIn),
+        nNodePenalty(nNodePenaltyIn)
     {
         std::ostringstream ostr;
         ostr << eType << ":" << strMessageIn;
@@ -77,7 +77,7 @@ public:
 
     virtual ~CGovernanceException() throw() {}
 
-    virtual const char* what() const throw() override 
+    virtual const char* what() const throw() override
     {
         return strMessage.c_str();
     }
@@ -92,7 +92,8 @@ public:
         return eType;
     }
 
-    int GetNodePenalty() const {
+    int GetNodePenalty() const
+    {
         return nNodePenalty;
     }
 };

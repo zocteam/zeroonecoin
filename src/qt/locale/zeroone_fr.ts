@@ -62,12 +62,12 @@
         <translation>Adresses de réception</translation>
     </message>
     <message>
-        <source>These are your ZeroOne addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Voici vos adresses ZeroOne pour l'envoi de paiements. Vérifiez toujours le montant et l'adresse de réception avant d'envoyer de l'argent.</translation>
+        <source>These are your Dash addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Voici vos adresses Dash pour l'envoi de paiements. Vérifiez toujours le montant et l'adresse de réception avant d'envoyer de l'argent.</translation>
     </message>
     <message>
-        <source>These are your ZeroOne addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Voici vos adresses ZeroOne pour la réception de paiements. Il est recommandé d'utiliser une nouvelle adresse de réception pour chaque transaction.</translation>
+        <source>These are your Dash addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Voici vos adresses Dash pour la réception de paiements. Il est recommandé d'utiliser une nouvelle adresse de réception pour chaque transaction.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -172,8 +172,8 @@
         <translation>Confirmer le chiffrement du portefeuille</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ZOC&lt;/b&gt;!</source>
-        <translation>Attention : si vous chiffrez votre portefeuille et perdez votre phrase de passe, vous &lt;b&gt;PERDREZ TOUS VOS ZOCS&lt;/b&gt; !</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR DASH&lt;/b&gt;!</source>
+        <translation>Attention : si vous chiffrez votre portefeuille et perdez votre phrase de passe, vous &lt;b&gt;PERDREZ TOUS VOS DASHS&lt;/b&gt; !</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -242,12 +242,12 @@
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <source>A fatal error occurred. ZeroOne Core can no longer continue safely and will quit.</source>
-        <translation>Une erreur fatale est survenue. ZeroOne ne peut plus continuer de façon sûre et va s'arrêter.</translation>
+        <source>A fatal error occurred. Dash Core can no longer continue safely and will quit.</source>
+        <translation>Une erreur fatale est survenue. Dash ne peut plus continuer de façon sûre et va s'arrêter.</translation>
     </message>
     <message>
-        <source>ZeroOne Core</source>
-        <translation>ZeroOne Core</translation>
+        <source>Dash Core</source>
+        <translation>Dash Core</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -270,16 +270,16 @@
         <translation>&amp;Envoyer</translation>
     </message>
     <message>
-        <source>Send coins to a ZeroOne address</source>
-        <translation>Envoyer de l'argent à une adresse ZeroOne</translation>
+        <source>Send coins to a Dash address</source>
+        <translation>Envoyer de l'argent à une adresse Dash</translation>
     </message>
     <message>
         <source>&amp;Receive</source>
         <translation>&amp;Recevoir</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and zeroone: URIs)</source>
-        <translation>Demande de paiements (génère des QR-codes et des URIs ZeroOne)</translation>
+        <source>Request payments (generates QR codes and dash: URIs)</source>
+        <translation>Demande de paiements (génère des QR-codes et des URIs Dash)</translation>
     </message>
     <message>
         <source>&amp;Transactions</source>
@@ -306,8 +306,8 @@
         <translation>Quitter l’application</translation>
     </message>
     <message>
-        <source>Show information about ZeroOne Core</source>
-        <translation>Affichez des informations à propos de  ZeroOne Core</translation>
+        <source>Show information about Dash Core</source>
+        <translation>Affichez des informations à propos de  Dash Core</translation>
     </message>
     <message>
         <source>About &amp;Qt</source>
@@ -378,16 +378,16 @@
         <translation>&amp;Signer le message...</translation>
     </message>
     <message>
-        <source>Sign messages with your ZeroOne addresses to prove you own them</source>
-        <translation>Signer les messages avec votre adresses ZeroOne pour prouver que vous en êtes l'auteur</translation>
+        <source>Sign messages with your Dash addresses to prove you own them</source>
+        <translation>Signer les messages avec votre adresses Dash pour prouver que vous en êtes l'auteur</translation>
     </message>
     <message>
         <source>&amp;Verify message...</source>
         <translation>&amp;Vérifier un message...</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified ZeroOne addresses</source>
-        <translation>Vérifier les messages pour vous assurer qu'ils ont été signés avec les adresses ZeroOne spécifiées</translation>
+        <source>Verify messages to ensure they were signed with specified Dash addresses</source>
+        <translation>Vérifier les messages pour vous assurer qu'ils ont été signés avec les adresses Dash spécifiées</translation>
     </message>
     <message>
         <source>&amp;Information</source>
@@ -474,16 +474,16 @@
         <translation>Ouvrir une &amp;URI...</translation>
     </message>
     <message>
-        <source>Open a zeroone: URI or payment request</source>
-        <translation>Ouvrir une URI ou demande de paiement ZeroOne</translation>
+        <source>Open a dash: URI or payment request</source>
+        <translation>Ouvrir une URI ou demande de paiement Dash</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
         <translation>Options de ligne de &amp;commande</translation>
     </message>
     <message>
-        <source>Show the %1 help message to get a list with possible ZeroOne command-line options</source>
-        <translation>Afficher le message d’aide de %1 pour obtenir la liste des options de ligne de commande ZeroOne possibles.</translation>
+        <source>Show the %1 help message to get a list with possible Dash command-line options</source>
+        <translation>Afficher le message d’aide de %1 pour obtenir la liste des options de ligne de commande Dash possibles.</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -518,8 +518,8 @@
         <translation>Barre d'outils des onglets</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to ZeroOne network</source>
-        <translation><numerusform>%n connexion active au réseau ZeroOne </numerusform><numerusform>%n connexions actives au réseau ZeroOne </numerusform></translation>
+        <source>%n active connection(s) to Dash network</source>
+        <translation><numerusform>%n connexion active au réseau Dash </numerusform><numerusform>%n connexions actives au réseau Dash </numerusform></translation>
     </message>
     <message>
         <source>Network activity disabled</source>
@@ -794,7 +794,7 @@
         <translation>Veuillez passer en “mode liste” pour utiliser cette fonction.</translation>
     </message>
     <message>
-        <source>Non-anonymized input selected. &lt;b&gt;PrivateSend will be disabled.&lt;/b&gt;&lt;br&gt;&lt;br&gt;If you still want to use PrivateSend, please deselect all non-nonymized inputs first and then check PrivateSend checkbox again.</source>
+        <source>Non-anonymized input selected. &lt;b&gt;PrivateSend will be disabled.&lt;/b&gt;&lt;br&gt;&lt;br&gt;If you still want to use PrivateSend, please deselect all non-anonymized inputs first and then check the PrivateSend checkbox again.</source>
         <translation>Éléments non-anonymisés sélectionnés. &lt;b&gt;PrivateSend sera désactivé.&lt;/b&gt;&lt;br&gt;&lt;br&gt;Si vous voulez quand même utiliser PrivateSend, veuillez d'abord désélectionner tous les éléments non-anonymisés, puis recochez la case PrivateSend.</translation>
     </message>
     <message>
@@ -814,8 +814,8 @@
         <translation>Cette étiquette devient rouge si l'un des destinataires reçoit un montant inférieur au niveau de "poussière".</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 zuff(s) per input.</source>
-        <translation>Peut varier de ± %1 zuff(s) par entrée.</translation>
+        <source>Can vary +/- %1 duff(s) per input.</source>
+        <translation>Peut varier de ± %1 duff(s) par entrée.</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -832,73 +832,6 @@
     <message>
         <source>n/a</source>
         <translation>n/a</translation>
-    </message>
-</context>
-<context>
-    <name>DarksendConfig</name>
-    <message>
-        <source>Configure PrivateSend</source>
-        <translation>Configurer PrivateSend</translation>
-    </message>
-    <message>
-        <source>Basic Privacy</source>
-        <translation>Confidentialité normale</translation>
-    </message>
-    <message>
-        <source>High Privacy</source>
-        <translation>Confidentialité élevée</translation>
-    </message>
-    <message>
-        <source>Maximum Privacy</source>
-        <translation>Confidentialité maximale</translation>
-    </message>
-    <message>
-        <source>Please select a privacy level.</source>
-        <translation>Veuillez choisir un niveau de confidentialité.</translation>
-    </message>
-    <message>
-        <source>Use 2 separate masternodes to mix funds up to 1000 ZOC</source>
-        <translation>Utiliser 2 masternodes distincts pour mélanger jusqu'à 1000 ZOC</translation>
-    </message>
-    <message>
-        <source>Use 8 separate masternodes to mix funds up to 1000 ZOC</source>
-        <translation>Utiliser 8 masternodes distincts pour mélanger jusqu'à 1000 ZOC</translation>
-    </message>
-    <message>
-        <source>Use 16 separate masternodes</source>
-        <translation>Utiliser 16 masternodes distincts</translation>
-    </message>
-    <message>
-        <source>This option is the quickest and will cost about ~0.025 ZOC to anonymize 1000 ZOC</source>
-        <translation>Cette option est la plus rapide et coûtera environ 0,025 ZOC pour anonymiser 1000 ZOC</translation>
-    </message>
-    <message>
-        <source>This option is moderately fast and will cost about 0.05 ZOC to anonymize 1000 ZOC</source>
-        <translation>Cette option est un peu moins rapide et coûtera environ 0,05 ZOC pour anonymiser 1000 ZOC</translation>
-    </message>
-    <message>
-        <source>0.1 ZOC per 1000 ZOC you anonymize.</source>
-        <translation>0,1 ZOC par 1000 ZOC anonymisés.</translation>
-    </message>
-    <message>
-        <source>This is the slowest and most secure option. Using maximum anonymity will cost</source>
-        <translation>Cette option est le plus lente et la plus sécurisée. Utiliser l'anonymisation maximale coûtera</translation>
-    </message>
-    <message>
-        <source>PrivateSend Configuration</source>
-        <translation>Configuration PrivateSend</translation>
-    </message>
-    <message>
-        <source>PrivateSend was successfully set to basic (%1 and 2 rounds). You can change this at any time by opening ZeroOne's configuration screen.</source>
-        <translation>PrivateSend a bien été réglé sur “normale” (%1 et 2 cycles). Vous pouvez modifier cela à tout moment dans la fenêtre de configuration de ZeroOne.</translation>
-    </message>
-    <message>
-        <source>PrivateSend was successfully set to high (%1 and 8 rounds). You can change this at any time by opening ZeroOne's configuration screen.</source>
-        <translation>PrivateSend a bien été réglé sur “élevée” (%1 et 8 cycles). Vous pouvez modifier cela à tout moment dans la fenêtre de configuration de ZeroOne.</translation>
-    </message>
-    <message>
-        <source>PrivateSend was successfully set to maximum (%1 and 16 rounds). You can change this at any time by opening ZeroOne's configuration screen.</source>
-        <translation>PrivateSend a bien été réglé sur “maximale” (%1 et 16 cycles). Vous pouvez modifier cela à tout moment dans la fenêtre de configuration de ZeroOne.</translation>
     </message>
 </context>
 <context>
@@ -940,8 +873,8 @@
         <translation>Modifier l’adresse d'envoi</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid ZeroOne address.</source>
-        <translation>L'adresse d'entrée « %1 » n'est pas une adresse ZeroOne valide</translation>
+        <source>The entered address "%1" is not a valid Dash address.</source>
+        <translation>L'adresse d'entrée « %1 » n'est pas une adresse Dash valide</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -1038,8 +971,8 @@
         <translation>Information PrivateSend</translation>
     </message>
     <message>
-        <source>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the ZeroOne in your wallet is comprised of different "inputs" which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type="1"&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.01 ZOC, 0.1 ZOC, 1 ZOC and 10 ZOC -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called "masternodes." These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know "who" you are.&lt;/li&gt; &lt;li&gt;When two other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users' wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it's called a "round." Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be anonymized. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these "change addresses." Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more info see &lt;a href="https://dashpay.atlassian.net/wiki/display/DOC/PrivateSend"&gt;https://dashpay.atlassian.net/wiki/display/DOC/PrivateSend&lt;/a&gt;         </source>
-        <translation>&lt;h3&gt;Ce qu'il faut savoir sur PrivateSend&lt;/h3&gt; PrivateSend vous offre une véritable confidentialité financière en obscurcissant l'origine de vos fonds. Tous les zeroones de votre portefeuille sont répartis en différentes "entrées", qu'on peut se représenter comme des pièces distinctes.&lt;br&gt; PrivateSend est un procédé innovant qui mélange vos entrées avec les entrées de deux autres personnes, sans que vos fonds ne quittent jamais votre portefeuille. Vous gardez le contrôle de votre argent à tout moment.&lt;hr&gt; &lt;b&gt;La procédure PrivateSend fonctionne comme ceci :&lt;/b&gt;&lt;ol type="1"&gt; &lt;li&gt;PrivateSend commence par diviser vos entrées de transaction en coupures standard. Ces coupures sont de 0.01 ZOC, 0.1 ZOC, 1 ZOC et 10 ZOC -- un peu comme pour les billets de banque que vous utilisez tous les jours.&lt;/li&gt; &lt;li&gt;Votre portefeuille envoie alors des requêtes à des serveurs spécifiques sur le réseau, appelés "masternodes". Ces masternodes sont informés que vous souhaiteriez mélanger certaines coupures. Aucune information permettant de vous identifier n'est envoyée aux masternodes, qui ne savent donc jamais "qui" vous êtes.&lt;/li&gt; &lt;li&gt;Quand deux autres personnes envoient des requêtes similaires, indiquant qu'elles veulent mélanger les mêmes coupures, alors commence une session de mélange. Le masternode mélange les entrées et demande aux portefeuilles des trois utilisateurs de payer l'entrée, désormais transformée, à eux-mêmes. Votre portefeuille paie cette coupure directement à lui-même, mais à une adresse différente (appelée adresse de monnaie rendue).&lt;/li&gt; &lt;li&gt;Afin d'obscurcir complètement vos fonds, votre portefeuille doit répéter cette procédure un certain nombre de fois avec chaque coupure. Une procédure terminée s'appelle un "cycle". Chaque cycle PrivateSend rend exponentiellement plus difficile de savoir d'où viennent vos fonds.&lt;/li&gt; &lt;li&gt;Cette procédure de mélange intervient en arrière-plan, sans aucune intervention de votre part. Quand vous souhaiterez faire une transaction, vos fonds seront déjà anonymisés. Aucune autre attente ne sera nécessaire.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT :&lt;/b&gt; Votre portefeuille ne contient que 1000 de ces "adresses de monnaie rendue". À chaque opération de mélange, jusqu'à 9 de ces adresses sont utilisées. Cela signifie que ces 1000 adresses couvrent environ 100 opérations de mélange. Quand 900 d'entre elles sont utilisées, votre portefeuille doit créer de nouvelles adresses. Cependant il ne peut le faire que si vous avez activé les sauvegardes automatiques.&lt;br&gt; En conséquence, les utilisateurs qui ont désactivé les sauvegardes ont aussi PrivateSend désactivé. &lt;hr&gt;Pour en savoir plus, voir &lt;a href="https://dashpay.atlassian.net/wiki/display/DOC/PrivateSend"&gt;https://dashpay.atlassian.net/wiki/display/DOC/PrivateSend&lt;/a&gt;         </translation>
+        <source>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Dash in your wallet is comprised of different "inputs" which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type="1"&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 DASH, 0.01 DASH, 0.1 DASH, 1 DASH and 10 DASH -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called "masternodes." These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know "who" you are.&lt;/li&gt; &lt;li&gt;When two other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users' wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it's called a "round." Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be anonymized. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these "change addresses." Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a href="https://docs.dash.org/en/latest/wallets/dashcore/privatesend-instantsend.html"&gt;PrivateSend documentation&lt;/a&gt;.</source>
+        <translation>&lt;h3&gt;Ce qu'il faut savoir sur PrivateSend&lt;/h3&gt; PrivateSend vous donne une véritable confidentialité financière en obscurcissant l'origine de vos fonds. Tous les dashs de votre portefeuille sont répartis en différentes "entrées", qu'on peut se représenter comme des pièces distinctes.&lt;br&gt; PrivateSend utilise une procédure innovante pour mélanger vos entrées avec les entrées de deux autres personnes, sans que vos fonds ne quittent jamais votre portefeuille. Vous gardez le contrôle de votre argent à tout moment.&lt;hr&gt; &lt;b&gt;La procédure PrivateSend fonctionne comme ceci :&lt;/b&gt;&lt;ol type="1"&gt; &lt;li&gt;PrivateSend commence par diviser vos entrées de transaction en coupures standard. Ces coupures sont de 0.001 DASH, 0.01 DASH, 0.1 DASH, 1 DASH et 10 DASH -- un peu comme pour les billets de banque que vous utilisez tous les jours.&lt;/li&gt; &lt;li&gt;Votre portefeuille envoie alors des requêtes à des serveurs spécifiques sur le réseau, appelés "masternodes". Ces masternodes sont informés que vous souhaiteriez mélanger certaines coupures. Aucune information permettant de vous identifier n'est envoyée aux masternodes, qui ne savent donc jamais "qui" vous êtes.&lt;/li&gt; &lt;li&gt;Quand deux autres personnes envoient des requêtes similaires, indiquant qu'elles veulent mélanger les mêmes coupures, alors commence une session de mélange. Le masternode mélange les entrées et demande aux portefeuilles des trois utilisateurs de payer l'entrée, désormais transformée, à eux-mêmes. Votre portefeuille paie cette coupure directement à lui-même, mais à une adresse différente (appelée une adresse de monnaie rendue).&lt;/li&gt; &lt;li&gt;Afin d'obscurcir complètement vos fonds, votre portefeuille doit répéter cette procédure un certain nombre de fois avec chaque coupure. Une procédure terminée s'appelle un "cycle". Chaque cycle PrivateSend rend exponentiellement plus difficile de déterminer d'où viennent vos fonds.&lt;/li&gt; &lt;li&gt;Cette procédure de mélange intervient en arrière-plan, sans aucune intervention de votre part. Quand vous souhaiterez faire une transaction, vos fonds seront déjà anonymisés. Aucune autre attente ne sera nécessaire.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT :&lt;/b&gt; Votre portefeuille ne contient que 1000 de ces "adresses de monnaie rendue". À chaque opération de mélange, jusqu'à 9 de ces adresses sont utilisées. Cela signifie que ces 1000 adresses couvrent environ 100 opérations de mélange. Quand 900 d'entre elles sont utilisées, votre portefeuille doit créer de nouvelles adresses. Cependant il ne peut le faire que si vous avez activé les sauvegardes automatiques.&lt;br&gt; En conséquence, les utilisateurs qui ont désactivé les sauvegardes ont aussi PrivateSend désactivé. &lt;hr&gt;Pour en savoir plus, voir la documentation PrivateSend.   </translation>
     </message>
 </context>
 <context>
@@ -1057,8 +990,8 @@
         <translation>Puisque c’est la première fois que le logiciel est lancé, vous pouvez choisir où %1 stockera ses données.</translation>
     </message>
     <message>
-        <source>%1 will download and store a copy of the ZeroOne block chain. At least %2GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>%1 va maintenant télécharger et stocker une copie de la blockchain ZeroOne.  Au moins %2GB de données seront stockés dans ce répertoire, et il grossira avec le temps. Le portefeuille sera également stocké dans ce répertoire.</translation>
+        <source>%1 will download and store a copy of the Dash block chain. At least %2GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>%1 va maintenant télécharger et stocker une copie de la blockchain Dash.  Au moins %2GB de données seront stockés dans ce répertoire, et il grossira avec le temps. Le portefeuille sera également stocké dans ce répertoire.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1176,8 +1109,76 @@
         <translation>Nombre de nœuds :</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: This list represents the legacy and non-deterministic masternode list. It is only active as long as DIP3 has not been fully activated. After SPORK15 activation, this list will be empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note : ceci est la liste des masternodes non-déterministes historiques. Elle restera active tant que la DIP3 n'aura pas été entièrement activée. Après l'activation SPORK15, cette liste sera vide.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>DIP3 Masternodes</source>
+        <translation>Masternodes DIP3</translation>
+    </message>
+    <message>
+        <source>PoSe Score</source>
+        <translation>Score PoSe</translation>
+    </message>
+    <message>
+        <source>Registered</source>
+        <translation>Enregistré</translation>
+    </message>
+    <message>
+        <source>Last Paid</source>
+        <translation>Dernier paiement</translation>
+    </message>
+    <message>
+        <source>Next Payment</source>
+        <translation>Prochain paiement</translation>
+    </message>
+    <message>
+        <source>Operator Reward</source>
+        <translation>Récompense opérateur</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: This list is not active yet and only for informational purposes. The network is still running in compatibility mode, which means that the non-deterministic masternode list is still active. Only after SPORK15 activation, this list will become the active one. Also, the values in the payment related fields are not used at the moment, but still updated for every block. Please ignore this until SPORK15 activation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note : cette liste n'est pas encore active, elle n'est affichée qu'à titre informatif. Le réseau fonctionne encore en mode de compatibilité, ce qui signifie que la liste des masternodes non-déterministes est encore active. Ce n'est qu'après l'activation SPORK15 que cette liste deviendra la liste active. Par ailleurs, les valeurs des champs relatifs aux paiements ne sont pas encore utilisées, mais sont mises à jour avec chaque bloc. Veuillez ignorer cette liste avant l'activation SPORK15.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <source>Start alias</source>
         <translation>Start-alias</translation>
+    </message>
+    <message>
+        <source>Copy ProTx Hash</source>
+        <translation>Copier hachage ProTx</translation>
+    </message>
+    <message>
+        <source>Copy Collateral Outpoint</source>
+        <translation>Copier sortie caution</translation>
+    </message>
+    <message>
+        <source>ENABLED</source>
+        <translation>ACTIVÉ</translation>
+    </message>
+    <message>
+        <source>POSE_BANNED</source>
+        <translation>BANNI_PoSe</translation>
+    </message>
+    <message>
+        <source>UNKNOWN</source>
+        <translation>INCONNU</translation>
+    </message>
+    <message>
+        <source>to %1</source>
+        <translation>à %1</translation>
+    </message>
+    <message>
+        <source>to UNKNOWN</source>
+        <translation>à INCONNU</translation>
+    </message>
+    <message>
+        <source>but not claimed</source>
+        <translation>mais non réclamé</translation>
+    </message>
+    <message>
+        <source>NONE</source>
+        <translation>AUCUN</translation>
     </message>
     <message>
         <source>Confirm masternode start</source>
@@ -1243,6 +1244,10 @@
         <source>Sentinel</source>
         <translation>Sentinel</translation>
     </message>
+    <message>
+        <source>Additional information for DIP3 Masternode %1</source>
+        <translation>Infos supplémentaires pour le masternode DIP3 %1</translation>
+    </message>
 </context>
 <context>
     <name>ModalOverlay</name>
@@ -1251,12 +1256,12 @@
         <translation>Formulaire</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the ZeroOne network, as detailed below.</source>
-        <translation>Les transactions récentes ne sont peut-être pas encore visibles ; le solde de votre portefeuille peut donc être incorrect. Ces informations seront correctes dès que votre portefeuille aura terminé sa synchronisation avec le réseau ZeroOne, comme précisé ci-dessous.</translation>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the Dash network, as detailed below.</source>
+        <translation>Les transactions récentes ne sont peut-être pas encore visibles ; le solde de votre portefeuille peut donc être incorrect. Ces informations seront correctes dès que votre portefeuille aura terminé sa synchronisation avec le réseau Dash, comme précisé ci-dessous.</translation>
     </message>
     <message>
-        <source>Attempting to spend ZeroOne that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>Les tentatives de dépenser des zeroones affectés par des transactions non encore affichées seront rejetées par le réseau.</translation>
+        <source>Attempting to spend Dash that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
+        <translation>Les tentatives de dépenser des dashs affectés par des transactions non encore affichées seront rejetées par le réseau.</translation>
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -1345,8 +1350,8 @@
         <translation>(0 = auto, &lt; 0 = ne pas utiliser ce nombre de cœurs)</translation>
     </message>
     <message>
-        <source>Amount of ZeroOne to keep anonymized</source>
-        <translation>Nombre de ZeroOne à conserver anonymisés</translation>
+        <source>Amount of Dash to keep anonymized</source>
+        <translation>Nombre de dashs à conserver anonymisés</translation>
     </message>
     <message>
         <source>W&amp;allet</source>
@@ -1397,8 +1402,8 @@
         <translation>Ce montant agit comme seuil de désactivation de PrivateSend, une fois atteint.</translation>
     </message>
     <message>
-        <source>Automatically open the ZeroOne Core client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Ouvrir automatiquement le port du client ZeroOne Core sur le routeur. Cela ne fonctionne que si votre routeur supporte UPnP et est activé.</translation>
+        <source>Automatically open the Dash Core client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Ouvrir automatiquement le port du client Dash Core sur le routeur. Cela ne fonctionne que si votre routeur supporte UPnP et est activé.</translation>
     </message>
     <message>
         <source>Accept connections from outside</source>
@@ -1409,8 +1414,8 @@
         <translation>Autoriser les connexions entrantes</translation>
     </message>
     <message>
-        <source>Connect to the ZeroOne network through a SOCKS5 proxy.</source>
-        <translation>Se connecter au réseau ZeroOne à travers un proxy SOCKS5.</translation>
+        <source>Connect to the Dash network through a SOCKS5 proxy.</source>
+        <translation>Se connecter au réseau Dash à travers un proxy SOCKS5.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
@@ -1447,6 +1452,14 @@
     <message>
         <source>Enable coin &amp;control features</source>
         <translation>Activer les fonctions de &amp;contrôle des pièces</translation>
+    </message>
+    <message>
+        <source>Show system popups for PrivateSend mixing transactions&lt;br/&gt;just like for all other transaction types.</source>
+        <translation>Affiche des notifications système pour les transactions de mélange PrivateSend&lt;br/&gt;tout comme pour les autres types de transaction.</translation>
+    </message>
+    <message>
+        <source>Show popups for PrivateSend transactions</source>
+        <translation>Afficher des notifications pour les transactions PrivateSend</translation>
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
@@ -1497,8 +1510,8 @@
         <translation>Tor</translation>
     </message>
     <message>
-        <source>Connect to the ZeroOne network through a separate SOCKS5 proxy for Tor hidden services.</source>
-        <translation>Se connecter au réseau ZeroOne via un proxy SOCKS5 séparé pour les services cachés Tor.</translation>
+        <source>Connect to the Dash network through a separate SOCKS5 proxy for Tor hidden services.</source>
+        <translation>Se connecter au réseau Dash via un proxy SOCKS5 séparé pour les services cachés Tor.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services:</source>
@@ -1542,9 +1555,9 @@
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/zeroone/</source>
+https://www.transifex.com/projects/p/dash/</source>
         <translation>Langage manquant ou traduction incomplète ? Participez aux traductions ici :
-https://www.transifex.com/projects/p/zeroone/</translation>
+https://www.transifex.com/projects/p/dash/</translation>
     </message>
     <message>
         <source>User Interface Theme:</source>
@@ -1622,8 +1635,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Formulaire</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ZeroOne network after a connection is established, but this process has not completed yet.</source>
-        <translation>L'information affichée peut être obsolète. Votre portefeuille se synchronise automatiquement avec le réseau ZeroOne lorsque la connection est établie, mais ce processus n'est pas encore terminé.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Dash network after a connection is established, but this process has not completed yet.</source>
+        <translation>L'information affichée peut être obsolète. Votre portefeuille se synchronise automatiquement avec le réseau Dash lorsque la connection est établie, mais ce processus n'est pas encore terminé.</translation>
     </message>
     <message>
         <source>Available:</source>
@@ -1722,8 +1735,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Montant et cycles :</translation>
     </message>
     <message>
-        <source>0 ZOC / 0 Rounds</source>
-        <translation>0 ZOC / 0 cycles</translation>
+        <source>0 DASH / 0 Rounds</source>
+        <translation>0 DASH / 0 cycles</translation>
     </message>
     <message>
         <source>Submitted Denom:</source>
@@ -1831,7 +1844,7 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     </message>
     <message>
         <source>Note: You can turn this message off in options.</source>
-        <translation>Note : masquez ce message dans Options.</translation>
+        <translation>À noter : vous pouvez masquer ce message dans Options.</translation>
     </message>
     <message>
         <source>WARNING! Something went wrong on automatic backup</source>
@@ -1864,10 +1877,6 @@ https://www.transifex.com/projects/p/zeroone/</translation>
 </translation>
     </message>
     <message>
-        <source>N/A</source>
-        <translation>n.d.</translation>
-    </message>
-    <message>
         <source>PrivateSend was successfully reset.</source>
         <translation>PrivateSend a bien été réinitialisé.</translation>
     </message>
@@ -1891,8 +1900,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Erreur de demande de paiement</translation>
     </message>
     <message>
-        <source>Cannot start zeroone: click-to-pay handler</source>
-        <translation>Impossible de démarrer le gestionnaire ZeroOne click-to-pay</translation>
+        <source>Cannot start dash: click-to-pay handler</source>
+        <translation>Impossible de démarrer le gestionnaire Dash click-to-pay</translation>
     </message>
     <message>
         <source>URI handling</source>
@@ -1907,8 +1916,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Adresse de paiement %1 invalide</translation>
     </message>
     <message>
-        <source>URI cannot be parsed! This can be caused by an invalid ZeroOne address or malformed URI parameters.</source>
-        <translation>L'URI ne peut être analysée ! Cela peut provenir d'une adresse ZeroOne invalide, ou de paramètres d'URI mal composés.</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid Dash address or malformed URI parameters.</source>
+        <translation>L'URI ne peut être analysée ! Cela peut provenir d'une adresse Dash invalide, ou de paramètres d'URI mal composés.</translation>
     </message>
     <message>
         <source>Payment request file handling</source>
@@ -1997,8 +2006,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
 <context>
     <name>QObject</name>
     <message>
-        <source>ZeroOne Core</source>
-        <translation>ZeroOne Core</translation>
+        <source>Dash Core</source>
+        <translation>Dash Core</translation>
     </message>
     <message>
         <source>%1 didn't yet exit safely...</source>
@@ -2013,8 +2022,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Montant</translation>
     </message>
     <message>
-        <source>Enter a ZeroOne address (e.g. %1)</source>
-        <translation>Entrez une adresse ZeroOne (e.g. %1)</translation>
+        <source>Enter a Dash address (e.g. %1)</source>
+        <translation>Entrez une adresse Dash (e.g. %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -2531,8 +2540,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Ré&amp;utiliser une adresse de réception existante (non recommandé)</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the ZeroOne network.</source>
-        <translation>Un message optionnel à joindre à la demande de paiement, qui sera affiché quand la demande sera ouverte. Note : ce message ne sera pas envoyé avec le paiement à travers le réseau ZeroOne.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Dash network.</source>
+        <translation>Un message optionnel à joindre à la demande de paiement, qui sera affiché quand la demande sera ouverte. Note : ce message ne sera pas envoyé avec le paiement à travers le réseau Dash.</translation>
     </message>
     <message>
         <source>&amp;Message:</source>
@@ -2543,8 +2552,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Une étiquette optionnelle à associer à la nouvelle adresse de réception.</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the ZeroOne network.</source>
-        <translation>Un message optionnel à joindre à la demande de paiement, qui sera affiché quand la demande sera ouverte.&lt;br&gt;Note : ce message ne sera pas envoyé avec le paiement à travers le réseau ZeroOne.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Dash network.</source>
+        <translation>Un message optionnel à joindre à la demande de paiement, qui sera affiché quand la demande sera ouverte.&lt;br&gt;Note : ce message ne sera pas envoyé avec le paiement à travers le réseau Dash.</translation>
     </message>
     <message>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
@@ -2804,15 +2813,15 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>InstantSend</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 zuffs and the transaction is only 250 bytes, then "per kilobyte" only pays 250 zuffs in fee,&lt;br /&gt;while "at least" pays 1000 zuffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Si les frais personnalisés sont à 1000 zuffs et que la transaction fait seulement 250 octets, alors "par kilooctet" coûtera seulement 250 zuffs de frais,&lt;br /&gt;alors que "au moins" coûtera 1000 zuffs. Pour les transactions de plus d'un kilooctet, les deux coûts seront calculés au kilooctet.</translation>
+        <source>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then "per kilobyte" only pays 250 duffs in fee,&lt;br /&gt;while "at least" pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Si les frais personnalisés sont à 1000 duffs et que la transaction fait seulement 250 octets, alors "par kilooctet" coûtera seulement 250 duffs de frais,&lt;br /&gt;alors que "au moins" coûtera 1000 duffs. Pour les transactions de plus d'un kilooctet, les deux coûts seront calculés au kilooctet.</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 zuffs and the transaction is only 250 bytes, then "per kilobyte" only pays 250 zuffs in fee,&lt;br /&gt;while "total at least" pays 1000 zuffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Si les frais personnalisés sont à 1000 zuffs et que la transaction fait seulement 250 octets, alors "par kilooctet" coûtera seulement 250 zuffs de frais,&lt;br /&gt;alors que "total au moins" coûtera 1000 zuffs. Pour les transactions de plus d'un kilooctet, les deux coûts seront calculés au kilooctet.</translation>
+        <source>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then "per kilobyte" only pays 250 duffs in fee,&lt;br /&gt;while "total at least" pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Si les frais personnalisés sont à 1000 duffs et que la transaction fait seulement 250 octets, alors "par kilooctet" coûtera seulement 250 duffs de frais,&lt;br /&gt;alors que "total au moins" coûtera 1000 duffs. Pour les transactions de plus d'un kilooctet, les deux coûts seront calculés au kilooctet.</translation>
     </message>
     <message>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for zeroone transactions than the network can process.</source>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for dash transactions than the network can process.</source>
         <translation>Payer les frais minimaux fonctionne tant que le volume des transactions est inférieur à l'espace libre dans les blocs.&lt;br/&gt;Gardez à l'esprit que cette option peut entraîner des transactions qui ne seront jamais confirmées si la demande excède la capacité du réseau.</translation>
     </message>
     <message>
@@ -3000,8 +3009,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation><numerusform>Le début de confirmation est estimé dans %n bloc.</numerusform><numerusform>Le début de confirmation est estimé dans les %n blocs.</numerusform></translation>
     </message>
     <message>
-        <source>Warning: Invalid ZeroOne address</source>
-        <translation>Attention : adresse ZeroOne invalide</translation>
+        <source>Warning: Invalid Dash address</source>
+        <translation>Attention : adresse Dash invalide</translation>
     </message>
     <message>
         <source>Warning: Unknown change address</source>
@@ -3031,8 +3040,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>&amp;Payer à :</translation>
     </message>
     <message>
-        <source>The ZeroOne address to send the payment to</source>
-        <translation>L'adresse ZeroOne à laquelle envoyer de la monnaie</translation>
+        <source>The Dash address to send the payment to</source>
+        <translation>L'adresse Dash à laquelle envoyer de la monnaie</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -3067,8 +3076,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>&amp;Montant :</translation>
     </message>
     <message>
-        <source>The fee will be deducted from the amount being sent. The recipient will receive a lower amount of ZeroOne than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
-        <translation>Les frais vont être déduits du montant envoyé. Le destinataire recevra moins de zeroones que ce que vous avez indiqué dans la case montant. S'il y a plusieurs destinataires, les frais seront partagés équitablement.</translation>
+        <source>The fee will be deducted from the amount being sent. The recipient will receive a lower amount of Dash than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
+        <translation>Les frais vont être déduits du montant envoyé. Le destinataire recevra moins de dashs que ce que vous avez indiqué dans la case montant. S'il y a plusieurs destinataires, les frais seront partagés équitablement.</translation>
     </message>
     <message>
         <source>S&amp;ubtract fee from amount</source>
@@ -3079,8 +3088,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Message :</translation>
     </message>
     <message>
-        <source>A message that was attached to the zeroone: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the ZeroOne network.</source>
-        <translation>Un message joint à l'URI ZeroOne qui sera sauvegardé avec la transaction pour référence. Note : ce message ne sera pas envoyé à travers le réseau ZeroOne.</translation>
+        <source>A message that was attached to the dash: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Dash network.</source>
+        <translation>Un message joint à l'URI Dash qui sera sauvegardé avec la transaction pour référence. Note : ce message ne sera pas envoyé à travers le réseau Dash.</translation>
     </message>
     <message>
         <source>This is an unauthenticated payment request.</source>
@@ -3132,12 +3141,12 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>&amp;Signer un message</translation>
     </message>
     <message>
-        <source>You can sign messages/agreements with your addresses to prove you can receive ZeroOne sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
-        <translation>Vous pouvez signer des messages ou contrats avec vos adresses, et ainsi prouver que vous pouvez y recevoir des zeroones. Faites attention de ne pas signer quoi que ce soit de vague ou d'aléatoire, car des attaques d'hameçonnage peuvent essayer d'usurper votre identité en utilisant votre signature. Ne signez que des déclarations très détaillées et avec lesquelles vous êtes entièrement d'accord.</translation>
+        <source>You can sign messages/agreements with your addresses to prove you can receive Dash sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
+        <translation>Vous pouvez signer des messages ou contrats avec vos adresses, et ainsi prouver que vous pouvez y recevoir des dashs. Faites attention de ne pas signer quoi que ce soit de vague ou d'aléatoire, car des attaques d'hameçonnage peuvent essayer d'usurper votre identité en utilisant votre signature. Ne signez que des déclarations très détaillées et avec lesquelles vous êtes entièrement d'accord.</translation>
     </message>
     <message>
-        <source>The ZeroOne address to sign the message with</source>
-        <translation>L'adresse ZeroOne avec laquelle signer le message</translation>
+        <source>The Dash address to sign the message with</source>
+        <translation>L'adresse Dash avec laquelle signer le message</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -3168,8 +3177,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Copier la signature actuelle dans le presse-papier</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this ZeroOne address</source>
-        <translation>Signer le message pour prouver que vous possédez cette adresse ZeroOne</translation>
+        <source>Sign the message to prove you own this Dash address</source>
+        <translation>Signer le message pour prouver que vous possédez cette adresse Dash</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
@@ -3192,12 +3201,12 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Saisir ci-dessous l'adresse du destinataire, le message (assurez-vous d'avoir copié exactement les retours à la ligne, les espaces, tabulations, etc.) et la signature pour vérifier le message. Faites attention à ne pas déduire davantage de la signature que ce qui est contenu dans le message signé lui-même, pour éviter d'être trompé par une attaque "man in the middle". Gardez à l'esprit que cette opération prouve uniquement que le destinataire peut recevoir des fonds dans l'adresse donnée, cela ne prouve pas l'identité de l'expéditeur d'une transaction !</translation>
     </message>
     <message>
-        <source>The ZeroOne address the message was signed with</source>
-        <translation>L'adresse ZeroOne avec laquelle le message a été signé</translation>
+        <source>The Dash address the message was signed with</source>
+        <translation>L'adresse Dash avec laquelle le message a été signé</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified ZeroOne address</source>
-        <translation>Vérifier le message pour s'assurer qu'il a été signé avec l'adresse ZeroOne spécifiée</translation>
+        <source>Verify the message to ensure it was signed with the specified Dash address</source>
+        <translation>Vérifier le message pour s'assurer qu'il a été signé avec l'adresse Dash spécifiée</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>
@@ -3607,6 +3616,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Si une adresse en lecture seule est impliquée dans cette transaction.</translation>
     </message>
     <message>
+        <source>Whether or not this transaction was locked by InstantSend.</source>
+        <translation>Si cette transaction est ou n'est pas verrouillée par InstantSend.</translation>
+    </message>
+    <message>
         <source>User-defined intent/purpose of the transaction.</source>
         <translation>Intention/raison de la transaction définie par l'utilisateur</translation>
     </message>
@@ -3620,6 +3633,14 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     <message>
         <source>All</source>
         <translation>Toutes</translation>
+    </message>
+    <message>
+        <source>Locked by InstantSend</source>
+        <translation>Verrouillée par InstantSend</translation>
+    </message>
+    <message>
+        <source>Not locked by InstantSend</source>
+        <translation>Non verrouillée par InstantSend</translation>
     </message>
     <message>
         <source>Today</source>
@@ -3815,8 +3836,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Envoyer des fonds</translation>
     </message>
     <message>
-        <source>InstantSend doesn't support sending values that high yet. Transactions are currently limited to %1 ZOC.</source>
-        <translation>InstantSend ne supporte pas des transferts aussi élevés. Les transactions sont pour le moment limitées à %1 ZOC.</translation>
+        <source>InstantSend doesn't support sending values that high yet. Transactions are currently limited to %1 DASH.</source>
+        <translation>InstantSend ne supporte pas des transferts aussi élevés. Les transactions sont pour le moment limitées à %1 DASH.</translation>
     </message>
     <message>
         <source>Used way too many inputs (&gt;%1) for this InstantSend transaction, fees could be huge.</source>
@@ -3863,7 +3884,7 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     </message>
 </context>
 <context>
-    <name>zeroone-core</name>
+    <name>dash-core</name>
     <message>
         <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
         <translation>Se lier à l'adresse donnée et toujours l'écouter. Utilisez la notation [host]:port pour l'IPv6</translation>
@@ -4045,6 +4066,14 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Effacer toutes les transactions du portefeuille et récupérer celles qui font partie de la chaîne de blocs par un -rescan au démarrage</translation>
     </message>
     <message>
+        <source>Enable publish raw transactions of attempted InstantSend double spend in &lt;address&gt;</source>
+        <translation>Activer la publication des transactions brutes des tentatives de double dépense InstantSend dans &lt;address&gt;</translation>
+    </message>
+    <message>
+        <source>Enable publish transaction hashes of attempted InstantSend double spend in &lt;address&gt;</source>
+        <translation>Activer la publication des empreintes de transaction des tentatives de double dépense InstantSend dans &lt;address&gt;</translation>
+    </message>
+    <message>
         <source>Error loading %s: You can't enable HD on a already existing non-HD wallet</source>
         <translation>Erreur en chargeant %s : Impossible d'activer HD sur un portefeuille non-HD déjà existant</translation>
     </message>
@@ -4089,6 +4118,14 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Extraire les informations de débogage (par défaut : %u, fournir &lt;category&gt; est optionnel)</translation>
     </message>
     <message>
+        <source>Overrides minimum spork signers to change spork value. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</source>
+        <translation>Ignore le nombre minimal de signataires spork pour la modification de la valeur de spork. Utile seulement pour les réseaux d'enregistrement et de développement. Utiliser ceci sur les réseaux principal ou de test entraînera votre bannissement.</translation>
+    </message>
+    <message>
+        <source>Use N separate masternodes in parallel to mix funds (%u-%u, default: %u)</source>
+        <translation>Utiliser en parallèle N masternodes distincts pour mélanger les fonds (%u-%u, par défaut : %u)</translation>
+    </message>
+    <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
         <translation>Utiliser un serveur proxy SOCKS5 séparé pour atteindre les pairs par les services cachés de Tor (par défaut : %s)</translation>
     </message>
@@ -4107,6 +4144,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     <message>
         <source>You need to rebuild the database using -reindex-chainstate to change -txindex</source>
         <translation>Vous devez reconstruire la base de données en utilisant -reindex-chainstate pour modifier -txindex</translation>
+    </message>
+    <message>
+        <source>You should specify a masternodeblsprivkey in the configuration. Please see documentation for help.</source>
+        <translation>Vous devriez indiquer une "masternodeprivkey" dans la configuration. Veuillez consulter la documentation pour en savoir plus.</translation>
     </message>
     <message>
         <source>(default: %s)</source>
@@ -4221,6 +4262,14 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Montant invalide pour -paytxfee=&lt;montant&gt; : « %s » (minimum possible: %s)</translation>
     </message>
     <message>
+        <source>Invalid masternodeblsprivkey. Please see documenation.</source>
+        <translation>masternodeblsprivkey invalide. Veuillez vous référer à la documentation.</translation>
+    </message>
+    <message>
+        <source>Invalid minimum number of spork signers specified with -minsporkkeys</source>
+        <translation>Le nombre minimal de signataires spork spécifié avec -minsporkkeys est invalide</translation>
+    </message>
+    <message>
         <source>Keypool ran out, please call keypoolrefill first</source>
         <translation>La réserve de clefs est épuisée, veuillez d'abord utiliser keypoolrefill</translation>
     </message>
@@ -4321,6 +4370,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Définir la taille de la réserve de clefs à &lt;n&gt; (par défaut : %u)</translation>
     </message>
     <message>
+        <source>Set the masternode BLS private key</source>
+        <translation>Définir la clé privée BLS du masternode</translation>
+    </message>
+    <message>
         <source>Set the number of threads to service RPC calls (default: %d)</source>
         <translation>Définir le nombre de fils d’exécution pour desservir les appels RPC (par défaut : %d)</translation>
     </message>
@@ -4383,6 +4436,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     <message>
         <source>Too many %f denominations, removing.</source>
         <translation>Trop de coupures %f, suppression en cours.</translation>
+    </message>
+    <message>
+        <source>Too many %f denominations, skipping.</source>
+        <translation>Trop de coupures %f, on ignore.</translation>
     </message>
     <message>
         <source>Tor control port password (default: empty)</source>
@@ -4477,8 +4534,12 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Garder au plus &lt;n&gt; transactions sans connexion en mémoire (par défaut : %u)</translation>
     </message>
     <message>
-        <source>Disable all ZeroOne specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</source>
-        <translation>Désactiver toutes les fonctionnalités liées à ZeroOne (masternodes, PrivateSend, InstantSend, gouvernance) (0-1, par défaut : %u)</translation>
+        <source>Disable all Dash specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</source>
+        <translation>Désactiver toutes les fonctionnalités liées à Dash (masternodes, PrivateSend, InstantSend, gouvernance) (0-1, par défaut : %u)</translation>
+    </message>
+    <message>
+        <source>%s file contains all private keys from this wallet. Do not share it with anyone!</source>
+        <translation>Le fichier %s contient toutes les clés privées de ce portefeuille. Ne le partagez avec personne !</translation>
     </message>
     <message>
         <source>Discover own IP addresses (default: 1 when listening and no -externalip or -proxy)</source>
@@ -4505,6 +4566,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Exécuter la commande lorsqu'une transaction InstantSend de portefeuille est bloquée avec succès (%s dans la commande est remplacée par TxID)</translation>
     </message>
     <message>
+        <source>Extra transactions to keep in memory for compact block reconstructions (default: %u)</source>
+        <translation>Transactions supplémentaires à conserver en mémoire pour les reconstructions de bloc compact (par défaut : %u)</translation>
+    </message>
+    <message>
         <source>Failed to create backup, file already exists! This could happen if you restarted wallet in less than 60 seconds. You can continue if you are ok with this.</source>
         <translation>La création de la sauvegarde a échoué, le fichier existe déjà ! Cela peut arriver si vous avez redémarré le portefeuille il y a moins de 60 secondes. Vous pouvez continuer si cela ne vous pose pas de problème.</translation>
     </message>
@@ -4521,8 +4586,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Si &lt;category&gt; n'est pas indiqué ou si &lt;category&gt; = 1, extraire toutes les données de débogage.</translation>
     </message>
     <message>
-        <source>InstantSend doesn't support sending values that high yet. Transactions are currently limited to %1 ZOC.</source>
-        <translation>InstantSend ne supporte pas encore des transferts aussi élevés. Les transactions sont pour le moment limitées à %1 ZOC.</translation>
+        <source>InstantSend doesn't support sending values that high yet. Transactions are currently limited to %1 DASH.</source>
+        <translation>InstantSend ne supporte pas encore des transferts aussi élevés. Les transactions sont pour le moment limitées à %1 DASH.</translation>
     </message>
     <message>
         <source>InstantSend requires inputs with at least %d confirmations, you might need to wait a few minutes and try again.</source>
@@ -4585,6 +4650,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>La taille totale de la chaîne de version réseau (%i) dépasse la taille maximum (%i). Réduisez le nombre ou la taille des uacomments.</translation>
     </message>
     <message>
+        <source>Transaction index can't be disabled in full mode. Either start with -litemode command line switch or enable transaction index.</source>
+        <translation>L'index de transaction ne peut pas être désactivé en mode complet. Démarrez en ligne de commande avec l'argument -litemode, ou bien activez l'index de transaction.</translation>
+    </message>
+    <message>
         <source>Tries to keep outbound traffic under the given target (in MiB per 24h), 0 = no limit (default: %d)</source>
         <translation>Essaie de limiter le trafic sortant sous la cible indiquée (en Mio par 24h), 0 = sans limite (par défaut : %d)</translation>
     </message>
@@ -4594,7 +4663,7 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     </message>
     <message>
         <source>Unsupported argument -socks found. Setting SOCKS version isn't possible anymore, only SOCKS5 proxies are supported.</source>
-        <translation>Paramètre obsolète -socks utilisé. Il n'est plus possible d'indiquer la version SOCKS, seul les proxy SOCKS5 sont supportés.</translation>
+        <translation>Paramètre obsolète -socks utilisé. Il n'est plus possible d'indiquer la version SOCKS, seuls les proxy SOCKS5 sont supportés.</translation>
     </message>
     <message>
         <source>Unsupported argument -whitelistalwaysrelay ignored, use -whitelistrelay and/or -whitelistforcerelay.</source>
@@ -4615,6 +4684,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     <message>
         <source>Warning: Unknown block versions being mined! It's possible unknown rules are in effect</source>
         <translation>Attention : un bloc de version inconnue est en train d'être miné ! Il est possible que des règles inconnues soient en vigueur.</translation>
+    </message>
+    <message>
+        <source>You are starting in lite mode, all Dash-specific functionality is disabled.</source>
+        <translation>Vous démarrez en mode allégé : toutes les fonctionnalités propres à Dash sont désactivées.</translation>
     </message>
     <message>
         <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</source>
@@ -4661,6 +4734,14 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Activer la publication du hachage de bloc dans &lt;address&gt;</translation>
     </message>
     <message>
+        <source>Enable publish hash of governance objects (like proposals) in &lt;address&gt;</source>
+        <translation>Activer la publication du hachage des objets de gouvernance (tels que les propositions budgétaires) dans &lt;address&gt;</translation>
+    </message>
+    <message>
+        <source>Enable publish hash of governance votes in &lt;address&gt;</source>
+        <translation>Activer la publication du hachage des votes de gouvernance dans &lt;address&gt;</translation>
+    </message>
+    <message>
         <source>Enable publish hash transaction (locked via InstantSend) in &lt;address&gt;</source>
         <translation>Activer la publication du hachage de transaction (verrouillée via InstantSend) dans &lt;address&gt; </translation>
     </message>
@@ -4681,10 +4762,6 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Activer la publication de la transaction brute dans &lt;address&gt; </translation>
     </message>
     <message>
-        <source>Enable transaction replacement in the memory pool (default: %u)</source>
-        <translation>Activer le remplacement de transaction dans la zone mémoire (par défaut : %u)</translation>
-    </message>
-    <message>
         <source>Error: A fatal internal error occurred, see debug.log for details</source>
         <translation>Erreur : Une erreur interne fatale est survenue, voir debug.log pour les détails</translation>
     </message>
@@ -4699,6 +4776,14 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     <message>
         <source>Failed to delete backup, error: %s</source>
         <translation>La suppression de la sauvegarde a échoué, erreur : %s !</translation>
+    </message>
+    <message>
+        <source>Failed to load InstantSend data cache from</source>
+        <translation>Échec du chargement du cache de données InstantSend depuis</translation>
+    </message>
+    <message>
+        <source>Failed to load sporks cache from</source>
+        <translation>Échec du chargement du cache des sporks depuis</translation>
     </message>
     <message>
         <source>Failed to parse host:port string</source>
@@ -4737,6 +4822,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Ligne : %d</translation>
     </message>
     <message>
+        <source>Loading InstantSend data cache...</source>
+        <translation>Chargement du cache de données d'InstantSend…</translation>
+    </message>
+    <message>
         <source>Loading addresses...</source>
         <translation>Chargement des adresses...</translation>
     </message>
@@ -4747,6 +4836,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     <message>
         <source>Loading governance cache...</source>
         <translation>Chargement du cache de gouvernance...</translation>
+    </message>
+    <message>
+        <source>Loading sporks cache...</source>
+        <translation>Chargement du cache des sporks…</translation>
     </message>
     <message>
         <source>Loading wallet... (%3.2f %%)</source>
@@ -4762,7 +4855,7 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     </message>
     <message>
         <source>Make the wallet broadcast transactions</source>
-        <translation>Faire transmettre les transactions par le portefeuille</translation>
+        <translation>Diffuser les transactions via le portefeuille</translation>
     </message>
     <message>
         <source>Masternode cache is empty, skipping payments and governance cache...</source>
@@ -4889,6 +4982,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>La transaction doit comporter au moins un destinataire</translation>
     </message>
     <message>
+        <source>Transaction too large</source>
+        <translation>Transaction trop volumineuse</translation>
+    </message>
+    <message>
         <source>Trying to connect...</source>
         <translation>Tentative de connexion...</translation>
     </message>
@@ -4909,6 +5006,10 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Options de débogage/de test du porte-monnaie :</translation>
     </message>
     <message>
+        <source>Wallet is not initialized</source>
+        <translation>Le portefeuille n'est pas initialisé</translation>
+    </message>
+    <message>
         <source>Wallet needed to be rewritten: restart %s to complete</source>
         <translation>Le porte-monnaie devait être réécrit : redémarrer %s pour terminer l’opération.</translation>
     </message>
@@ -4925,12 +5026,16 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Opérer en mode blocs uniquement (par défaut : %u)</translation>
     </message>
     <message>
+        <source>You can not start a masternode in lite mode.</source>
+        <translation>Vous ne pouvez pas démarrer un masternode en mode allégé.</translation>
+    </message>
+    <message>
         <source>ZeroMQ notification options:</source>
         <translation>Options de notifications ZeroMQ :</translation>
     </message>
     <message>
         <source>no mixing available.</source>
-        <translation>pas de mélangeur disponible.</translation>
+        <translation>pas de mélange disponible.</translation>
     </message>
     <message>
         <source>see debug.log for details.</source>
@@ -4941,8 +5046,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>Options du serveur RPC :</translation>
     </message>
     <message>
-        <source>ZeroOne Core</source>
-        <translation>ZeroOne Core</translation>
+        <source>Dash Core</source>
+        <translation>Dash Core</translation>
     </message>
     <message>
         <source>The %s developers</source>
@@ -5011,10 +5116,6 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     <message>
         <source>Set lowest fee rate (in %s/kB) for transactions to be included in block creation. (default: %s)</source>
         <translation>Définir le taux minimal de frais (en %s/Ko) pour les transactions à inclure dans la création de blocs (par défaut : %s)</translation>
-    </message>
-    <message>
-        <source>Show N confirmations for a successfully locked transaction (%u-%u, default: %u)</source>
-        <translation>Afficher N confirmations pour une transaction verrouillée avec succès (%u-%u, par défaut : %u)</translation>
     </message>
     <message>
         <source>This is the transaction fee you may pay when fee estimates are not available.</source>
@@ -5149,8 +5250,8 @@ https://www.transifex.com/projects/p/zeroone/</translation>
         <translation>L'adresse spork spécifiée avec -sporkaddr est invalide</translation>
     </message>
     <message>
-        <source>Keep N ZOC anonymized (%u-%u, default: %u)</source>
-        <translation>Conserver N zeroones anonymisés (%u-%u, par défaut : %u)</translation>
+        <source>Keep N DASH anonymized (%u-%u, default: %u)</source>
+        <translation>Conserver N dashs anonymisés (%u-%u, par défaut : %u)</translation>
     </message>
     <message>
         <source>Print this help message and exit</source>
@@ -5290,7 +5391,7 @@ https://www.transifex.com/projects/p/zeroone/</translation>
     </message>
     <message>
         <source>Unknown state: id = %u</source>
-        <translation>État inconnu: id = %u</translation>
+        <translation>État inconnu : id = %u</translation>
     </message>
     <message>
         <source>Username for JSON-RPC connections</source>
