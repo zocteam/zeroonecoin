@@ -7,7 +7,7 @@ export BUILD_TARGET=${BUILD_TARGET:-linux64}
 export PULL_REQUEST=${PULL_REQUEST:-false}
 export JOB_NUMBER=${JOB_NUMBER:-1}
 
-export BUILDER_IMAGE_NAME="dash-builder-$BUILD_TARGET-$JOB_NUMBER"
+export BUILDER_IMAGE_NAME="zeroone-builder-$BUILD_TARGET-$JOB_NUMBER"
 
 export HOST_SRC_DIR=${HOST_SRC_DIR:-$(pwd)}
 export HOST_CACHE_DIR=${HOST_CACHE_DIR:-$(pwd)/ci-cache-$BUILD_TARGET}
@@ -65,7 +65,7 @@ elif [ "$BUILD_TARGET" = "linux64" ]; then
   export PACKAGES="bc python3-zmq"
   export DEP_OPTS="NO_QT=1 NO_UPNP=1 DEBUG=1"
   export BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports"
-  export CPPFLAGS="-DDEBUG_LOCKORDER -DENABLE_DASH_DEBUG"
+  export CPPFLAGS="-DDEBUG_LOCKORDER -DENABLE_ZEROONE_DEBUG"
   export PYZMQ=true
   export RUN_TESTS=true
 elif [ "$BUILD_TARGET" = "linux64_nowallet" ]; then
