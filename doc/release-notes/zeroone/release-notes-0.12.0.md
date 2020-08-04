@@ -8,7 +8,7 @@ ZeroOne Core version 0.12.0 is now available from:
 
 Please report bugs using the issue tracker at github:
 
-  https://github.com/zeroonecoin/zeroone/issues
+  https://github.com/zocteam/zeroonecoin/issues
 
 
 How to Upgrade

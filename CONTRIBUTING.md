@@ -158,7 +158,7 @@ where possible keep them short, uncomplex and easy to verify.
 -------------------------
 
 The following applies to code changes to the ZeroOne Core project (and related
-projects such as libsecp256k1), and is not to be confused with overall Dash
+projects such as libsecp256k1), and is not to be confused with overall 01Coin
 Network Protocol consensus changes.
 
 Whether a pull request is merged into ZeroOne Core rests with the project merge
@@ -174,7 +174,7 @@ In general, all pull requests must:
     the project (for example refactoring for modularisation);
   - be well peer reviewed;
   - have unit tests and functional tests where appropriate;
-  - follow code style guidelines;
+  - follow [code style guidelines](/doc/developer-notes.md);
   - not break the existing test suite;
   - where bugs are fixed, where possible, there should be unit tests
     demonstrating the bug and also proving the fix. This helps prevent regression.

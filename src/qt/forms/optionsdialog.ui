@@ -177,6 +177,16 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="showPrivateSendPopups">
+            <property name="toolTip">
+             <string>Show system popups for PrivateSend mixing transactions&lt;br/&gt;just like for all other transaction types.</string>
+            </property>
+            <property name="text">
+             <string>Show popups for PrivateSend transactions</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="lowKeysWarning">
             <property name="toolTip">
              <string>Show warning dialog when PrivateSend detects that wallet has very low number of keys left.</string>
@@ -227,7 +237,7 @@
             <number>2</number>
            </property>
            <property name="maximum">
-            <number>8</number>
+            <number>16</number>
            </property>
            <property name="value">
             <number>4</number>
