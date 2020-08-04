@@ -1,4 +1,4 @@
-# 01coin version 0.12.3.7
+# 01coin version 0.13.0.1
 
 Release is now available from:
 
@@ -12,8 +12,8 @@ Please report bugs using the issue tracker at github:
 
 If you are running an older version, shut it down. Wait until it has completely
 shut down (which might take a few minutes for older versions), then run the
-installer (on Windows) or just copy over /Applications/Dash-Qt (on Mac) or
-dashd/dash-qt (on Linux). If you upgrade after DIP0003 activation you will
+installer (on Windows) or just copy over /Applications/ZeroOne-Qt (on Mac) or
+zerooned/zeroone-qt (on Linux). If you upgrade after DIP0003 activation you will
 have to reindex (start with -reindex-chainstate or -reindex) to make sure
 your wallet has all the new data synced.
 
@@ -146,7 +146,7 @@ Few cmd-line options are no longer supported:
 - `mempoolreplacement`.
 
 ## Credits
-See `Help -> Command-line options` in Qt wallet or `dashd --help` for more info.
+See `Help -> Command-line options` in Qt wallet or `zerooned --help` for more info.
 
 Thanks to everyone who directly contributed to this release, as well as everyone who submitted issues and reviewed pull requests. Particular thanks for this release is owed to camenlx for spearheading this release.
 Lots of refactoring and bug fixes
@@ -157,7 +157,7 @@ A lot of refactoring, code cleanups and other small fixes were done in this rele
 0.13.0.0 Change log
 ===================
 
-See detailed [set of changes](https://github.com/dashpay/dash/compare/v0.12.3.4...dashpay:v0.13.0.0).
+See detailed [set of changes](https://github.com/zocteam/zeroonecoin/compare/v0.12.3.7...zocteam:v0.13.0.1).
 
 ### Network
 - [`03a6865d9`](https://github.com/dashpay/dash/commit/03a6865d9) Enforce correct port on mainnet for DIP3 MNs (#2576)

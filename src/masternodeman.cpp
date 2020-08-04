@@ -2474,7 +2474,7 @@ void CMasternodeMan::NotifyMasternodeUpdates(CConnman& connman, bool forceAddedC
 
 void CMasternodeMan::DoMaintenance(CConnman& connman)
 {
-    if(fLiteMode) return; // disable all Dash specific functionality
+    if(fLiteMode) return; // disable all ZeroOne specific functionality
 
     if(!masternodeSync.IsBlockchainSynced() || ShutdownRequested())
         return;

@@ -84,8 +84,8 @@ libconftest.dylib*
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-dash-qt
-Dash-Qt.app
+zeroone-qt
+Zeroone-Qt.app
 
 # Unit-tests
 Makefile.test

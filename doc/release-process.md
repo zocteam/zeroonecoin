@@ -29,10 +29,10 @@ If you're using the automated script (found in [contrib/gitian-build.py](/contri
 Check out the source code in the following directory hierarchy.
 
 	cd /path/to/your/toplevel/build
-	git clone https://github.com/zeroonecoin/gitian.sigs.git
-	git clone https://github.com/zeroonecoin/zeroone-detached-sigs.git
+	git clone https://github.com/zocteam/gitian.sigs.git
+	git clone https://github.com/zocteam/zeroonecoin-detached-sigs.git
 	git clone https://github.com/devrandom/gitian-builder.git
-	git clone https://github.com/zeroonecoin/zeroone.git
+	git clone https://github.com/zocteam/zeroonecoin.git
 
 ### ZeroOne Core maintainers/release engineers, update (commit) version in sources
 

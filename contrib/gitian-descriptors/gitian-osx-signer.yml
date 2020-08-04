@@ -7,7 +7,7 @@ architectures:
 packages:
 - "faketime"
 remotes:
-- "url": "https://github.com/zeroonecoin/zeroone-detached-sigs.git"
+- "url": "https://github.com/zocteam/zeroone-detached-sigs.git"
   "dir": "signature"
 files:
 - "zeroonecore-osx-unsigned.tar.gz"

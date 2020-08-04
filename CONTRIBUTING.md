@@ -158,7 +158,7 @@ where possible keep them short, uncomplex and easy to verify.
 -------------------------
 
 The following applies to code changes to the ZeroOne Core project (and related
-projects such as libsecp256k1), and is not to be confused with overall Dash
+projects such as libsecp256k1), and is not to be confused with overall 01Coin
 Network Protocol consensus changes.
 
 Whether a pull request is merged into ZeroOne Core rests with the project merge

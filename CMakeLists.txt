@@ -73,4 +73,4 @@ file(GLOB SOURCE_FILES
         src/rpc/*.h
         )
 
-add_executable(dash ${SOURCE_FILES})
+add_executable(zeroone ${SOURCE_FILES})
