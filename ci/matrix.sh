@@ -7,7 +7,7 @@ export BUILD_TARGET=${BUILD_TARGET:-linux64}
 export PULL_REQUEST=${PULL_REQUEST:-false}
 export JOB_NUMBER=${JOB_NUMBER:-1}
 
-export BUILDER_IMAGE_NAME="dash-builder-$BUILD_TARGET-$JOB_NUMBER"
+export BUILDER_IMAGE_NAME="zeroone-builder-$BUILD_TARGET-$JOB_NUMBER"
 
 export HOST_SRC_DIR=${HOST_SRC_DIR:-$(pwd)}
 export HOST_CACHE_DIR=${HOST_CACHE_DIR:-$(pwd)/ci-cache-$BUILD_TARGET}
@@ -43,7 +43,7 @@ elif [ "$BUILD_TARGET" = "win32" ]; then
   export PACKAGES="python3 nsis g++-mingw-w64-i686 wine-stable wine32 bc"
   export BITCOIN_CONFIG="--enable-gui --enable-reduce-exports"
   export DIRECT_WINE_EXEC_TESTS=true
-  export RUN_TESTS=true
+  export RUN_TESTS=false
 elif [ "$BUILD_TARGET" = "win64" ]; then
   export HOST=x86_64-w64-mingw32
   export DPKG_ADD_ARCH="i386"
@@ -51,7 +51,7 @@ elif [ "$BUILD_TARGET" = "win64" ]; then
   export PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-stable wine64 bc"
   export BITCOIN_CONFIG="--enable-gui --enable-reduce-exports"
   export DIRECT_WINE_EXEC_TESTS=true
-  export RUN_TESTS=true
+  export RUN_TESTS=false
 elif [ "$BUILD_TARGET" = "linux32" ]; then
   export HOST=i686-pc-linux-gnu
   export PACKAGES="g++-multilib bc python3-zmq"
@@ -59,15 +59,15 @@ elif [ "$BUILD_TARGET" = "linux32" ]; then
   export BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports LDFLAGS=-static-libstdc++"
   export USE_SHELL="/bin/dash"
   export PYZMQ=true
-  export RUN_TESTS=true
+  export RUN_TESTS=false
 elif [ "$BUILD_TARGET" = "linux64" ]; then
   export HOST=x86_64-unknown-linux-gnu
   export PACKAGES="bc python3-zmq"
   export DEP_OPTS="NO_QT=1 NO_UPNP=1 DEBUG=1"
   export BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports"
-  export CPPFLAGS="-DDEBUG_LOCKORDER -DENABLE_DASH_DEBUG"
+  export CPPFLAGS="-DDEBUG_LOCKORDER -DENABLE_ZEROONE_DEBUG"
   export PYZMQ=true
-  export RUN_TESTS=true
+  export RUN_TESTS=false
 elif [ "$BUILD_TARGET" = "linux64_nowallet" ]; then
   export HOST=x86_64-unknown-linux-gnu
   export PACKAGES="python3"
