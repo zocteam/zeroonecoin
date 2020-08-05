@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/camenlx/zeroonecoin.svg?branch=dev01301y2020)](https://travis-ci.org/camenlx/zeroonecoin)
+
 ![ZeroOne](doc/splash.png)
 
 01coin Community v0.13.0.1
