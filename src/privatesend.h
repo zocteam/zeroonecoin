@@ -118,8 +118,6 @@ public:
     inline void SerializationOp(Stream& s, Operation ser_action)
     {
         READWRITE(nDenom);
-        // @todo??
-        // READWRITE(nInputCount);
         READWRITE(txCollateral);
     }
 

@@ -19,7 +19,6 @@
 #include <vector>
 
 extern int nConnectTimeout;
-extern int nConnectRetCode;
 extern bool fNameLookup;
 
 //! -timeout default

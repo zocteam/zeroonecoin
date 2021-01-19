@@ -1,5 +1,4 @@
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The ZeroOne Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -142,9 +141,9 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
     static int nTick = 0;
     nTick++;
 
-    // reset the sync process if the last call to this function was more than 10 minutes ago (client was in sleep mode)
+    // reset the sync process if the last call to this function was more than 60 minutes ago (client was in sleep mode)
     static int64_t nTimeLastProcess = GetTime();
-    if(GetTime() - nTimeLastProcess > 10*60) {
+    if(GetTime() - nTimeLastProcess > 60*60) {
         LogPrintf("CMasternodeSync::ProcessTick -- WARNING: no actions for too long, restarting sync...\n");
         Reset();
         SwitchToNextAsset(connman);
@@ -219,9 +218,7 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
         }
 
         // NORMAL NETWORK MODE - TESTNET/MAINNET
-        // search for relevant nodes only
-        if (pnode->nVersion >= mnpayments.GetMinMasternodePaymentsProto()) {
-
+        {
             if(netfulfilledman.HasFulfilledRequest(pnode->addr, "full-sync")) {
                 // We already fully synced from this node recently,
                 // disconnect to free this connection slot for another peer.
@@ -281,10 +278,8 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                     return;
                 }
 
-                // request up to six peers max (in 30seconds timeout)
-                if (nTriedPeerCount > 5) {
-                    // so all six requests done, no need to wait timeout to move
-                    SwitchToNextAsset(connman);
+                // request from three peers max
+                if (nTriedPeerCount > 2) {
                     connman.ReleaseNodeVector(vNodesCopy);
                     return;
                 }
@@ -293,8 +288,7 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                 if(netfulfilledman.HasFulfilledRequest(pnode->addr, "masternode-list-sync")) continue;
                 netfulfilledman.AddFulfilledRequest(pnode->addr, "masternode-list-sync");
 
-                // TODO : cleanup after testing sync is better
-                // if (pnode->nVersion < mnpayments.GetMinMasternodePaymentsProto()) continue;
+                if (pnode->nVersion < mnpayments.GetMinMasternodePaymentsProto()) continue;
                 nTriedPeerCount++;
 
                 mnodeman.DsegUpdate(pnode, connman);
@@ -340,10 +334,8 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                     return;
                 }
 
-                // request up to six peers max (in 30 seconds timeout)
-                if (nTriedPeerCount > 5) {
-                    // so all six requests done, no need to wait timeout to move
-                    SwitchToNextAsset(connman);
+                // request from three peers max
+                if (nTriedPeerCount > 2) {
                     connman.ReleaseNodeVector(vNodesCopy);
                     return;
                 }
@@ -352,8 +344,7 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                 if(netfulfilledman.HasFulfilledRequest(pnode->addr, "masternode-payment-sync")) continue;
                 netfulfilledman.AddFulfilledRequest(pnode->addr, "masternode-payment-sync");
 
-                // TODO : cleanup after testing sync is better
-                // if(pnode->nVersion < mnpayments.GetMinMasternodePaymentsProto()) continue;
+                if(pnode->nVersion < mnpayments.GetMinMasternodePaymentsProto()) continue;
                 nTriedPeerCount++;
 
                 // ask node for all payment votes it has (new nodes will only return votes for future payments)

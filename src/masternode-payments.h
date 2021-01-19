@@ -1,5 +1,4 @@
-// Copyright (c) 2014-2019 The Dash Core developers
-// Copyright (c) 2018-2019 The ZeroOne Core developers
+// Copyright (c) 2014-2017 The Dash Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,16 +16,15 @@ class CMasternodePayments;
 class CMasternodePaymentVote;
 class CMasternodeBlockPayees;
 
-//See now as sporks tunable values:
-//static const int MNPAYMENTS_SIGNATURES_REQUIRED         = 6;
-//static const int MNPAYMENTS_SIGNATURES_TOTAL            = 10;
+static const int MNPAYMENTS_SIGNATURES_REQUIRED         = 6;
+static const int MNPAYMENTS_SIGNATURES_TOTAL            = 10;
 
 //! minimum peer version that can receive and send masternode payment messages,
 //  vote for masternode and be elected as a payment winner
 // V1 - Last protocol version before update
 // V2 - Newest protocol version
-static const int MIN_MASTERNODE_PAYMENT_PROTO_VERSION_1 = 70211;
-static const int MIN_MASTERNODE_PAYMENT_PROTO_VERSION_2 = 70211;
+static const int MIN_MASTERNODE_PAYMENT_PROTO_VERSION_1 = 70210;
+static const int MIN_MASTERNODE_PAYMENT_PROTO_VERSION_2 = 70210;
 
 extern CCriticalSection cs_vecPayees;
 extern CCriticalSection cs_mapMasternodeBlocks;
@@ -195,7 +193,6 @@ public:
     bool HasVerifiedPaymentVote(const uint256& hashIn) const;
     bool ProcessBlock(int nBlockHeight, CConnman& connman);
     void CheckBlockVotes(int nBlockHeight);
-    void CheckMissingVotes();
 
     void Sync(CNode* node, CConnman& connman) const;
     void RequestLowDataPaymentBlocks(CNode* pnode, CConnman& connman) const;

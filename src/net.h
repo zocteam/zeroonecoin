@@ -1,7 +1,5 @@
-// Copyright (c) 2009-2019 Satoshi Nakamoto
-// Copyright (c) 2009-2019 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
-// Copyright (c) 2018-2019 The ZeroOne Core developers
+// Copyright (c) 2009-2010 Satoshi Nakamoto
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -400,10 +398,6 @@ public:
     unsigned int GetReceiveFloodSize() const;
 
     void WakeMessageHandler();
-
-    // ZOC: FindNode is used in masternodeman.cpp
-    CNode* FindNode(const CService& addr);
-
 private:
     struct ListenSocket {
         SOCKET socket;
@@ -426,7 +420,7 @@ private:
     CNode* FindNode(const CNetAddr& ip);
     CNode* FindNode(const CSubNet& subNet);
     CNode* FindNode(const std::string& addrName);
-  //CNode* FindNode(const CService& addr);
+    CNode* FindNode(const CService& addr);
 
     bool AttemptToEvictConnection();
     CNode* ConnectNode(CAddress addrConnect, const char *pszDest = NULL, bool fCountFailure = false);
@@ -596,9 +590,6 @@ extern bool fRelayTxes;
 extern bool fOkIPv4;
 extern bool fOkIPv6;
 extern bool fOkDual;
-
-// Dirty list of missing MNs
-extern std::map<CService, int> mapMissingMNs;
 
 extern limitedmap<uint256, int64_t> mapAlreadyAskedFor;
 

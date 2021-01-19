@@ -1,5 +1,4 @@
 // Copyright (c) 2014-2018 The Dash Core developers
-// Copyright (c) 2018-2019 The ZeroOne Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -28,6 +27,7 @@ void CPrivateSendServer::ProcessMessage(CNode* pfrom, const std::string& strComm
     if (strCommand == NetMsgType::DSACCEPT) {
         if (pfrom->nVersion < MIN_PRIVATESEND_PEER_PROTO_VERSION) {
             LogPrint("privatesend", "DSACCEPT -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
+            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE, strprintf("Version must be %d or greater", MIN_PRIVATESEND_PEER_PROTO_VERSION)));
             PushStatus(pfrom, STATUS_REJECTED, ERR_VERSION, connman);
             return;
         }
@@ -92,6 +92,7 @@ void CPrivateSendServer::ProcessMessage(CNode* pfrom, const std::string& strComm
 
         if (pfrom->nVersion < MIN_PRIVATESEND_PEER_PROTO_VERSION) {
             LogPrint("privatesend", "DSQUEUE -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
+            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE, strprintf("Version must be %d or greater", MIN_PRIVATESEND_PEER_PROTO_VERSION)));
             return;
         }
 
@@ -145,6 +146,7 @@ void CPrivateSendServer::ProcessMessage(CNode* pfrom, const std::string& strComm
     } else if (strCommand == NetMsgType::DSVIN) {
         if (pfrom->nVersion < MIN_PRIVATESEND_PEER_PROTO_VERSION) {
             LogPrint("privatesend", "DSVIN -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
+            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE, strprintf("Version must be %d or greater", MIN_PRIVATESEND_PEER_PROTO_VERSION)));
             PushStatus(pfrom, STATUS_REJECTED, ERR_VERSION, connman);
             return;
         }
@@ -242,6 +244,7 @@ void CPrivateSendServer::ProcessMessage(CNode* pfrom, const std::string& strComm
     } else if (strCommand == NetMsgType::DSSIGNFINALTX) {
         if (pfrom->nVersion < MIN_PRIVATESEND_PEER_PROTO_VERSION) {
             LogPrint("privatesend", "DSSIGNFINALTX -- peer=%d using obsolete version %i\n", pfrom->id, pfrom->nVersion);
+            connman.PushMessage(pfrom, CNetMsgMaker(pfrom->GetSendVersion()).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE, strprintf("Version must be %d or greater", MIN_PRIVATESEND_PEER_PROTO_VERSION)));
             return;
         }
 
@@ -391,7 +394,7 @@ void CPrivateSendServer::ChargeFees(CConnman& connman)
     if (!fMasternodeMode) return;
 
     //we don't need to charge collateral for every offence.
-    //if (GetRandInt(100) > 33) return;
+    if (GetRandInt(100) > 33) return;
 
     std::vector<CTransactionRef> vecOffendersCollaterals;
 
@@ -426,7 +429,7 @@ void CPrivateSendServer::ChargeFees(CConnman& connman)
     if (vecOffendersCollaterals.empty()) return;
 
     //mostly offending? Charge sometimes
-    //if ((int)vecOffendersCollaterals.size() >= Params().PoolMaxTransactions() - 1 && GetRandInt(100) > 33) return;
+    if ((int)vecOffendersCollaterals.size() >= Params().PoolMaxTransactions() - 1 && GetRandInt(100) > 33) return;
 
     //everyone is an offender? That's not right
     if ((int)vecOffendersCollaterals.size() >= Params().PoolMaxTransactions()) return;
@@ -436,7 +439,7 @@ void CPrivateSendServer::ChargeFees(CConnman& connman)
 
     if (nState == POOL_STATE_ACCEPTING_ENTRIES || nState == POOL_STATE_SIGNING) {
         LogPrintf("CPrivateSendServer::ChargeFees -- found uncooperative node (didn't %s transaction), charging fees: %s",
-            (nState == POOL_STATE_SIGNING) ? "sign" : "send", vecOffendersCollaterals[0]->ToString());
+                  (nState == POOL_STATE_SIGNING) ? "sign" : "send", vecOffendersCollaterals[0]->ToString());
 
         LOCK(cs_main);
 
@@ -496,7 +499,7 @@ void CPrivateSendServer::CheckTimeout(CConnman& connman)
 
     if (nState != POOL_STATE_IDLE && fTimeout) {
         LogPrint("privatesend", "CPrivateSendServer::CheckTimeout -- %s timed out (%ds) -- resetting\n",
-            (nState == POOL_STATE_SIGNING) ? "Signing" : "Session", nTimeout);
+                 (nState == POOL_STATE_SIGNING) ? "Signing" : "Session", nTimeout);
         ChargeFees(connman);
         SetNull();
     }
@@ -665,7 +668,7 @@ bool CPrivateSendServer::IsOutputsCompatibleWithSessionDenom(const std::vector<C
 
     for (const auto& entry : vecEntries) {
         LogPrintf("CPrivateSendServer::IsOutputsCompatibleWithSessionDenom -- vecTxOut denom %d, entry.vecTxOut denom %d\n",
-            CPrivateSend::GetDenominations(vecTxOut), CPrivateSend::GetDenominations(entry.vecTxOut));
+                  CPrivateSend::GetDenominations(vecTxOut), CPrivateSend::GetDenominations(entry.vecTxOut));
         if (CPrivateSend::GetDenominations(vecTxOut) != CPrivateSend::GetDenominations(entry.vecTxOut)) return false;
     }
 
@@ -728,7 +731,7 @@ bool CPrivateSendServer::CreateNewSession(const CPrivateSendAccept& dsa, PoolMes
 
     vecSessionCollaterals.push_back(MakeTransactionRef(dsa.txCollateral));
     LogPrintf("CPrivateSendServer::CreateNewSession -- new session created, nSessionID: %d  nSessionDenom: %d (%s)  vecSessionCollaterals.size(): %d\n",
-        nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom), vecSessionCollaterals.size());
+              nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom), vecSessionCollaterals.size());
 
     return true;
 }
@@ -750,7 +753,7 @@ bool CPrivateSendServer::AddUserToExistingSession(const CPrivateSendAccept& dsa,
 
     if (dsa.nDenom != nSessionDenom) {
         LogPrintf("CPrivateSendServer::AddUserToExistingSession -- incompatible denom %d (%s) != nSessionDenom %d (%s)\n",
-            dsa.nDenom, CPrivateSend::GetDenominationsToString(dsa.nDenom), nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom));
+                  dsa.nDenom, CPrivateSend::GetDenominationsToString(dsa.nDenom), nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom));
         nMessageIDRet = ERR_DENOM;
         return false;
     }
@@ -762,7 +765,7 @@ bool CPrivateSendServer::AddUserToExistingSession(const CPrivateSendAccept& dsa,
     vecSessionCollaterals.push_back(MakeTransactionRef(dsa.txCollateral));
 
     LogPrintf("CPrivateSendServer::AddUserToExistingSession -- new user accepted, nSessionID: %d  nSessionDenom: %d (%s)  vecSessionCollaterals.size(): %d\n",
-        nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom), vecSessionCollaterals.size());
+              nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom), vecSessionCollaterals.size());
 
     return true;
 }
@@ -770,7 +773,7 @@ bool CPrivateSendServer::AddUserToExistingSession(const CPrivateSendAccept& dsa,
 void CPrivateSendServer::RelayFinalTransaction(const CTransaction& txFinal, CConnman& connman)
 {
     LogPrint("privatesend", "CPrivateSendServer::%s -- nSessionID: %d  nSessionDenom: %d (%s)\n",
-        __func__, nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom));
+             __func__, nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom));
 
     // final mixing tx with empty signatures should be relayed to mixing participants only
     for (const auto entry : vecEntries) {
@@ -813,7 +816,7 @@ void CPrivateSendServer::RelayStatus(PoolStatusUpdate nStatusUpdate, CConnman& c
 
     // smth went wrong
     LogPrintf("CPrivateSendServer::%s -- can't continue, %llu client(s) disconnected, nSessionID: %d  nSessionDenom: %d (%s)\n",
-        __func__, nDisconnected, nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom));
+              __func__, nDisconnected, nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom));
 
     // notify everyone else that this session should be terminated
     for (const auto& entry : vecEntries) {
@@ -833,7 +836,7 @@ void CPrivateSendServer::RelayStatus(PoolStatusUpdate nStatusUpdate, CConnman& c
 void CPrivateSendServer::RelayCompletedTransaction(PoolMessage nMessageID, CConnman& connman)
 {
     LogPrint("privatesend", "CPrivateSendServer::%s -- nSessionID: %d  nSessionDenom: %d (%s)\n",
-        __func__, nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom));
+             __func__, nSessionID, nSessionDenom, CPrivateSend::GetDenominationsToString(nSessionDenom));
 
     // final mixing tx with empty signatures should be relayed to mixing participants only
     for (const auto& entry : vecEntries) {
