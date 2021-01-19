@@ -175,6 +175,8 @@ bool CActiveDeterministicMasternodeManager::GetLocalAddress(CService& addrRet)
             empty = false;
             if (pnode->addr.IsIPv4())
                 fFoundLocal = GetLocal(activeMasternodeInfo.service, &pnode->addr) && CMasternode::IsValidNetAddr(activeMasternodeInfo.service);
+            if (pnode->addr.IsIPv6())
+                fFoundLocal = GetLocal(activeMasternodeInfo.service, &pnode->addr) && CMasternode::IsValidNetAddr(activeMasternodeInfo.service);
             return !fFoundLocal;
         });
         // nothing and no live connections, can't do anything for now
