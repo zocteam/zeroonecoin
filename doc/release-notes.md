@@ -1,4 +1,4 @@
-# 01coin version 0.12.3.7
+# 01coin version 0.13.0.0
 
 Release is now available from:
 
