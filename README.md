@@ -1,4 +1,4 @@
-`master:` [![Build Status](https://travis-ci.org/zocteam/zeroonecoin.svg?branch=master)](https://travis-ci.org/zocteam/zeroonecoin) `dev:` [![Build Status](https://travis-ci.org/zocteam/zeroonecoin.svg?branch=dev)](https://travis-ci.org/zocteam/zeroonecoin/branches)
+`master:` [![Build Status](https://travis-ci.com/zocteam/zeroonecoin.svg?branch=master)](https://travis-ci.com/zocteam/zeroonecoin) `dev:` [![Build Status](https://travis-ci.com/zocteam/zeroonecoin.svg?branch=dev)](https://travis-ci.com/zocteam/zeroonecoin/branches)
 
 ![ZeroOne](doc/splash.png)
 
