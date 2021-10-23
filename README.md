@@ -1,3 +1,5 @@
+`master:` [![Build Status](https://travis-ci.com/zocteam/zeroonecoin.svg?branch=master)](https://travis-ci.com/zocteam/zeroonecoin) `dev:` [![Build Status](https://travis-ci.com/zocteam/zeroonecoin.svg?branch=dev)](https://travis-ci.com/zocteam/zeroonecoin/branches)
+
 ![ZeroOne](doc/splash.png)
 
 01coin Community v0.12.3.7
