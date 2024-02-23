@@ -271,7 +271,7 @@ public:
 
         chainTxData = ChainTxData{
             1571439186,// * UNIX timestamp of last known number of transactions
-            123333,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
+            967800,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
                        //   (the tx=... number in the SetBestChain debug.log lines)
             0.002      // * estimated number of transactions per second after that timestamp (123333/(1571439186-1517407200)=0.002)
         };
@@ -394,11 +394,11 @@ public:
         consensus.llmqs[Consensus::LLMQ_400_60] = llmq400_60;
         consensus.llmqs[Consensus::LLMQ_400_85] = llmq400_85;
 
-        fMiningRequiresPeers = true;
+        fMiningRequiresPeers = false;
         fDefaultConsistencyChecks = false;
         fRequireStandard = false;
         fRequireRoutableExternalIP = true;
-        fMineBlocksOnDemand = false;
+        fMineBlocksOnDemand = true;
         fAllowMultipleAddressesFromGroup = false;
         fAllowMultiplePorts = false;
 
@@ -409,6 +409,20 @@ public:
         nMinSporkKeys = 1;
         fBIP9CheckMasternodesUpgraded = true;
         consensus.fLLMQAllowDummyCommitments = true;
+
+        checkpointData = (CCheckpointData) {
+            boost::assign::map_list_of
+            ( 0, uint256S("0x00000ebe61e5bc70bc968b9cf4e5ed85ec996a85a68853361557876ae37a1648"))
+            ( 5, uint256S("0x000005d1bf96cec113d79aee3f3d66908f75606b880ab0d2b54a33364100bf2e"))
+
+        };
+
+        chainTxData = ChainTxData{
+            1522852335,// * UNIX timestamp of last known number of transactions
+            5,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
+                       //   (the tx=... number in the SetBestChain debug.log lines)
+            0.002      // * estimated number of transactions per second after that timestamp (123333/(1571439186-1517407200)=0.002)
+        };
 
     }
 };
