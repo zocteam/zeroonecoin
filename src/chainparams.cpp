@@ -286,35 +286,35 @@ class CTestNetParams : public CChainParams {
 public:
     CTestNetParams() {
         strNetworkID = "test";
-        consensus.nSubsidyHalvingInterval = 10;
+        consensus.nSubsidyHalvingInterval = 210384;
         consensus.nMasternodePaymentsStartBlock = 300; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
-        consensus.nMasternodePaymentsIncreaseBlock = 350;
-        consensus.nMasternodePaymentsIncreasePeriod = 10;
+        consensus.nMasternodePaymentsIncreaseBlock = 158000;
+        consensus.nMasternodePaymentsIncreasePeriod = 576*30;
         consensus.nInstantSendConfirmationsRequired = 2;
         consensus.nInstantSendKeepLock = 6;
-        consensus.nBudgetPaymentsStartBlock = 1000; // 1x/11/2018
+        consensus.nBudgetPaymentsStartBlock = 48120; // 1x/11/2018
         consensus.nBudgetPaymentsCycleBlocks = 50;
         consensus.nBudgetPaymentsWindowBlocks = 10;
         consensus.nBudgetProposalEstablishingTime = 60*20;
-        consensus.nSuperblockStartBlock = 1500; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
+        consensus.nSuperblockStartBlock = 4200; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
         consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
-        consensus.nSuperblockCycle = 10; // Superblocks can be issued hourly on testnet
+        consensus.nSuperblockCycle = 24; // Superblocks can be issued hourly on testnet
         consensus.nGovernanceMinQuorum = 1;
-        consensus.nGovernanceFilterElements = 100;
+        consensus.nGovernanceFilterElements = 500;
         consensus.nMasternodeMinimumConfirmations = 1;
         consensus.BIP34Height = 32553; // FIX
         consensus.BIP34Hash = uint256S("0x0"); // FIX
         consensus.BIP65Height = 32553; // 0000039cf01242c7f921dcb4806a5994bc003b48c1973ae0c89b67809c2bb2ab
         consensus.BIP66Height = 32553; // 0000002acdd29a14583540cb72e1c5cc83783560e38fa7081495d474fe1671f7
-        consensus.DIP0001Height = 2;
+        consensus.DIP0001Height = 150;
         consensus.powLimit = uint256S("00000fffff000000000000000000000000000000000000000000000000000000");
         consensus.nPowTargetTimespan = 60 * 60; // ZeroOne: 1 hour, 24 blocks
         consensus.nPowTargetSpacing = 2.5 * 60; // ZeroOne: 150 seconds
         consensus.fPowAllowMinDifficultyBlocks = true;
-        consensus.fPowNoRetargeting = true;
+        consensus.fPowNoRetargeting = false;
         consensus.nPowKGWHeight = 4002; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
         consensus.nPowDGWHeight = 4002;
-        consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
+        consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 144; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
@@ -394,12 +394,12 @@ public:
         consensus.llmqs[Consensus::LLMQ_400_60] = llmq400_60;
         consensus.llmqs[Consensus::LLMQ_400_85] = llmq400_85;
 
- 
 
-        fMiningRequiresPeers = false;
+
+        fMiningRequiresPeers = true;
         fDefaultConsistencyChecks = true;
         fRequireStandard = false;
-        fRequireRoutableExternalIP = false;
+        fRequireRoutableExternalIP = true;
         fMineBlocksOnDemand = true;
         fAllowMultipleAddressesFromGroup = true;
         fAllowMultiplePorts = true;
@@ -415,12 +415,12 @@ public:
         checkpointData = (CCheckpointData) {
             boost::assign::map_list_of
             ( 0, uint256S("0x00000ebe61e5bc70bc968b9cf4e5ed85ec996a85a68853361557876ae37a1648"))
-           
+            ( 265, uint256S("0x000005f723b9f24dfa0ad64bd71f7c798e73bf18cc7572cd6c9f92e4d63b6af9"))
         };
 
         chainTxData = ChainTxData{
             1522852335,// * UNIX timestamp of last known number of transactions
-            1,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
+            265,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
                        //   (the tx=... number in the SetBestChain debug.log lines)
             0.002      // * estimated number of transactions per second after that timestamp (123333/(1571439186-1517407200)=0.002)
         };
