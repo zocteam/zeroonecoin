@@ -267,11 +267,12 @@ public:
             ( 321143, uint256S("0x000000003cd8528639e51ed1541de721d8dd32c5c53a8c2ecdd5bebfaa059940"))
             ( 327856, uint256S("0x000000002fdb5872e1c42d949dab224cb1d41a79520a1c605f737236a2e55ecf"))
             ( 967800, uint256S("0x0000000000000024e26c7df7e46d673724d223cf4ca2b2adc21297cc095600f4"))
+	    ( 1120358, uint256S("0x000000004033492a9e90d65f41a34e503f890baed0004a7d957026d7c9657cd0"))
         };
 
         chainTxData = ChainTxData{
             1571439186,// * UNIX timestamp of last known number of transactions
-            967800,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
+            1120358,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
                        //   (the tx=... number in the SetBestChain debug.log lines)
             0.002      // * estimated number of transactions per second after that timestamp (123333/(1571439186-1517407200)=0.002)
         };
@@ -416,11 +417,12 @@ public:
             boost::assign::map_list_of
             ( 0, uint256S("0x00000ebe61e5bc70bc968b9cf4e5ed85ec996a85a68853361557876ae37a1648"))
             ( 265, uint256S("0x000005f723b9f24dfa0ad64bd71f7c798e73bf18cc7572cd6c9f92e4d63b6af9"))
+            ( 1152, uint256S("0x000004ae51e364c5adc0d2d1ea0ac7118efad424a591ab953c32a5e148a1d34f"))
         };
 
         chainTxData = ChainTxData{
             1522852335,// * UNIX timestamp of last known number of transactions
-            265,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
+            1152,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
                        //   (the tx=... number in the SetBestChain debug.log lines)
             0.002      // * estimated number of transactions per second after that timestamp (123333/(1571439186-1517407200)=0.002)
         };
