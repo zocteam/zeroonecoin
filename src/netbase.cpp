@@ -36,7 +36,6 @@ static proxyType proxyInfo[NET_MAX];
 static proxyType nameProxy;
 static CCriticalSection cs_proxyInfos;
 int nConnectTimeout = DEFAULT_CONNECT_TIMEOUT;
-int nConnectRetCode = 0;
 bool fNameLookup = DEFAULT_NAME_LOOKUP;
 
 // Need ample time for negotiation for very slow proxies such as Tor (milliseconds)
@@ -468,8 +467,7 @@ bool static ConnectSocketDirectly(const CService &addrConnect, SOCKET& hSocketRe
             }
             if (nRet != 0)
             {
-                nConnectRetCode = nRet; // eg. "Connection refused (111)"
-                LogPrintf("connect() to %s failed after select(): %s\n", addrConnect.ToString(), NetworkErrorString(nRet));                
+                LogPrintf("connect() to %s failed after select(): %s\n", addrConnect.ToString(), NetworkErrorString(nRet));
                 CloseSocket(hSocket);
                 return false;
             }
@@ -480,8 +478,7 @@ bool static ConnectSocketDirectly(const CService &addrConnect, SOCKET& hSocketRe
         else
 #endif
         {
-            nConnectRetCode = WSAGetLastError(); // eg. "Network is unreachable (101)"
-            LogPrintf("connect() to %s failed: %s\n", addrConnect.ToString(), NetworkErrorString(nConnectRetCode));
+            LogPrintf("connect() to %s failed: %s\n", addrConnect.ToString(), NetworkErrorString(WSAGetLastError()));
             CloseSocket(hSocket);
             return false;
         }

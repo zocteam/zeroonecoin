@@ -1,4 +1,4 @@
-prefix=/usr/local
+prefix=/Users/owenray/Documents/Projects/zeroonecoin3/depends/x86_64-apple-darwin19.4.0
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

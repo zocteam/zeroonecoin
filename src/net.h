@@ -1,7 +1,5 @@
-// Copyright (c) 2009-2019 Satoshi Nakamoto
-// Copyright (c) 2009-2019 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
-// Copyright (c) 2018-2019 The ZeroOne Core developers
+// Copyright (c) 2009-2010 Satoshi Nakamoto
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -67,7 +65,7 @@ static const int MAX_OUTBOUND_CONNECTIONS = 16;
 /** Maximum number of addnode outgoing nodes */
 static const int MAX_ADDNODE_CONNECTIONS = 8;
 /** Maximum number if outgoing masternodes */
-static const int MAX_OUTBOUND_MASTERNODE_CONNECTIONS = 20;
+static const int MAX_OUTBOUND_MASTERNODE_CONNECTIONS = 30;
 /** -listen default */
 static const bool DEFAULT_LISTEN = true;
 /** -upnp default */
@@ -311,6 +309,10 @@ public:
     void RelayTransaction(const CTransaction& tx);
     void RelayTransaction(const CTransaction& tx, const CDataStream& ss);
     void RelayInv(CInv &inv, const int minProtoVersion = MIN_PEER_PROTO_VERSION);
+    void RelayInvFiltered(CInv &inv, const CTransaction &relatedTx, const int minProtoVersion = MIN_PEER_PROTO_VERSION);
+    // This overload will not update node filters,  so use it only for the cases when other messages will update related transaction data in filters
+    void RelayInvFiltered(CInv &inv, const uint256 &relatedTxHash, const int minProtoVersion = MIN_PEER_PROTO_VERSION);
+    void RemoveAskFor(const uint256& hash);
 
     // Addrman functions
     size_t GetAddressCount() const;
@@ -396,10 +398,6 @@ public:
     unsigned int GetReceiveFloodSize() const;
 
     void WakeMessageHandler();
-
-    // ZOC: FindNode is used in masternodeman.cpp
-    CNode* FindNode(const CService& addr);
-
 private:
     struct ListenSocket {
         SOCKET socket;
@@ -422,7 +420,7 @@ private:
     CNode* FindNode(const CNetAddr& ip);
     CNode* FindNode(const CSubNet& subNet);
     CNode* FindNode(const std::string& addrName);
-  //CNode* FindNode(const CService& addr);
+    CNode* FindNode(const CService& addr);
 
     bool AttemptToEvictConnection();
     CNode* ConnectNode(CAddress addrConnect, const char *pszDest = NULL, bool fCountFailure = false);
@@ -592,9 +590,6 @@ extern bool fRelayTxes;
 extern bool fOkIPv4;
 extern bool fOkIPv6;
 extern bool fOkDual;
-
-// Dirty list of missing MNs
-extern std::map<CService, int> mapMissingMNs;
 
 extern limitedmap<uint256, int64_t> mapAlreadyAskedFor;
 
@@ -901,9 +896,14 @@ public:
 
     void AddInventoryKnown(const CInv& inv)
     {
+        AddInventoryKnown(inv.hash);
+    }
+
+    void AddInventoryKnown(const uint256& hash)
+    {
         {
             LOCK(cs_inventory);
-            filterInventoryKnown.insert(inv.hash);
+            filterInventoryKnown.insert(hash);
         }
     }
 
@@ -921,8 +921,12 @@ public:
             LogPrint("net", "PushInventory --  inv: %s peer=%d\n", inv.ToString(), id);
             vInventoryBlockToSend.push_back(inv.hash);
         } else {
-            LogPrint("net", "PushInventory --  inv: %s peer=%d\n", inv.ToString(), id);
-            vInventoryOtherToSend.push_back(inv);
+            if (!filterInventoryKnown.contains(inv.hash)) {
+                LogPrint("net", "PushInventory --  inv: %s peer=%d\n", inv.ToString(), id);
+                vInventoryOtherToSend.push_back(inv);
+            } else {
+                LogPrint("net", "PushInventory --  filtered inv: %s peer=%d\n", inv.ToString(), id);
+            }
         }
     }
 
@@ -933,6 +937,7 @@ public:
     }
 
     void AskFor(const CInv& inv);
+    void RemoveAskFor(const uint256& hash);
 
     void CloseSocketDisconnect();
 

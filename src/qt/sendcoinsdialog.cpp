@@ -261,10 +261,8 @@ void SendCoinsDialog::on_sendButton_clicked()
 
     QString strFunds = tr("using") + " <b>" + tr("anonymous funds") + "</b>";
     QString strFee = "";
-    recipients[0].inputType = ONLY_DENOMINATED;
 
     if(ui->checkUsePrivateSend->isChecked()) {
-        recipients[0].inputType = ONLY_DENOMINATED;
         strFunds = tr("using") + " <b>" + tr("anonymous funds") + "</b>";
         QString strNearestAmount(
             BitcoinUnits::formatWithUnit(
@@ -273,18 +271,18 @@ void SendCoinsDialog::on_sendButton_clicked()
             "(privatesend requires this amount to be rounded up to the nearest %1)."
         ).arg(strNearestAmount));
     } else {
-        recipients[0].inputType = ALL_COINS;
         strFunds = tr("using") + " <b>" + tr("any available funds (not anonymous)") + "</b>";
     }
 
     if(ui->checkUseInstantSend->isChecked()) {
-        recipients[0].fUseInstantSend = true;
         strFunds += " ";
         strFunds += tr("and InstantSend");
-    } else {
-        recipients[0].fUseInstantSend = false;
     }
 
+    for (SendCoinsRecipient& rcp : recipients) {
+        rcp.inputType = ui->checkUsePrivateSend->isChecked() ? ONLY_DENOMINATED : ALL_COINS;
+        rcp.fUseInstantSend = ui->checkUseInstantSend->isChecked();
+    }
 
     fNewRecipientAllowed = false;
     // request unlock only if was locked or unlocked for mixing:
@@ -908,13 +906,13 @@ void SendCoinsDialog::coinControlChangeEdited(const QString& text)
                 else
                 {
                     ui->lineEditCoinControlChange->setText("");
-                    ui->labelCoinControlChangeLabel->setStyleSheet("QLabel{color:black;}");
+                    ui->labelCoinControlChangeLabel->setStyleSheet("QLabel{color:white;}");
                     ui->labelCoinControlChangeLabel->setText("");
                 }
             }
             else // Known change address
             {
-                ui->labelCoinControlChangeLabel->setStyleSheet("QLabel{color:black;}");
+                ui->labelCoinControlChangeLabel->setStyleSheet("QLabel{color:white;}");
 
                 // Query label
                 QString associatedLabel = model->getAddressTableModel()->labelForAddress(text);

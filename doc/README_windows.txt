@@ -1,4 +1,4 @@
-ZeroOne Core 0.12.3
+ZeroOne Core 0.13.0
 =====================
 
 Intro
