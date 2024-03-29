@@ -267,11 +267,12 @@ public:
             ( 321143, uint256S("0x000000003cd8528639e51ed1541de721d8dd32c5c53a8c2ecdd5bebfaa059940"))
             ( 327856, uint256S("0x000000002fdb5872e1c42d949dab224cb1d41a79520a1c605f737236a2e55ecf"))
             ( 967800, uint256S("0x0000000000000024e26c7df7e46d673724d223cf4ca2b2adc21297cc095600f4"))
+	    ( 1120358, uint256S("0x000000004033492a9e90d65f41a34e503f890baed0004a7d957026d7c9657cd0"))
         };
 
         chainTxData = ChainTxData{
             1571439186,// * UNIX timestamp of last known number of transactions
-            123333,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
+            1120358,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
                        //   (the tx=... number in the SetBestChain debug.log lines)
             0.002      // * estimated number of transactions per second after that timestamp (123333/(1571439186-1517407200)=0.002)
         };
@@ -306,7 +307,7 @@ public:
         consensus.BIP34Hash = uint256S("0x0"); // FIX
         consensus.BIP65Height = 32553; // 0000039cf01242c7f921dcb4806a5994bc003b48c1973ae0c89b67809c2bb2ab
         consensus.BIP66Height = 32553; // 0000002acdd29a14583540cb72e1c5cc83783560e38fa7081495d474fe1671f7
-        consensus.DIP0001Height = 9999999;
+        consensus.DIP0001Height = 150;
         consensus.powLimit = uint256S("00000fffff000000000000000000000000000000000000000000000000000000");
         consensus.nPowTargetTimespan = 60 * 60; // ZeroOne: 1 hour, 24 blocks
         consensus.nPowTargetSpacing = 2.5 * 60; // ZeroOne: 150 seconds
@@ -315,12 +316,12 @@ public:
         consensus.nPowKGWHeight = 4002; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
         consensus.nPowDGWHeight = 4002;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
-        consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
+        consensus.nMinerConfirmationWindow = 144; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
-        consensus.nPowDGWHeight = 350;
-        consensus.nPowKGWHeight = 350;
+        consensus.nPowDGWHeight = 300;
+        consensus.nPowKGWHeight = 300;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
@@ -349,10 +350,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nThreshold = 50; // 50% of 100
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000000000003cd72a542"); // 4000
+        consensus.nMinimumChainWork = uint256S("0x00"); // 4000
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x00000ce22113f3eb8636e225d6a1691e132fdd587aed993e1bc9b07a0235eea4"); // 4000
+        consensus.defaultAssumeValid = uint256S("0x00"); // 4000
 
         pchMessageStart[0] = 0xd1;
         pchMessageStart[1] = 0x2b;
@@ -394,22 +395,50 @@ public:
         consensus.llmqs[Consensus::LLMQ_400_60] = llmq400_60;
         consensus.llmqs[Consensus::LLMQ_400_85] = llmq400_85;
 
+
+
         fMiningRequiresPeers = true;
-        fDefaultConsistencyChecks = false;
+        fDefaultConsistencyChecks = true;
         fRequireStandard = false;
         fRequireRoutableExternalIP = true;
-        fMineBlocksOnDemand = false;
-        fAllowMultipleAddressesFromGroup = false;
-        fAllowMultiplePorts = false;
+        fMineBlocksOnDemand = true;
+        fAllowMultipleAddressesFromGroup = true;
+        fAllowMultiplePorts = true;
 
         nPoolMaxTransactions = 3;
         nFulfilledRequestExpireTime = 5*60; // fulfilled requests expire in 5 minutes
 
         vSporkAddresses = {"nJqRtXk5iKZTv7R5Xs8jUEX5E7LBZFTmMu"};
         nMinSporkKeys = 1;
-        fBIP9CheckMasternodesUpgraded = true;
+        fBIP9CheckMasternodesUpgraded = false;
         consensus.fLLMQAllowDummyCommitments = true;
 
+        checkpointData = (CCheckpointData) {
+            boost::assign::map_list_of
+            ( 0, uint256S("0x00000ebe61e5bc70bc968b9cf4e5ed85ec996a85a68853361557876ae37a1648"))
+            ( 265, uint256S("0x000005f723b9f24dfa0ad64bd71f7c798e73bf18cc7572cd6c9f92e4d63b6af9"))
+            ( 1152, uint256S("0x000004ae51e364c5adc0d2d1ea0ac7118efad424a591ab953c32a5e148a1d34f"))
+        };
+
+        chainTxData = ChainTxData{
+            1522852335,// * UNIX timestamp of last known number of transactions
+            1152,    // * total number of transactions between genesis and that timestamp  (transactions from gettxoutsetinfo)
+                       //   (the tx=... number in the SetBestChain debug.log lines)
+            0.002      // * estimated number of transactions per second after that timestamp (123333/(1571439186-1517407200)=0.002)
+        };
+
+    }
+ void UpdateBIP9Parameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout)
+    {
+        consensus.vDeployments[d].nStartTime = nStartTime;
+        consensus.vDeployments[d].nTimeout = nTimeout;
+    }
+
+    void UpdateBudgetParameters(int nMasternodePaymentsStartBlock, int nBudgetPaymentsStartBlock, int nSuperblockStartBlock)
+    {
+        consensus.nMasternodePaymentsStartBlock = nMasternodePaymentsStartBlock;
+        consensus.nBudgetPaymentsStartBlock = nBudgetPaymentsStartBlock;
+        consensus.nSuperblockStartBlock = nSuperblockStartBlock;
     }
 };
 static CTestNetParams testNetParams;

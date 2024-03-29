@@ -3956,7 +3956,7 @@ bool static LoadBlockIndexDB(const CChainParams& chainparams)
         LogPrintf("LoadBlockIndexDB(): Block files have previously been pruned\n");
 
     // Check whether we need to continue reindexing
-    bool fReindexing = false;
+    bool fReindexing = true;
     pblocktree->ReadReindexing(fReindexing);
     fReindex |= fReindexing;
 

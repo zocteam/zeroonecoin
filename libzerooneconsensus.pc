@@ -1,11 +1,11 @@
-prefix=/Users/owenray/Documents/Projects/zeroonecoin3/depends/x86_64-apple-darwin19.4.0
+prefix=
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
 Name: ZeroOne Core consensus library
 Description: Library for the Bitcoin consensus protocol.
-Version: 0.12.3
+Version: 0.13.0
 Libs: -L${libdir} -lzerooneconsensus
 Cflags: -I${includedir}
 Requires.private: libcrypto
